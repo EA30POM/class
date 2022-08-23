@@ -1,0 +1,131 @@
+---
+title: "Syllabus"
+author: ""
+date: "`r Sys.Date()`"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+POMblue <- "#0057B7"
+options(tinytex.verbose = TRUE)
+```
+
+# Overview
+
+*Environmental Science* introduces the scientific, socio-political, and technological dimensions of environmental problems that pose unprecedented challenges to humanity and the environment: climate change, biodiversity loss, and providing food and water for 7.8 billion people. In this class, we will examine fundamental changes in the biosphere, and their implications for climate, land, water, and species, while emphasizing a systems-view of problems and potential solutions.
+
+Over the coming semester, we will look at environmental issues at a local and global scale, examining how individual and collective decisions lead to environmental changes. We will use case studies to illustrate the different dimensions of environmental problems. In the laboratory, you will learn some core techniques for environmental science, including the use and analysis of spatial and environmental data, as well as the uncertainty and limitations of real-world data.
+
+## Learning outcomes
+
+By the end of the course, a successful learner will be able to:
+
+* Describe how anthropogenic factors affect climate, air, biota, water, and soils;
+* Apply systems science thinking and techniques to environmental science issues;
+* Interpret and critically analyze environmental data using quantitative and qualitative approaches; 
+* Communicate scientific information to broad audiences;
+* Understand issues such as risk, uncertainty, and trade-offs that that underlie all environmental challenges and the search for effective solutions to environmental problems.
+
+## General information
+
+**Lecture location**: Seaver South Room 121
+
+**Lab location**: Seaver South Room 113 (or Bernard Field Station South Outdoors Classroom when noted)
+
+**Lecture Schedule**: Tuesdays and Thursdays, 9:35-10:50am PT
+
+**Lab Schedule**: Tuesdays 1:15-5:00pm PT
+
+**Office Hours**: I am always happy to talk to you. My open-doors office hours will typically be Tuesdays 11:15am-12:15pm and Thursdays 11:30am-12:30pm. If these times do not work for your schedule, please reach out via Slack. While you are welcome to show up at my office, it can be helpful to use my [Calendly](https://calendly.com/chchang47/small-group-meetings) to let me know if you want to meet via Zoom or have a particular agenda item you'd like to discuss.
+
+**Prerequisites**: None
+
+**Readings**: This course will use a combination of the primary literature, popular science books, and textbooks, chief among them *Living in the Environment* (LITE for short). Please note that you **do not need to purchase** *Living in the Environment* -- all readings will be available online.
+
+## Course assessment
+
+* Exam #1 (15%)
+* Exam #2 (15%, not comprehensive)
+* Final exam (20%, comprehensive)
+* Laboratory & lecture assignments (15%)
+* Laboratory projects (30%)
+* Class participation (5%)
+
+## Mutual expectations
+
+### What I expect from you
+
+I welcome individuals of all ages, backgrounds, beliefs, ethnicities, genders, gender identities, gender expressions, national origins, religious affiliations, sexual orientations, ability -- and any other visible and non-visible differences. As an instructor, I strongly emphasize student agency; this class is **your** learning journey, and as such, I expect students to take leadership in their own learning and to keep track of assignments and examination dates. I expect we will respectfully consider differing opinions and engage in constructive discourse. As such, I expect that everyone will help create a collegial environment where all students feel welcome and their rights to learn are respected. Please refer to the [Pomona College Student Code](http://catalog.pomona.edu/content.php?catoid=38&navoid=7668) for official policy.
+
+**Digital ethics**: One of the tools we will use from time to time in this course is Zoom. To facilitate access, I may occasionally record Zoom meetings. I will inform students when recordings are in progress. I expect that students in my class will respect one another and my privacy. To that end, students in EA 30 will not record any other member of the class--including the instructor--without obtaining their consent in advance. Students in EA 30 will also not share information about other members of this course in any type of public fora, such as social media. As the instructor, I own the copyright to my instructional materials. These materials cannot be distributed in whole or in part to any person or entity other than other members of the current class without my prior written consent.
+
+### What you can expect from me
+
+I will strive to provide an equitable and inclusive learning environment. My overarching goal is to help you succeed in your exploration of environmental science. To that end, you can expect me to be responsive to your feedback and ideas about course content and design. 
+
+A key component of my role as an instructor is office hours. During office hours, I am available to help you work through any problems, questions, or thoughts you have about the course. I am also more than happy to chat about broader questions such as career paths in environmental science, ecology, and conservation, next steps after Pomona College/the Claremont Colleges, or other academic or professional topics of interest to you.
+
+**Student Well-Being**: Our health, both mental and physical, is paramount. We must consider the health of others inside and outside the classroom. All Claremont Colleges students have signed agreements regulating on-campus behavior during the pandemic; in the classroom, we will uphold these agreements. We need to take care of each other for this course to be successful. I ask you therefore to adhere to the following principles: 
+
+* There is a mask mandate for all indoor spaces on campus. You must wear a mask for the entire class; eating and drinking in indoors classroom spaces are not permitted. Your mask must cover your mouth and nose. The college has zero-tolerance for violations of this policy, and our shared commitment to the health and safety of our community members means if you come to class unmasked you will have to leave class for the day. 
+* Class attendance is important, but if you need to miss class for health reasons, concerning symptoms, suspected COVID exposure, unexpected dependent care, technology issues, or other emergency reasons I will work with you. Let me underscore this: **please make your decisions always based on health, safety, and wellness—yours and others**—and I will work with you at the other end. *Take any potential symptoms seriously; we’re counting on each other.*
+* When not in class, avoid closed public spaces, and if you can't avoid them: wear your mask properly, wash your hands, and maintain social distance.    
+* If you, or a family member, are experiencing hardship because of the pandemic, talk to me or to someone in the Dean of Students office. You are not alone during this time. 
+
+In addition to the course policies, I seek to prioritize your health and well-being. Physical or mental illness, personal crises, family care, and other responsibilities can strongly impact your ability to participate in this course. Please let me and/or staff in the Student Affairs or related offices know if any of these issues pose severe obstacles to you and we will work together to come up with solutions. I am also more than happy to work with you and a representative from Student Affairs in situations where sensitive information is involved.
+
+## General course policies
+
+*Office hours, email, and class Slack channel*: During office hours, I am available to help you work through any problems, questions, or thoughts you have about the course. If you would like to discuss a particular problem or topic that would benefit from preparation on my part, please give me advance notice via [Calendly](https://calendly.com/chchang47/small-group-meetings). 
+
+I have email boundaries and I encourage you to find your own. Mine include not answering emails after 6pm, or on weekends or holidays. Finally, I request that emails only be used for interactions that are truly one-on-one (e.g. requesting extensions to assignments or accomodations); in general, to help create an atmosphere of transparency and group learning, I request that questions about content and assignments be directed to the #ea30f22 Slack channel.
+
+*Learning diversity & accommodations*: Pomona College welcomes and accommodates students with disabilities. As your instructor, I aim to see you succeed in your growth as an environmental scholar. If you encounter obstacles to your success, please let me know immediately so that we can work together to identify ways to overcome any limitations of current course design. If you feel you need a reasonable accommodation to participate in this class, complete course requirements, or benefit from the College’s programs or services, you are also welcome to contact the student accessibility resource office at your College to begin this conversation or to establish accommodations for this or other courses.
+
+Below is a list of the relevant accessibility resource offices at each of the Colleges:
+
+1. [Claremont McKenna College (CMC) Accessibility Services](https://www.cmc.edu/dean-of-students/accessibility-services)
+2. [Harvey Mudd College (HMC) Disability Resources Office](https://www.hmc.edu/student-life/disability-resources/)
+3. [Pitzer College (PZ) Academic Support Services](https://www.pitzer.edu/student-life/academic-support-services/)
+4. [Pomona College (POM) Student Accessibility Resources and Services Office](https://www.pomona.edu/accessibility/student-accessibility)
+5. [Scripps College (SC) Accommodations for Students with Disabilities](https://www.scrippscollege.edu/academics/students-with-disabilities)
+6. [The 7 College (7C) Student Disability Resource Center](https://services.claremont.edu/sdrc/) and [7C Student Disability Resource Center email](mailto:SDRC@claremont.edu)
+
+*Writing center and student support services*: I urge all students to make use of your home campus’ Writing Center and other student support services. A list of relevant resources in included below. For example, the Writing Center is a great resource to workshop and improve your writing whether that is for classwork, for public consumption (e.g. op-eds), graduate school or funding applications, or any other domain.
+
+1. [CMC Center for Writing and Public Discourse](https://www.cmc.edu/writing) 
+2. [HMC Writing Center](https://www.hmc.edu/learning-programs/writing-center/)
+3. [POM Writing Center](https://www.pomona.edu/administration/writing-center)
+4. [PZ Writing Center](https://www.pitzer.edu/writing-center/)
+5. [SC Writing Center](https://www.scrippscollege.edu/departments/writing-program/writing-center)
+
+**All students in any Pomona class are welcome to use the Pomona College Writing Center**. The following is a description from the Writing Center's director, Prof. Kara Wittman.
+
+The Writing Center is open this semester! We open at full capacity after the second week of the semester, but we will be holding limited hours as soon as classes begin. Writing and Speaking Partners meet one-on-one with students to talk about their work and provide feedback at any stage of their preparation process. Trained to think deeply about rhetoric and communication across the curriculum, these student peers facilitate conversations about everything from ID1 papers to senior theses, lab reports to creative writing, giving presentations to developing strategies for reading and engaging more deeply in class discussions. Additionally, Jenny Thomas, our Assistant Director of College Writing and Language Diversity, offers specialized writing and speaking support for multilingual students navigating English as an additional language. To make an appointment with a Writing or Speaking Partner, please log on to the Portal and go to Academics > Writing Center, or contact us at [writing.center@pomona.edu](writing.center@pomona.edu). All appointments will be made through the Portal as usual, will be online--or sometimes in-person but outdoors--and our Writing and Speaking Partners will be flexible both about the mode of consultation (phone, Zoom, email, Google docs, walk and talk, etc.) and about their hours in order to accommodate student need.  
+
+*Late assignments*:  When assignments are handed in late without prior notice, I reserve the right to apply a grade deduction penalty (1 grade reduction for each day late).
+
+*Academic integrity*: Academic honesty is a core value of Pomona College and the Claremont Colleges. Plagiarism undermines academic integrity and is a threat to communal ethics. I will assign plagiarized assignments a failing grade and will report any instance of plagiarism to the College.
+
+## Course Schedule
+
+Please note that this schedule is subject to change; this syllabus is very much a *living document* that will change to reflect the unique conditions of this semester. I reserve the right to exercise some flexibility in scheduling, usually in favor of giving more time to students.
+
+```{r, echo=F, warning=FALSE, message=FALSE}
+library(dplyr)
+library(googlesheets4)
+library(htmlTable)
+
+## Pull in Google sheet schedule
+schedDF <- googlesheets4::read_sheet("https://docs.google.com/spreadsheets/d/1dK_8Z8O84QNcyY4Kn2j6nm41ZSQlLf9TEO2foBkuFF4/edit?usp=sharing",sheet = "ScheduleF22",col_types="ccccc")
+
+## Hack-y workaround to do zebra banding color automagically (based on NA values)
+zebra_cols <- rep("none",dim(schedDF)[1])
+zebra_cols[which(is.na(schedDF$Topic))] <- "#adc2d8"
+
+schedDF %>% 
+  addHtmlTableStyle(col.rgroup = zebra_cols) %>%
+  htmlTable(rnames=FALSE) # can't figure out for now how to merge cells - whatever
+```
+
+

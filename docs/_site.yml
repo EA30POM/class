@@ -1,0 +1,52 @@
+name: "EA30 FA22"
+output_dir: "."
+navbar:
+  title: "Environmental Science"
+  left:
+    - text: "Syllabus"
+      icon: fa-home
+      href: index.html
+    - text: "Data science"
+      menu:
+        - text: "Week 1"
+        - text: "The R and RStudio environments"
+          href: Rintro.html
+    - text: "Climate science"
+      menu:
+        - text: "Week 1"
+        - text: "Air Quality Lab Introduction"
+          href: AQintro.html
+        #- text: "Week 2"
+        #- text: "Air Quality: Test transects"
+        #  href: AQexp1.html
+    #     - text: "Week 3"
+    #     - text: "Air Quality: Analysis"
+    #       href: AQexp2.html
+    # - text: "Soil science"
+    #   menu:
+    #     - text: "Analyzing data"
+    #       href: soil.html
+    # - text: "Environmental communications"
+    #   menu:
+    #     - text: "Visualization"
+    #       href: EnvComm1.html
+    #     - text: "Analysis"
+    #       href: EnvComm2.html
+    #     - text: "Groups"
+    #       menu:
+    #         - text: "Group1"
+    #           href: Group1.html
+    #         - text: "Group2"
+    #           href: Group2.html
+    #         - text: "Group3"
+    #           href: Group3.html
+    #         - text: "Group4"
+    #           href: Group4.html
+    #         - text: "Group5"
+    #           href: Group5.html
+    #         - text: "Group6"
+    #           href: Group6.html
+output:
+  html_document:
+    theme: flatly
+    css: style.css
