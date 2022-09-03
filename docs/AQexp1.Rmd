@@ -1,0 +1,77 @@
+---
+title: "Air quality lab: Week 2"
+author: ""
+date: "`r Sys.Date()`"
+output: html_document
+---
+
+# Week 2 Lab Overview
+
+## Objectives
+
+In lab this week, we will perform the following:
+
+* identify a candidate (set of) question(s) for the class data collection;
+* revisit and enhance community guidelines to also incorporate field safety;
+* collect data!
+
+Time permitting, we may also take on the following tasks:
+
+* viewing and interacting with the PL Air data from week 1 in `R` using RStudio Server.
+
+We are working toward the [climate/air quality group poster described here](https://docs.google.com/document/d/1jcAIl_YpCUeGb5eY5Wh9oro4RNXdYCVzbKZf7_rCD10/edit?usp=sharing).
+
+
+## Enhancing the community guidelines document
+
+Before we revisit the community guidelines document, please read this article in [Small Pond Science](https://smallpondscience.com/2017/07/10/safety-in-the-field/) (content warning: references sexual assault) and this [Bulletin of the Ecological Society of America](https://esajournals.onlinelibrary.wiley.com/doi/full/10.1890/0012-9623-95.3.264) article (please pay special attention to Table 1).
+
+Here are some guiding questions to consider. There are additional questions that we can and should consider as a group! Please share them, and if you are uncomfortable sharing them directly, you are welcome to anonymously pose the question in the Google doc.
+
+* When and where does working in teams or small groups enhance field safety? When might working in teams or small groups be less than ideal for safety?
+* What are the signs of physical or emotional distress? How can we support and look out for one another?
+* When and where can technology facilitate safety? When and where might technology undermine field safety?
+* What are examples of conditions that are unsafe in the field? How can we avoid them? How can we look out for one another with respect to avoiding these conditions or dealing with these conditions constructively?
+    + One example could be contact with a [poisonous plant such as poison oak](https://www.cdc.gov/niosh/topics/plants/symptoms.html).
+    + Another could be a confrontation with another person, which could be driven by larger systemic biases.
+    + Finally, conditions such as uneven terrain or very open locations with no tree cover could pose issues in this time of year (or in general).
+* What are best practices for communicating our comfort or discomfort in the field?
+* What are the potential physical, emotional, or other barriers to participating in different forms of field work or field work in different types of locations?
+
+## Generating our class dataset
+
+For this laboratory project, you will have several decisions to make as a community:
+
+* What question do we seek to explore with PL Air data? What variable(s) are we particularly interested in? 
+* What is an appropriate distance between sampling points?
+* What, if any, sources or locations do we seek to sample?
+* How long should we remain at each point to collect the data?
+* How many replicates should we take of our data? In this context, replicates could mean the combination of *distance to a location/source*, *time duration*, and *variable measured* if these are variables of interest to your group.
+
+This resource from the [Royal Geographical Society](https://www.rgs.org/schools/teaching-resources/sampling-techniques/) may provide additional insight into designing your transects.
+
+### A note on replicating data
+
+How might you replicate data collection to try and account for uncertainty in individual estimates? Generally there are two broad ways to achieve this: spatial replication and temporal replication. In your small groups, please discuss the salient variables that could affect the class' question (e.g. distance to a road or a construction site for pollutants, tree cover for a heat island effect, and time of day).
+
+### Additional air pollution information
+
+Note that the PL Air units report AQI, PM 2.5, PM 10, and O3 data. You can toggle back to the previous week's Air Quality page to see Myriad Sensors' (PL Air company) description of how these values are estimated. However, if, for instance, you are interested in the raw values of PM 2.5 that are reported, you may wonder how these values are converted to and from AQI scores. You can navigate to [this AirNow calculator](https://www.airnow.gov/aqi/aqi-calculator-concentration/) to see how your data maps to AQI. If you would like to see the interpretation of AQI values, please check out [this AirNow explainer site](https://www.airnow.gov/aqi/aqi-basics/). Note - researchers are still developing ways to take the much more instantaneous data we observe on the PL Air and other sensors to "instant exposure" AQI scales. For now though we can use the 24-hour averages for PM and submit the observed data to see that mapping play out (between $\mu g/m^3$ to AQI scores).
+
+# Candidate class questions
+
+## Ventilation or indoor air quality
+
+* Are there differences in air quality between spaces such as:
+    + Dorms across campus(es) based on age or other features
+    + Upstairs vs. basements in dorms
+    + Dining halls
+    + More enclosed versus more open parking structures
+    + Dormitory or campus infrastructure such as laundry vents.
+
+## Air quality around sites in Claremont
+
+* How do PM levels vary around sites such as gym construction site vs. open area such as the farm or Marston quad? 
+* How does air quality vary across open campus spaces such as  quads or student farms?
+* How does air quality vary as a function of distances to roads, such as Foothill, College, or the 210 highway
+* How does air quality vary across different local communities which may have varying socioeconomic attributes and environmental features such as trees?

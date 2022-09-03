@@ -12,7 +12,7 @@
 
 <meta name="date" content="2022-09-02" />
 
-<title>Air quality lab introduction</title>
+<title>Climate class activity</title>
 
 <script src="site_libs/header-attrs-2.13/header-attrs.js"></script>
 <script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
@@ -302,39 +302,98 @@ $(document).ready(function () {
 
 
 
-<h1 class="title toc-ignore">Air quality lab introduction</h1>
+<h1 class="title toc-ignore">Climate class activity</h1>
 <h4 class="author"></h4>
 <h4 class="date">2022-09-02</h4>
 
 </div>
 
 
-<div id="air-quality-lab-overview" class="section level1">
-<h1>Air Quality Lab Overview</h1>
-<p>In this lab, you will work in groups to examine how air quality varies across Claremont. To that end, you will use these <a href="https://support.thepocketlab.com/knowledge/pocketlab-air-specifications?hsLang=en">PocketLab Air (a.k.a. PL Air) sensor units</a>. Each PL Air unit measures:</p>
+<div id="evaluating-the-signs-of-climate-change" class="section level1">
+<h1>Evaluating the signs of climate change</h1>
+<p>We are going to encounter some methods for interacting with, visualizing, and analyzing earth sciences data in this activity. At each table, one student will pick one of the datasets and run the code associated with that dataset. What do you see? Based on the course materials, how does this constitute evidence for global climate change?</p>
+<p>Please start by logging into <a href="https://sso.rstudio.cloud/pomona">sso.rstudio.cloud/pomona</a>. Once you’ve logged in, you should see the option to open the <code>EA 30.1 - Fall 2022</code> workspace. You can also access <a href="https://sso.rstudio.cloud/pomona?redirect=https%3A%2F%2Frstudio.cloud%2Fspaces%2F272090%2Fjoin%3Faccess_code%3DRH6FObo67WiGmhjuBirlncXZZYKYQBZW9K1HPSEV">the <code>EA 30.1 - Fall 2022</code> workspace at this link</a>.</p>
+<p>First, we will all load these packages - make sure you run this code irrespective of whichever variable you select.</p>
+<pre class="r"><code>library(dplyr)
+library(openxlsx)
+library(ggplot2)
+
+sheet_url &lt;- &quot;https://github.com/EA30POM/Fall2021/blob/main/data/ClimateChangeSigns.xlsx?raw=true&quot; # location of the Excel spreadsheet
+
+keelingCO2 &lt;- openxlsx::read.xlsx(sheet_url,sheet=&quot;Keeling&quot;) # everyone needs to download the Keeling CO2 data because we will be combining that with the other variables too.</code></pre>
+<div id="variable-1-global-co_2-concentration-in-the-atmosphere" class="section level2">
+<h2>Variable 1: Global <span class="math inline">\(CO_2\)</span> concentration in the atmosphere</h2>
+<p>The data source for this variable is <a href="https://climate.nasa.gov/vital-signs/carbon-dioxide/">NASA’s Global Climate Change Vital Signs of the Planet Program</a>.</p>
+<pre class="r"><code>p &lt;- ggplot(keelingCO2, aes(x=year,y=meanCO2ppm))
+p &lt;- p + geom_point()
+p &lt;- p + geom_line()
+p &lt;- p + labs(x=&quot;Year&quot;,y=&quot;CO2 (ppm)&quot;)
+p &lt;- p + theme_classic()
+p
+
+CO2mod &lt;- lm(meanCO2ppm~year, data=keelingCO2) # we are running a &quot;linear regression&quot; statistical model. You can think of this like finding the line that fits our data the best.
+summary(CO2mod) # what do you see in the Coefficients: table for year?</code></pre>
+</div>
+<div id="variable-2-arctic-sea-ice-minimum-spatial-extent" class="section level2">
+<h2>Variable 2: Arctic sea ice minimum spatial extent</h2>
+<p>The <a href="https://climate.nasa.gov/vital-signs/arctic-sea-ice/">data source is here</a>.</p>
+<pre class="r"><code>seaIce &lt;- openxlsx::read.xlsx(sheet_url,&quot;SeaIce&quot;)
+seaIceCO2 &lt;- left_join(seaIce, keelingCO2, by=c(&quot;year&quot;=&quot;year&quot;)) # we are joining up the sea ice extent data with global CO2 level data, matching on each year
+
+p &lt;- ggplot(seaIceCO2, aes(x=meanCO2ppm, y=extent))
+p &lt;- p + geom_point()
+p &lt;- p + geom_line()
+p &lt;- p + labs(x=&quot;CO2 (ppm)&quot;,y=&quot;Minimum sea ice extent (million km2)&quot;)
+p &lt;- p + theme_classic()
+p # what do we see?
+
+seaIceMod &lt;- lm(extent ~ meanCO2ppm, data=seaIceCO2) # we are running a &quot;linear regression&quot; statistical model. You can think of this like finding the line that fits our data the best.
+summary(seaIceMod) # what do you see in the Coefficients: table for mean CO2 (ppm)? </code></pre>
+</div>
+<div id="variable-3-global-surface-temperature-land-and-ocean" class="section level2">
+<h2>Variable 3: Global surface temperature (land and ocean)</h2>
+<p>The <a href="https://climate.nasa.gov/vital-signs/global-temperature/">data source is here</a>.</p>
+<pre class="r"><code>globTemp &lt;- openxlsx::read.xlsx(sheet_url,&quot;GlobTemp&quot;)
+globTempCO2 &lt;- left_join(globTemp, keelingCO2, by=c(&quot;Year&quot;=&quot;year&quot;)) # we are joining up global temperature data with global CO2 level data, matching on each year
+
+p &lt;- ggplot(globTempCO2, aes(x=meanCO2ppm, y=TempObs))
+p &lt;- p + geom_point()
+p &lt;- p + geom_line()
+p &lt;- p + labs(x=&quot;CO2 (ppm)&quot;,y=&quot;Global temperature anomaly (*C)&quot;)
+p &lt;- p + theme_classic()
+p # what do we see?
+
+tempMod &lt;- lm(TempObs ~ meanCO2ppm, data=globTempCO2) # we are running a &quot;linear regression&quot; statistical model. You can think of this like finding the line that fits our data the best.
+summary(tempMod) # what do you see in the Coefficients: table for mean CO2 (ppm)? </code></pre>
+</div>
+<div id="variable-4-heat-content-of-the-oceans" class="section level2">
+<h2>Variable 4: Heat content of the oceans</h2>
+<p>The <a href="https://climate.nasa.gov/vital-signs/ocean-heat/">original data source is here</a> but the data I used came from the <a href="https://www.epa.gov/climate-indicators/climate-change-indicators-ocean-heat">EPA</a>. The ocean’s heat content is expressed in <em>zettajoules</em> or <span class="math inline">\(10^{22}\)</span> joules. In contrast, total global energy consumption is around 580 million terajoules, or 5.8 zettajoules.</p>
+<pre class="r"><code>oceanHeat &lt;- openxlsx::read.xlsx(sheet_url,&quot;OceanHeat&quot;)
+oceanHeatCO2 &lt;- left_join(oceanHeat, keelingCO2, by=c(&quot;Year&quot;=&quot;year&quot;)) # we are joining up global ocean heat content data with global CO2 level data, matching on each year
+
+p &lt;- ggplot(oceanHeatCO2, aes(x=meanCO2ppm, y=NOAASea))
+p &lt;- p + geom_point()
+p &lt;- p + geom_line()
+p &lt;- p + labs(x=&quot;CO2 (ppm)&quot;,y=&quot;Ocean heat content (ZJ)&quot;)
+p &lt;- p + theme_classic()
+p # what do we see?
+
+oceanMod &lt;- lm(NOAASea ~ meanCO2ppm, data=oceanHeatCO2) # we are running a &quot;linear regression&quot; statistical model. You can think of this like finding the line that fits our data the best.
+summary(oceanMod) # what do you see in the Coefficients: table for mean CO2 (ppm)? </code></pre>
+</div>
+<div id="taking-the-activity-further" class="section level2">
+<h2>Taking the activity further</h2>
+<p>Time permitting, consider the following:</p>
 <ul>
-<li><a href="https://support.thepocketlab.com/knowledge/how-does-the-pocketlab-air-co2-sensor-work">CO2</a></li>
-<li><a href="https://support.thepocketlab.com/knowledge/how-does-the-pocketlab-air-ozone-sensor-work">Ozone</a></li>
-<li><a href="https://support.thepocketlab.com/knowledge/how-does-the-pocketlab-air-particulate-matter-sensor-work">Particulate Matter</a></li>
-<li><a href="https://support.thepocketlab.com/knowledge/measuring-air-quality-index">Air Quality Index</a></li>
-<li><a href="https://support.thepocketlab.com/knowledge/tips-for-measuring-temperature">Temperature</a></li>
-</ul>
-<p>Ultimately, by working with your groups and incorporating the class’ data, you will develop a lesson plan focused on some aspect of air quality or climate change. This lesson plan will be the lab report for this first class project. Your recommendations will directly inform ongoing community science initiatives at PocketLab such as <a href="https://archive.thepocketlab.com/educators/article/blue-sky-zero">Blue Sky Zero</a> or <a href="https://blog.thepocketlab.com/georgia-tech-is-mapping-heat-islands-in-atlanta-with-pocketlabs">Urban Heat Islands</a>.</p>
-<div id="week-1-of-lab" class="section level2">
-<h2>Week 1 of lab</h2>
-<p>Our objective in the first week of lab is to:</p>
+<li>for the <code>lm</code> coefficient outputs, what do those numbers represent? What do they tell us about the impact on some response variable for changes in <span class="math inline">\(CO_2\)</span>?
 <ul>
-<li>Set up a <a href="https://app.thepocketlab.com/home">PocketLab Notebook account</a>
-<ul>
-<li>Note that the class code is <code>1T5MU5</code></li>
-<li>You will log in as a <code>Student</code> using this class code and your FIRST NAME, SURNAME FIRST INITIAL (e.g. Cecil S. for Cecil Sagehen) as it is displayed in the Pomona Portal (if you would like that updated, please let me know and I can do that)</li>
+<li>what is the unit of change in <span class="math inline">\(CO_2\)</span> for the coefficients?</li>
+<li>how much would your variable change if <span class="math inline">\(CO_2\)</span> went up by 10 ppm?</li>
+<li>can we reasonably extrapolate those estimated valus into the future?</li>
 </ul></li>
-<li>Connect to your group’s PL Air sensor on a computer and record data</li>
-<li>Upload your group’s mobile phone data as a <code>.csv</code> (comma-separated values spreadsheet file) to the <a href="https://drive.google.com/drive/folders/1_sl0G6HRjXt8a1aFGjiD2L4VaEYQOSTu?usp=sharing">Week 1 data folder</a>.</li>
-<li>If someone in your group has an Android device, you may consider connecting to your group’s PL Air sensor on a phone and record data. Unfortunately, I do not recommend using the iPhone/iOS app to read in PocketLab Air data.</li>
+<li>how would you modify the code above to re-run the analyses with <code>Year</code> as the explanatory/predictive/x-axis variable?</li>
 </ul>
-<p>If you encounter any issues, please let Prof. Chang or the lab TA know ASAP.</p>
-<p><strong>Congrats on completing lab for the first week of EA 30!</strong></p>
 </div>
 </div>
 
