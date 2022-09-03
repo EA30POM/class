@@ -11,6 +11,7 @@ navbar:
         - text: "Week 1"
         - text: "The R and RStudio environments"
           href: Rintro.html
+        - text: "Class activities"
         - text: "Climate data"
           href: ClimateData.html
     - text: "Climate science"
@@ -18,7 +19,6 @@ navbar:
         - text: "Week 1"
         - text: "Air Quality Lab Introduction"
           href: AQintro.html
-        - text: "Class activities"
         - text: "Week 2"
         - text: "Air Quality: Test transects"
           href: AQexp1.html
