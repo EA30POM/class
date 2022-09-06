@@ -10,7 +10,7 @@
 
 
 
-<meta name="date" content="2022-09-02" />
+<meta name="date" content="2022-09-06" />
 
 <title>Air quality lab: Week 2</title>
 
@@ -304,7 +304,7 @@ $(document).ready(function () {
 
 <h1 class="title toc-ignore">Air quality lab: Week 2</h1>
 <h4 class="author"></h4>
-<h4 class="date">2022-09-02</h4>
+<h4 class="date">2022-09-06</h4>
 
 </div>
 
@@ -315,52 +315,125 @@ $(document).ready(function () {
 <h2>Objectives</h2>
 <p>In lab this week, we will perform the following:</p>
 <ul>
-<li>identify a candidate (set of) question(s) for the class data collection;</li>
-<li>revisit and enhance community guidelines to also incorporate field safety;</li>
+<li>identify a candidate (set of) question(s) for the class data
+collection;</li>
+<li>revisit and enhance community guidelines to also incorporate field
+safety;</li>
 <li>collect data!</li>
 </ul>
-<p>Time permitting, we may also take on the following tasks:</p>
-<ul>
-<li>viewing and interacting with the PL Air data from week 1 in <code>R</code> using RStudio Server.</li>
-</ul>
-<p>We are working toward the <a href="https://docs.google.com/document/d/1jcAIl_YpCUeGb5eY5Wh9oro4RNXdYCVzbKZf7_rCD10/edit?usp=sharing">climate/air quality group poster described here</a>.</p>
+<p>We are working toward the <a
+href="https://docs.google.com/document/d/1jcAIl_YpCUeGb5eY5Wh9oro4RNXdYCVzbKZf7_rCD10/edit?usp=sharing">climate/air
+quality group poster described here</a>. Note that you can find your
+group for this lab at the Sakai Lessons Week 2 sub-page.</p>
 </div>
-<div id="enhancing-the-community-guidelines-document" class="section level2">
+<div id="enhancing-the-community-guidelines-document"
+class="section level2">
 <h2>Enhancing the community guidelines document</h2>
-<p>Before we revisit the community guidelines document, please read this article in <a href="https://smallpondscience.com/2017/07/10/safety-in-the-field/">Small Pond Science</a> (content warning: references sexual assault) and this <a href="https://esajournals.onlinelibrary.wiley.com/doi/full/10.1890/0012-9623-95.3.264">Bulletin of the Ecological Society of America</a> article (please pay special attention to Table 1).</p>
-<p>Here are some guiding questions to consider. There are additional questions that we can and should consider as a group! Please share them, and if you are uncomfortable sharing them directly, you are welcome to anonymously pose the question in the Google doc.</p>
+<p>Before we revisit the community guidelines document, please read this
+article in <a
+href="https://smallpondscience.com/2017/07/10/safety-in-the-field/">Small
+Pond Science</a> (content warning: references sexual assault) and this
+<a
+href="https://esajournals.onlinelibrary.wiley.com/doi/full/10.1890/0012-9623-95.3.264">Bulletin
+of the Ecological Society of America</a> article (please pay special
+attention to Table 1).</p>
+<p>Here are some guiding questions to consider. There are additional
+questions that we can and should consider as a group! Please share them,
+and if you are uncomfortable sharing them directly, you are welcome to
+anonymously pose the question in the Google doc.</p>
 <ul>
-<li>When and where does working in teams or small groups enhance field safety? When might working in teams or small groups be less than ideal for safety?</li>
-<li>What are the signs of physical or emotional distress? How can we support and look out for one another?</li>
-<li>When and where can technology facilitate safety? When and where might technology undermine field safety?</li>
-<li>What are examples of conditions that are unsafe in the field? How can we avoid them? How can we look out for one another with respect to avoiding these conditions or dealing with these conditions constructively?
+<li>When and where does working in teams or small groups enhance field
+safety? When might working in teams or small groups be less than ideal
+for safety?</li>
+<li>What are the signs of physical or emotional distress? How can we
+support and look out for one another?</li>
+<li>When and where can technology facilitate safety? When and where
+might technology undermine field safety?</li>
+<li>What are examples of conditions that are unsafe in the field? How
+can we avoid them? How can we look out for one another with respect to
+avoiding these conditions or dealing with these conditions
+constructively?
 <ul>
-<li>One example could be contact with a <a href="https://www.cdc.gov/niosh/topics/plants/symptoms.html">poisonous plant such as poison oak</a>.</li>
-<li>Another could be a confrontation with another person, which could be driven by larger systemic biases.</li>
-<li>Finally, conditions such as uneven terrain or very open locations with no tree cover could pose issues in this time of year (or in general).</li>
+<li>One example could be contact with a <a
+href="https://www.cdc.gov/niosh/topics/plants/symptoms.html">poisonous
+plant such as poison oak</a>.</li>
+<li>Another could be a confrontation with another person, which could be
+driven by larger systemic biases.</li>
+<li>Finally, conditions such as uneven terrain or very open locations
+with no tree cover could pose issues in this time of year (or in
+general).</li>
 </ul></li>
-<li>What are best practices for communicating our comfort or discomfort in the field?</li>
-<li>What are the potential physical, emotional, or other barriers to participating in different forms of field work or field work in different types of locations?</li>
+<li>What are best practices for communicating our comfort or discomfort
+in the field?</li>
+<li>What are the potential physical, emotional, or other barriers to
+participating in different forms of field work or field work in
+different types of locations?</li>
 </ul>
 </div>
 <div id="generating-our-class-dataset" class="section level2">
 <h2>Generating our class dataset</h2>
-<p>For this laboratory project, you will have several decisions to make as a community:</p>
+<p>For this laboratory project, you will have several decisions to make
+as a community:</p>
 <ul>
-<li>What question do we seek to explore with PL Air data? What variable(s) are we particularly interested in?</li>
+<li>What question do we seek to explore with Pocket Lab Air (PL Air)
+data? What variable(s) are we particularly interested in?</li>
 <li>What is an appropriate distance between sampling points?</li>
 <li>What, if any, sources or locations do we seek to sample?</li>
 <li>How long should we remain at each point to collect the data?</li>
-<li>How many replicates should we take of our data? In this context, replicates could mean the combination of <em>distance to a location/source</em>, <em>time duration</em>, and <em>variable measured</em> if these are variables of interest to your group.</li>
+<li>How many replicates should we take of our data? In this context,
+replicates could mean the combination of <em>distance to a
+location/source</em>, <em>time duration</em>, and <em>variable
+measured</em> if these are variables of interest to your group.</li>
 </ul>
-<p>This resource from the <a href="https://www.rgs.org/schools/teaching-resources/sampling-techniques/">Royal Geographical Society</a> may provide additional insight into designing your transects.</p>
+<p>This resource from the <a
+href="https://www.rgs.org/schools/teaching-resources/sampling-techniques/">Royal
+Geographical Society</a> may provide additional insight into
+experimental design elements such as transects.</p>
+<p>You may be wondering - what is a transect? It is a common method of
+field sampling. For transect sampling, one typically takes data at
+specific, equally-spaced locations along a gradient or across
+(micro)habitats. For one example of transect sampling air pollution,
+please see this <a
+href="https://publiclab.org/notes/sarasage/08-09-2021/choosing-locations-and-methodology-for-air-quality-gas-testing">Public
+Lab write up</a> and/or this <a
+href="https://insideecology.com/2018/09/11/the-ecology-of-air-pollution/">Inside
+Ecology write up</a>.</p>
+<p>This is also a form of systematic sampling, as you would be taking
+measurements at locations based on a fixed pattern. For more background
+on sampling procedures and guidance on one way to think through sampling
+design, please visit this <a
+href="https://web.njit.edu/~kebbekus/analysis/SAMPLING.htm">Environmental
+Chemical Analysis site</a>. Note that not all of the examples there are
+relevant (e.g. biodiversity sampling, soil sampling), but the general
+principles in Sections 2.1, 2.2 (our sample is more akin to a “grab
+sample”), and 2.4 are pertinent.</p>
 <div id="a-note-on-replicating-data" class="section level3">
 <h3>A note on replicating data</h3>
-<p>How might you replicate data collection to try and account for uncertainty in individual estimates? Generally there are two broad ways to achieve this: spatial replication and temporal replication. In your small groups, please discuss the salient variables that could affect the class’ question (e.g. distance to a road or a construction site for pollutants, tree cover for a heat island effect, and time of day).</p>
+<p>How might you replicate data collection to try and account for
+uncertainty in individual estimates? Generally there are two broad ways
+to achieve this: spatial replication and temporal replication. In your
+small groups, please discuss the salient variables that could affect the
+class’ question (e.g. distance to a road or a construction site for
+pollutants, tree cover for a heat island effect, and time of day).</p>
 </div>
 <div id="additional-air-pollution-information" class="section level3">
 <h3>Additional air pollution information</h3>
-<p>Note that the PL Air units report AQI, PM 2.5, PM 10, and O3 data. You can toggle back to the previous week’s Air Quality page to see Myriad Sensors’ (PL Air company) description of how these values are estimated. However, if, for instance, you are interested in the raw values of PM 2.5 that are reported, you may wonder how these values are converted to and from AQI scores. You can navigate to <a href="https://www.airnow.gov/aqi/aqi-calculator-concentration/">this AirNow calculator</a> to see how your data maps to AQI. If you would like to see the interpretation of AQI values, please check out <a href="https://www.airnow.gov/aqi/aqi-basics/">this AirNow explainer site</a>. Note - researchers are still developing ways to take the much more instantaneous data we observe on the PL Air and other sensors to “instant exposure” AQI scales. For now though we can use the 24-hour averages for PM and submit the observed data to see that mapping play out (between <span class="math inline">\(\mu g/m^3\)</span> to AQI scores).</p>
+<p>Note that the PL Air units report AQI, PM 2.5, PM 10, and O3 data.
+You can toggle back to the previous week’s Air Quality page to see
+Myriad Sensors’ (PL Air company) description of how these values are
+estimated. However, if, for instance, you are interested in the raw
+values of PM 2.5 that are reported, you may wonder how these values are
+converted to and from AQI scores. You can navigate to <a
+href="https://www.airnow.gov/aqi/aqi-calculator-concentration/">this
+AirNow calculator</a> to see how your data maps to AQI. If you would
+like to see the interpretation of AQI values, please check out <a
+href="https://www.airnow.gov/aqi/aqi-basics/">this AirNow explainer
+site</a>. Note - researchers are still developing ways to take the much
+more instantaneous data we observe on the PL Air and other sensors to
+“instant exposure” AQI scales. For now though we can use the 24-hour
+averages for PM and submit the observed data to see that mapping play
+out (between <span class="math inline">\(\mu g/m^3\)</span> to AQI
+scores).</p>
 </div>
 </div>
 </div>
@@ -382,12 +455,49 @@ $(document).ready(function () {
 <div id="air-quality-around-sites-in-claremont" class="section level2">
 <h2>Air quality around sites in Claremont</h2>
 <ul>
-<li>How do PM levels vary around sites such as gym construction site vs. open area such as the farm or Marston quad?</li>
-<li>How does air quality vary across open campus spaces such as quads or student farms?</li>
-<li>How does air quality vary as a function of distances to roads, such as Foothill, College, or the 210 highway</li>
-<li>How does air quality vary across different local communities which may have varying socioeconomic attributes and environmental features such as trees?</li>
+<li>How do PM levels vary around sites such as gym construction site
+vs. open area such as the farm or Marston quad?</li>
+<li>How does air quality vary across open campus spaces such as quads or
+student farms?</li>
+<li>How does air quality vary as a function of distances to roads, such
+as Foothill, College, or the 210 highway</li>
+<li>How does air quality vary across different local communities which
+may have varying socioeconomic attributes and environmental features
+such as trees?</li>
 </ul>
 </div>
+</div>
+<div id="recording-your-data" class="section level1">
+<h1>Recording your data</h1>
+<ul>
+<li>Following last week’s instructions, please log in to our class at
+the <a href="https://app.thepocketlab.com/home">PocketLab Notebook
+site</a>
+<ul>
+<li>Note that the class code is <code>1T5MU5</code></li>
+<li>You will log in as a <code>Student</code> using this class code and
+your FIRST NAME, SURNAME FIRST INITIAL. (e.g. Cecil S. for Cecil
+Sagehen) as it is displayed in the Pomona Portal (if you would like that
+updated, please let me know and I can do that)</li>
+</ul></li>
+<li>I recommend using the “Lab report data collection placeholder”
+assignment as a <strong>secure</strong> location to record your
+PocketLab Air group data using Google Chrome on a laptop.</li>
+<li>Please make sure that you then upload your group’s PL Air data as a
+<code>.csv</code> (comma-separated values spreadsheet file) to:
+<ul>
+<li><a
+href="https://drive.google.com/drive/folders/1kdz9ok5LWC_CZFoLMnUTfOrzpT5L1QmN?usp=sharing">Week
+2 data folder</a></li>
+<li>or, if additional sampling is necessary next week, the <a
+href="https://drive.google.com/drive/folders/136HiXiFkrto7ObKMghbkXBo9vZGI_rbo?usp=sharing">Week
+3 data folder</a></li>
+</ul></li>
+<li>If someone in your group has an Android device, you may consider
+connecting to your group’s PL Air sensor on a phone and record data.
+Unfortunately, I do not recommend using the iPhone/iOS app to read in
+PocketLab Air data.</li>
+</ul>
 </div>
 
 

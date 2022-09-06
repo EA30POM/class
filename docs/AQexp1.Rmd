@@ -15,11 +15,7 @@ In lab this week, we will perform the following:
 * revisit and enhance community guidelines to also incorporate field safety;
 * collect data!
 
-Time permitting, we may also take on the following tasks:
-
-* viewing and interacting with the PL Air data from week 1 in `R` using RStudio Server.
-
-We are working toward the [climate/air quality group poster described here](https://docs.google.com/document/d/1jcAIl_YpCUeGb5eY5Wh9oro4RNXdYCVzbKZf7_rCD10/edit?usp=sharing).
+We are working toward the [climate/air quality group poster described here](https://docs.google.com/document/d/1jcAIl_YpCUeGb5eY5Wh9oro4RNXdYCVzbKZf7_rCD10/edit?usp=sharing). Note that you can find your group for this lab at the Sakai Lessons Week 2 sub-page.
 
 
 ## Enhancing the community guidelines document
@@ -42,13 +38,17 @@ Here are some guiding questions to consider. There are additional questions that
 
 For this laboratory project, you will have several decisions to make as a community:
 
-* What question do we seek to explore with PL Air data? What variable(s) are we particularly interested in? 
+* What question do we seek to explore with Pocket Lab Air (PL Air) data? What variable(s) are we particularly interested in? 
 * What is an appropriate distance between sampling points?
 * What, if any, sources or locations do we seek to sample?
 * How long should we remain at each point to collect the data?
 * How many replicates should we take of our data? In this context, replicates could mean the combination of *distance to a location/source*, *time duration*, and *variable measured* if these are variables of interest to your group.
 
-This resource from the [Royal Geographical Society](https://www.rgs.org/schools/teaching-resources/sampling-techniques/) may provide additional insight into designing your transects.
+This resource from the [Royal Geographical Society](https://www.rgs.org/schools/teaching-resources/sampling-techniques/) may provide additional insight into experimental design elements such as transects. 
+
+You may be wondering - what is a transect? It is a common method of field sampling. For transect sampling, one typically takes data at specific, equally-spaced locations along a gradient or across (micro)habitats. For one example of transect sampling air pollution, please see this [Public Lab write up](https://publiclab.org/notes/sarasage/08-09-2021/choosing-locations-and-methodology-for-air-quality-gas-testing) and/or this [Inside Ecology write up](https://insideecology.com/2018/09/11/the-ecology-of-air-pollution/). 
+
+This is also a form of systematic sampling, as you would be taking measurements at locations based on a fixed pattern. For more background on sampling procedures and guidance on one way to think through sampling design, please visit this [Environmental Chemical Analysis site](https://web.njit.edu/~kebbekus/analysis/SAMPLING.htm). Note that not all of the examples there are relevant (e.g. biodiversity sampling, soil sampling), but the general principles in Sections 2.1, 2.2 (our sample is more akin to a "grab sample"), and 2.4 are pertinent.
 
 ### A note on replicating data
 
@@ -75,3 +75,14 @@ Note that the PL Air units report AQI, PM 2.5, PM 10, and O3 data. You can toggl
 * How does air quality vary across open campus spaces such as  quads or student farms?
 * How does air quality vary as a function of distances to roads, such as Foothill, College, or the 210 highway
 * How does air quality vary across different local communities which may have varying socioeconomic attributes and environmental features such as trees?
+
+# Recording your data
+
+* Following last week's instructions, please log in to our class at the [PocketLab Notebook site](https://app.thepocketlab.com/home)
+  + Note that the class code is `1T5MU5`
+  + You will log in as a `Student` using this class code and your FIRST NAME, SURNAME FIRST INITIAL. (e.g. Cecil S. for Cecil Sagehen) as it is displayed in the Pomona Portal (if you would like that updated, please let me know and I can do that)
+* I recommend using the "Lab report data collection placeholder" assignment as a **secure** location to record your PocketLab Air group data using Google Chrome on a laptop.
+* Please make sure that you then upload your group's PL Air data as a `.csv` (comma-separated values spreadsheet file) to:
+    + [Week 2 data folder](https://drive.google.com/drive/folders/1kdz9ok5LWC_CZFoLMnUTfOrzpT5L1QmN?usp=sharing)
+    + or, if additional sampling is necessary next week, the [Week 3 data folder](https://drive.google.com/drive/folders/136HiXiFkrto7ObKMghbkXBo9vZGI_rbo?usp=sharing)
+* If someone in your group has an Android device, you may consider connecting to your group's PL Air sensor on a phone and record data. Unfortunately, I do not recommend using the iPhone/iOS app to read in PocketLab Air data.
