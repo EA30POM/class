@@ -9,7 +9,9 @@ output: html_document
 
 We are going to encounter some methods for interacting with, visualizing, and analyzing earth sciences data in this activity. At each table, one student will pick one of the datasets and run the code associated with that dataset. What do you see? Based on the course materials, how does this constitute evidence for global climate change?
 
-Please start by logging into [sso.rstudio.cloud/pomona](https://sso.rstudio.cloud/pomona). Once you've logged in, you should see the option to open the `EA 30.1 - Fall 2022` workspace. You can also access [the `EA 30.1 - Fall 2022` workspace at this link](https://sso.rstudio.cloud/pomona?redirect=https%3A%2F%2Frstudio.cloud%2Fspaces%2F272090%2Fjoin%3Faccess_code%3DRH6FObo67WiGmhjuBirlncXZZYKYQBZW9K1HPSEV).
+Please start by logging into [sso.rstudio.cloud/pomona](https://sso.rstudio.cloud/pomona). Once you've logged in, you should see the option to open the `EA 30.1 - Fall 2022` workspace. You can also access [the `EA 30.1 - Fall 2022` workspace at this link](https://sso.rstudio.cloud/pomona?redirect=https%3A%2F%2Frstudio.cloud%2Fspaces%2F272090%2Fjoin%3Faccess_code%3DRH6FObo67WiGmhjuBirlncXZZYKYQBZW9K1HPSEV). 
+
+At the workspace, you should then see the "Assignment" `ClimateData`. Please click on that Assignment. Here is a [direct link to the `ClimateData` project](https://rstudio.cloud/spaces/272090/content/4437518), but it may not work if this is the first time in a while that you're logging into RStudio.Cloud. If it doesn't work, no worries - just log in through the [sso.rstudio.cloud/pomona](https://sso.rstudio.cloud/pomona) link.
 
 First, we will all load these packages - make sure you run this code irrespective of whichever variable you select.
 
