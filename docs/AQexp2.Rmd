@@ -1,0 +1,207 @@
+---
+title: "Week 3"
+author: ""
+date: '`r Sys.Date()`'
+output: 
+  html_document:
+    number_sections: true
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, warning=F, message=F) # by default, print out all of the chunks with commands
+```
+
+# Preparing data
+
+## Load packages
+
+Below, we will start by loading packages that we'll need.
+
+```{r pkgs}
+### Load packages
+library("ggplot2") # plotting functions
+library("dplyr") # data wrangling functions
+library("readr") # reading in tables, including ones online
+library("lubridate") # a package to specify date-time stamps
+library("mosaic") # shuffle (permute) our data
+
+### note to self - throw in a boxplot of light vs day/night and scatter of light vs temp
+```
+
+## Read data
+
+Next, we will pull in our data.
+
+```{r data}
+### Load in dataset
+airDF <- readr::read_tsv("https://raw.githubusercontent.com/EA30POM/site/main/data/PLairData.tsv")
+
+### How many observations and columns do we have?
+dim(airDF)
+```
+
+### Using the `View` command
+
+Oftentimes, we may want a more intuitive way to see our data tables. It can be really annoying when `R` is too clever and only displays a subset of the columns of your spreadsheet. The `View()` function pulls up an Excel-style data viewer. Let's try it below:
+
+```
+View( head( airDF ) )
+```
+
+I'm going to use the pipe operator `%>%` to daisy chain commands together into a sequence. It is a handy way to make a complex operation with intermediate steps more transparent. The visualization below describes what pipes do in `R` in linking up functions:
+
+![Schematic of the pipe `%>%` operator in `R` (Altaf Ali)](figures/Rpipeoperator.png)
+
+```
+airDF %>% head() %>% View()
+```
+
+### Pre-processing the data
+
+Now we'll use that handy `%>%` operator to clean our data. We'll also use a very helpful function called  `mutate`. `mutate` is a command to either alter an existing column or create a new column in the data.
+
+```{r}
+### Pre-processing steps
+  # We want the Date and Time columns to be datetime objects
+airDF <- airDF %>%
+  mutate(Date = lubridate::dmy(Date), Time=lubridate::hms(Time))
+  # We want to code which observations are made in the day vs. night
+  # using 5pm as our cut-off
+pm_limit <- lubridate::hms("17:00:00")
+
+### Add on a new column to note whether or not the data is day or night
+airDF <- airDF %>%
+  mutate(DayNight = case_when( Time >= pm_limit ~ "Night",
+                               TRUE ~ "Day"))
+```
+
+# Analyzing the data
+
+Below, I provide fully-worked examples of different ways of inspecting your data and performing analyses **assuming that `Lux` is the variable of interest**. In applying this code to your own data, you will want to think about what variable name should *replace* `Lux` in the commands below.
+
+Let's start with exploratory data analysis where you calculate summary statistics and visualize your variable. Let's say that I'm interested in understanding how the values of light (`Lux`) vary across day and night (a silly example, I know). We'll use another function: `group_by` splits a data table into groups based on distinct values a variable that has **categories**. In this case, we tell `group_by` to divide up the `airDF` data table into groups based on the values of `DayNight`. We then will use a function `summarize` to get summary statistics of `Lux` in the day and night.
+
+```{r, eval=F}
+### Calculate summary statistics for Lux
+### for each DayNight condition
+airDF %>%
+  group_by(DayNight) %>%
+  summarize(min=min(Lux), mean=mean(Lux), max=max(Lux))
+  # use DayNight as the grouping variable
+  # for Lux and then summarize Lux
+  # for each value of DayNight
+```
+
+## Do day and night differ in their light levels?
+
+Let's calculate the difference between Day and Night in terms of their mean `Lux` values.
+
+```{r}
+### Calculating differences in mean Lux values
+obs_diff <- diff( mean( Lux ~ DayNight, data=airDF, na.rm=T ) )
+obs_diff # print out the value
+```
+
+OK, so we see that there is a difference of `r round(obs_diff, 2)` in mean light levels across day and night. Is this a meaningful difference though? Our null hypothesis is that there is **no difference** in mean light levels between day and night (again, a silly example, I know).
+
+Logically, if there is a meaningful difference, then if we shuffle our data around, that should lead to different results than what we see. That is one way to *simulate* statistics to test the null hypothesis. And specifically, in this case, we would expect to see our observed difference is much larger than most of the simulated values.
+
+What does simulating our data look like?
+
+Well, here is what the data look like initially. We're going to use another function, `select`, to pull out particular columns of interest from the data.
+
+```{r}
+airDF %>%
+  dplyr::select(Date,Time,Lux,DayNight)
+```
+
+Here's what the data look like if we shuffle it by randomizing the assignment of observations as day or night. This is like a chaos agent coming around and slapping a new label for day or night on at random for every row in the data table. (But if we think `mean(Lux)` is the same for `Day` and `Night`, then that should be a perfectly OK action by the chaos agent.)
+
+```{r}
+resample(airDF[,c("Date","Time","Lux","DayNight")],groups=DayNight,shuffled=c("Lux"))
+```
+
+We can repeat that procedure again and see how the data shifts if we do another shuffle.
+
+```{r}
+resample(airDF[,c("Date","Time","Lux","DayNight")],groups=DayNight,shuffled=c("Lux"))
+```
+
+Let's shuffle the data and see what that means for the distribution of mean `Lux` differences between day and night.
+
+```{r permuteDiffs}
+### Create random differences by shuffling the data
+randomizing_diffs <- do(1000) * diff( mean( Lux ~ shuffle(DayNight),na.rm=T, data = airDF) ) # calculate the mean in Lux when we're shuffling the day/night values around 1000 times
+  # Clean up our shuffled data
+names(randomizing_diffs)[1] <- "DiffMeans" # change the name of the variable
+
+# View first few rows of data
+head(randomizing_diffs)
+```
+
+Now we can visualize the distribution of simulated differences in mean soil density and our observed difference between CSS and CHAP.
+
+```{r diffHist}
+gf_histogram(~ DiffMeans, fill = ~ (DiffMeans >= obs_diff),
+             data = randomizing_diffs,
+             xlab="Difference in mean light across day/night under null",
+             ylab="Count")
+```
+
+In the end, how many of the simulated mean differences were larger than the value we observed? Based on this value, if we were using the conventional $p$-value (probability value) of 0.05, we would conclude that because this simulated $p$-value < 0.05, that we reject the null hypothesis. There is a difference in mean light level between day and night.
+
+```{r obsDiffP}
+# What proportion of simulated values were larger than our observed difference?
+prop( ~ DiffMeans >= obs_diff, data = randomizing_diffs)
+```
+
+## Calculating correlations between numeric variables
+
+Let's say that instead of comparing light across day and night, I want to compare light against temperature. Light and temperature are both numeric variables. There aren't obvious categories for either variable.
+
+If I'm interested in seeing if `lower temperature is associated with lower (or higher) light levels` I can measure that by calculating a correlation coefficient.
+
+```{r obs_cor}
+### Calculate observed correlation
+obs_cor <- cor(Lux ~ TempC, data=airDF, use="complete.obs") # store observed correlation in obs_cor of Lux and Temperature
+obs_cor # print out value
+```
+
+Is this value of a correlation coefficient of `r round(obs_cor,2)` meaningful? Let's test that against a null hypothesis. Our null is that there's no meaningful association. That is, the correlation coefficient is actually 0. 
+
+How then do I know that my correlation coefficient of `r round(obs_cor)` is significantly different from 0? We can tackle this question by simulating a ton of correlation coefficient values from our data by shuffling it!
+
+In this case, the shuffling here lets us estimate the variation in the correlation coefficient given our data. So we are curious now if the distribution of simulated values does or does not include 0 (that is, is it clearly $< 0$ or $> 0$?).
+
+```{r cor_shuffle}
+### Calculate correlation coefs for shuffled data
+randomizing_cor <- do(1000) * cor(Lux ~ TempC, 
+                                 data = resample(airDF), 
+                                 use="complete.obs") 
+# Shuffle the data 1000 times
+# Calculate the correlation coefficient each time
+# By correlating Lux to TempC from the
+# data table airDF
+```
+
+What are the distribution of correlation coefficients that we see when we shuffle our data?
+
+```{r quantiles_cor}
+quantiles_cor <- qdata( ~ cor, p = c(0.025, 0.975), data=randomizing_cor) # calculate the 2.5% and 97.5% quantiles in our simulated correlation coefficient data (note that 97.5-2.5 = 95!)
+quantiles_cor # display the quantiles
+```
+
+The values above give us a 95% confidence interval estimate for our correlation coefficient!
+
+Do we clearly see that our correlation coefficient distribution does or doesn't include 0?
+
+```{r simCorHist}
+gf_histogram(~ cor,
+             data = randomizing_cor,
+             xlab="Simulated correlation coefficients",
+             ylab="Count")
+```
+
+In this case, our simulated correlation coefficient does not include in its 95% simulated confidence interval (we actually never see any values close to 0 here!). We can also see this in the plot. So given these data, we would also reject the null hypothesis that `there is no association between light and temperature`. 
+
+On the other hand, if we had seen 0 in the interval, then we would conclude that given the data, we cannot reject the null hypothesis. In that case, there is not sufficiently strong data that light correlates with temperature in any clear way.

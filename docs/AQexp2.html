@@ -1,0 +1,602 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+
+<meta name="date" content="2022-09-09" />
+
+<title>Week 3</title>
+
+<script src="site_libs/header-attrs-2.13/header-attrs.js"></script>
+<script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/flatly.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<style>h1 {font-size: 34px;}
+       h1.title {font-size: 38px;}
+       h2 {font-size: 30px;}
+       h3 {font-size: 24px;}
+       h4 {font-size: 18px;}
+       h5 {font-size: 16px;}
+       h6 {font-size: 12px;}
+       code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
+       pre:not([class]) { background-color: white }</style>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<link href="site_libs/highlightjs-9.12.0/default.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+<link href="site_libs/font-awesome-5.1.0/css/all.css" rel="stylesheet" />
+<link href="site_libs/font-awesome-5.1.0/css/v4-shims.css" rel="stylesheet" />
+
+<style type="text/css">
+  code{white-space: pre-wrap;}
+  span.smallcaps{font-variant: small-caps;}
+  span.underline{text-decoration: underline;}
+  div.column{display: inline-block; vertical-align: top; width: 50%;}
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  ul.task-list{list-style: none;}
+    </style>
+
+<style type="text/css">code{white-space: pre;}</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+
+
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+details > summary > p:only-child {
+  display: inline;
+}
+pre code {
+  padding: 0;
+}
+</style>
+
+
+<style type="text/css">
+.dropdown-submenu {
+  position: relative;
+}
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  border-radius: 0 6px 6px 6px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
+}
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #cccccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+.dropdown-submenu:hover>a:after {
+  border-left-color: #adb5bd;
+}
+.dropdown-submenu.pull-left {
+  float: none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  border-radius: 6px 0 6px 6px;
+}
+</style>
+
+<script type="text/javascript">
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark it active
+  menuAnchor.tab('show');
+
+  // if it's got a parent navbar menu mark it active as well
+  menuAnchor.closest('li.dropdown').addClass('active');
+
+  // Navbar adjustments
+  var navHeight = $(".navbar").first().height() + 15;
+  var style = document.createElement('style');
+  var pt = "padding-top: " + navHeight + "px; ";
+  var mt = "margin-top: -" + navHeight + "px; ";
+  var css = "";
+  // offset scroll position for anchor links (for fixed navbar)
+  for (var i = 1; i <= 6; i++) {
+    css += ".section h" + i + "{ " + pt + mt + "}\n";
+  }
+  style.innerHTML = "body {" + pt + "padding-bottom: 40px; }\n" + css;
+  document.head.appendChild(style);
+});
+</script>
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "&#xe258;";
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+  background-color: transparent;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-bs-toggle="collapse" data-target="#navbar" data-bs-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">Environmental Science</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li>
+  <a href="index.html">
+    <span class="fa fa-home"></span>
+     
+    Syllabus
+  </a>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    Data science
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li class="dropdown-header">Week 1</li>
+    <li>
+      <a href="Rintro.html">The R and RStudio environments</a>
+    </li>
+    <li class="dropdown-header">Class activities</li>
+    <li>
+      <a href="ClimateData.html">Climate data</a>
+    </li>
+  </ul>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    Climate science
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li class="dropdown-header">Week 1</li>
+    <li>
+      <a href="AQintro.html">Air Quality Lab Introduction</a>
+    </li>
+    <li class="dropdown-header">Week 2</li>
+    <li>
+      <a href="AQexp1.html">Air Quality: Test transects</a>
+    </li>
+    <li class="dropdown-header">Week 3</li>
+    <li>
+      <a href="AQexp2.html">Air Quality: Analysis</a>
+    </li>
+  </ul>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div id="header">
+
+
+
+<h1 class="title toc-ignore">Week 3</h1>
+<h4 class="author"></h4>
+<h4 class="date">2022-09-09</h4>
+
+</div>
+
+
+<div id="preparing-data" class="section level1" number="1">
+<h1><span class="header-section-number">1</span> Preparing data</h1>
+<div id="load-packages" class="section level2" number="1.1">
+<h2><span class="header-section-number">1.1</span> Load packages</h2>
+<p>Below, we will start by loading packages that we’ll need.</p>
+<pre class="r"><code>### Load packages
+library(&quot;ggplot2&quot;) # plotting functions
+library(&quot;dplyr&quot;) # data wrangling functions
+library(&quot;readr&quot;) # reading in tables, including ones online
+library(&quot;lubridate&quot;) # a package to specify date-time stamps
+library(&quot;mosaic&quot;) # shuffle (permute) our data
+
+### note to self - throw in a boxplot of light vs day/night and scatter of light vs temp</code></pre>
+</div>
+<div id="read-data" class="section level2" number="1.2">
+<h2><span class="header-section-number">1.2</span> Read data</h2>
+<p>Next, we will pull in our data.</p>
+<pre class="r"><code>### Load in dataset
+airDF &lt;- readr::read_tsv(&quot;https://raw.githubusercontent.com/EA30POM/site/main/data/PLairData.tsv&quot;)
+
+### How many observations and columns do we have?
+dim(airDF)</code></pre>
+<pre><code>## [1] 6557   21</code></pre>
+<div id="using-the-view-command" class="section level3" number="1.2.1">
+<h3><span class="header-section-number">1.2.1</span> Using the
+<code>View</code> command</h3>
+<p>Oftentimes, we may want a more intuitive way to see our data tables.
+It can be really annoying when <code>R</code> is too clever and only
+displays a subset of the columns of your spreadsheet. The
+<code>View()</code> function pulls up an Excel-style data viewer. Let’s
+try it below:</p>
+<pre><code>View( head( airDF ) )</code></pre>
+<p>I’m going to use the pipe operator <code>%&gt;%</code> to daisy chain
+commands together into a sequence. It is a handy way to make a complex
+operation with intermediate steps more transparent. The visualization
+below describes what pipes do in <code>R</code> in linking up
+functions:</p>
+<div class="figure">
+<img src="figures/Rpipeoperator.png" alt="" />
+<p class="caption">Schematic of the pipe <code>%&gt;%</code> operator in
+<code>R</code> (Altaf Ali)</p>
+</div>
+<pre><code>airDF %&gt;% head() %&gt;% View()</code></pre>
+</div>
+<div id="pre-processing-the-data" class="section level3" number="1.2.2">
+<h3><span class="header-section-number">1.2.2</span> Pre-processing the
+data</h3>
+<p>Now we’ll use that handy <code>%&gt;%</code> operator to clean our
+data. We’ll also use a very helpful function called <code>mutate</code>.
+<code>mutate</code> is a command to either alter an existing column or
+create a new column in the data.</p>
+<pre class="r"><code>### Pre-processing steps
+  # We want the Date and Time columns to be datetime objects
+airDF &lt;- airDF %&gt;%
+  mutate(Date = lubridate::dmy(Date), Time=lubridate::hms(Time))
+  # We want to code which observations are made in the day vs. night
+  # using 5pm as our cut-off
+pm_limit &lt;- lubridate::hms(&quot;17:00:00&quot;)
+
+### Add on a new column to note whether or not the data is day or night
+airDF &lt;- airDF %&gt;%
+  mutate(DayNight = case_when( Time &gt;= pm_limit ~ &quot;Night&quot;,
+                               TRUE ~ &quot;Day&quot;))</code></pre>
+</div>
+</div>
+</div>
+<div id="analyzing-the-data" class="section level1" number="2">
+<h1><span class="header-section-number">2</span> Analyzing the data</h1>
+<p>Below, I provide fully-worked examples of different ways of
+inspecting your data and performing analyses <strong>assuming that
+<code>Lux</code> is the variable of interest</strong>. In applying this
+code to your own data, you will want to think about what variable name
+should <em>replace</em> <code>Lux</code> in the commands below.</p>
+<p>Let’s start with exploratory data analysis where you calculate
+summary statistics and visualize your variable. Let’s say that I’m
+interested in understanding how the values of light (<code>Lux</code>)
+vary across day and night (a silly example, I know). We’ll use another
+function: <code>group_by</code> splits a data table into groups based on
+distinct values a variable that has <strong>categories</strong>. In this
+case, we tell <code>group_by</code> to divide up the <code>airDF</code>
+data table into groups based on the values of <code>DayNight</code>. We
+then will use a function <code>summarize</code> to get summary
+statistics of <code>Lux</code> in the day and night.</p>
+<pre class="r"><code>### Calculate summary statistics for Lux
+### for each DayNight condition
+airDF %&gt;%
+  group_by(DayNight) %&gt;%
+  summarize(min=min(Lux), mean=mean(Lux), max=max(Lux))
+  # use DayNight as the grouping variable
+  # for Lux and then summarize Lux
+  # for each value of DayNight</code></pre>
+<div id="do-day-and-night-differ-in-their-light-levels"
+class="section level2" number="2.1">
+<h2><span class="header-section-number">2.1</span> Do day and night
+differ in their light levels?</h2>
+<p>Let’s calculate the difference between Day and Night in terms of
+their mean <code>Lux</code> values.</p>
+<pre class="r"><code>### Calculating differences in mean Lux values
+obs_diff &lt;- diff( mean( Lux ~ DayNight, data=airDF, na.rm=T ) )
+obs_diff # print out the value</code></pre>
+<pre><code>##    Night 
+## 6.732392</code></pre>
+<p>OK, so we see that there is a difference of 6.73 in mean light levels
+across day and night. Is this a meaningful difference though? Our null
+hypothesis is that there is <strong>no difference</strong> in mean light
+levels between day and night (again, a silly example, I know).</p>
+<p>Logically, if there is a meaningful difference, then if we shuffle
+our data around, that should lead to different results than what we see.
+That is one way to <em>simulate</em> statistics to test the null
+hypothesis. And specifically, in this case, we would expect to see our
+observed difference is much larger than most of the simulated
+values.</p>
+<p>What does simulating our data look like?</p>
+<p>Well, here is what the data look like initially. We’re going to use
+another function, <code>select</code>, to pull out particular columns of
+interest from the data.</p>
+<pre class="r"><code>airDF %&gt;%
+  dplyr::select(Date,Time,Lux,DayNight)</code></pre>
+<pre><code>## # A tibble: 6,557 x 4
+##    Date       Time         Lux DayNight
+##    &lt;date&gt;     &lt;Period&gt;   &lt;dbl&gt; &lt;chr&gt;   
+##  1 2022-07-09 22H 0M 3S   11.1 Night   
+##  2 2022-07-09 22H 0M 4S    9.1 Night   
+##  3 2022-07-09 22H 0M 5S   11.1 Night   
+##  4 2022-07-09 22H 0M 6S   11.1 Night   
+##  5 2022-07-09 22H 0M 7S   11.1 Night   
+##  6 2022-07-09 22H 0M 8S    9.1 Night   
+##  7 2022-07-09 22H 0M 9S    9.1 Night   
+##  8 2022-07-09 22H 0M 10S   9.1 Night   
+##  9 2022-07-09 22H 0M 11S  11.1 Night   
+## 10 2022-07-09 22H 0M 12S  11.1 Night   
+## # … with 6,547 more rows</code></pre>
+<p>Here’s what the data look like if we shuffle it by randomizing the
+assignment of observations as day or night. This is like a chaos agent
+coming around and slapping a new label for day or night on at random for
+every row in the data table. (But if we think <code>mean(Lux)</code> is
+the same for <code>Day</code> and <code>Night</code>, then that should
+be a perfectly OK action by the chaos agent.)</p>
+<pre class="r"><code>resample(airDF[,c(&quot;Date&quot;,&quot;Time&quot;,&quot;Lux&quot;,&quot;DayNight&quot;)],groups=DayNight,shuffled=c(&quot;Lux&quot;))</code></pre>
+<p>We can repeat that procedure again and see how the data shifts if we
+do another shuffle.</p>
+<pre class="r"><code>resample(airDF[,c(&quot;Date&quot;,&quot;Time&quot;,&quot;Lux&quot;,&quot;DayNight&quot;)],groups=DayNight,shuffled=c(&quot;Lux&quot;))</code></pre>
+<p>Let’s shuffle the data and see what that means for the distribution
+of mean <code>Lux</code> differences between day and night.</p>
+<pre class="r"><code>### Create random differences by shuffling the data
+randomizing_diffs &lt;- do(1000) * diff( mean( Lux ~ shuffle(DayNight),na.rm=T, data = airDF) ) # calculate the mean in Lux when we&#39;re shuffling the day/night values around 1000 times
+  # Clean up our shuffled data
+names(randomizing_diffs)[1] &lt;- &quot;DiffMeans&quot; # change the name of the variable
+
+# View first few rows of data
+head(randomizing_diffs)</code></pre>
+<pre><code>##     DiffMeans
+## 1  0.00834821
+## 2 -0.09598367
+## 3 -0.13168603
+## 4 -0.14833713
+## 5 -0.04708045
+## 6 -0.04385523</code></pre>
+<p>Now we can visualize the distribution of simulated differences in
+mean soil density and our observed difference between CSS and CHAP.</p>
+<pre class="r"><code>gf_histogram(~ DiffMeans, fill = ~ (DiffMeans &gt;= obs_diff),
+             data = randomizing_diffs,
+             xlab=&quot;Difference in mean light across day/night under null&quot;,
+             ylab=&quot;Count&quot;)</code></pre>
+<p><img src="AQexp2_files/figure-html/diffHist-1.png" width="672" /></p>
+<p>In the end, how many of the simulated mean differences were larger
+than the value we observed? Based on this value, if we were using the
+conventional <span class="math inline">\(p\)</span>-value (probability
+value) of 0.05, we would conclude that because this simulated <span
+class="math inline">\(p\)</span>-value &lt; 0.05, that we reject the
+null hypothesis. There is a difference in mean light level between day
+and night.</p>
+<pre class="r"><code># What proportion of simulated values were larger than our observed difference?
+prop( ~ DiffMeans &gt;= obs_diff, data = randomizing_diffs)</code></pre>
+<pre><code>## prop_TRUE 
+##         0</code></pre>
+</div>
+<div id="calculating-correlations-between-numeric-variables"
+class="section level2" number="2.2">
+<h2><span class="header-section-number">2.2</span> Calculating
+correlations between numeric variables</h2>
+<p>Let’s say that instead of comparing light across day and night, I
+want to compare light against temperature. Light and temperature are
+both numeric variables. There aren’t obvious categories for either
+variable.</p>
+<p>If I’m interested in seeing if
+<code>lower temperature is associated with lower (or higher) light levels</code>
+I can measure that by calculating a correlation coefficient.</p>
+<pre class="r"><code>### Calculate observed correlation
+obs_cor &lt;- cor(Lux ~ TempC, data=airDF, use=&quot;complete.obs&quot;) # store observed correlation in obs_cor of Lux and Temperature
+obs_cor # print out value</code></pre>
+<pre><code>## [1] 0.3564104</code></pre>
+<p>Is this value of a correlation coefficient of 0.36 meaningful? Let’s
+test that against a null hypothesis. Our null is that there’s no
+meaningful association. That is, the correlation coefficient is actually
+0.</p>
+<p>How then do I know that my correlation coefficient of 0 is
+significantly different from 0? We can tackle this question by
+simulating a ton of correlation coefficient values from our data by
+shuffling it!</p>
+<p>In this case, the shuffling here lets us estimate the variation in
+the correlation coefficient given our data. So we are curious now if the
+distribution of simulated values does or does not include 0 (that is, is
+it clearly <span class="math inline">\(&lt; 0\)</span> or <span
+class="math inline">\(&gt; 0\)</span>?).</p>
+<pre class="r"><code>### Calculate correlation coefs for shuffled data
+randomizing_cor &lt;- do(1000) * cor(Lux ~ TempC, 
+                                 data = resample(airDF), 
+                                 use=&quot;complete.obs&quot;) 
+# Shuffle the data 1000 times
+# Calculate the correlation coefficient each time
+# By correlating Lux to TempC from the
+# data table airDF</code></pre>
+<p>What are the distribution of correlation coefficients that we see
+when we shuffle our data?</p>
+<pre class="r"><code>quantiles_cor &lt;- qdata( ~ cor, p = c(0.025, 0.975), data=randomizing_cor) # calculate the 2.5% and 97.5% quantiles in our simulated correlation coefficient data (note that 97.5-2.5 = 95!)
+quantiles_cor # display the quantiles</code></pre>
+<pre><code>##      2.5%     97.5% 
+## 0.3389436 0.3745962</code></pre>
+<p>The values above give us a 95% confidence interval estimate for our
+correlation coefficient!</p>
+<p>Do we clearly see that our correlation coefficient distribution does
+or doesn’t include 0?</p>
+<pre class="r"><code>gf_histogram(~ cor,
+             data = randomizing_cor,
+             xlab=&quot;Simulated correlation coefficients&quot;,
+             ylab=&quot;Count&quot;)</code></pre>
+<p><img src="AQexp2_files/figure-html/simCorHist-1.png" width="672" /></p>
+<p>In this case, our simulated correlation coefficient does not include
+in its 95% simulated confidence interval (we actually never see any
+values close to 0 here!). We can also see this in the plot. So given
+these data, we would also reject the null hypothesis that
+<code>there is no association between light and temperature</code>.</p>
+<p>On the other hand, if we had seen 0 in the interval, then we would
+conclude that given the data, we cannot reject the null hypothesis. In
+that case, there is not sufficiently strong data that light correlates
+with temperature in any clear way.</p>
+</div>
+</div>
+
+
+
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.odd').parent('tbody').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open');
+  });
+});
+</script>
+
+<!-- code folding -->
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

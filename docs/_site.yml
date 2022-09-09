@@ -22,9 +22,9 @@ navbar:
         - text: "Week 2"
         - text: "Air Quality: Test transects"
           href: AQexp1.html
-    #     - text: "Week 3"
-    #     - text: "Air Quality: Analysis"
-    #       href: AQexp2.html
+        - text: "Week 3"
+        - text: "Air Quality: Analysis"
+          href: AQexp2.html
     # - text: "Soil science"
     #   menu:
     #     - text: "Analyzing data"
