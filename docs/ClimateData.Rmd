@@ -25,16 +25,30 @@ sheet_url <- "https://github.com/EA30POM/Fall2021/blob/main/data/ClimateChangeSi
 keelingCO2 <- openxlsx::read.xlsx(sheet_url,sheet="Keeling") # everyone needs to download the Keeling CO2 data because we will be combining that with the other variables too.
 ```
 
+Visualization can help you get a feel for your data, and can be a very useful aid in exploring data. We will use the `ggplot2` package to create plots in `R`. 
+
+`ggplot2` creates plots based on different layers. The three necessary components are:
+
+* the dataset with the data to be plotted
+* the "aesthetics", which map how the data will be associated with different plotting elements, such as the location of points in a scatterplot, or other features such as shape, size, color, transparency, etc.
+* the geometric elements in the plot (points, boxplot, histogram)
+
+While there are additional layering components that one can include, we will confine our attention to these three layers. For more information, please consult the [free, online ggplot2 Book](https://ggplot2-book.org/).
+
+Scatterplots are most useful for visualizing two continuous, numeric variables. In defining a plot using `ggplot2`, we specify the data source (in the `ggplot` function), and the mapping of the variables (`aes`, short for aesthetic, within `ggplot`). Subsequently, we specify the type of `geom` (geometry) we want in the plot.
+
+Below, we will follow a convention where we assign an object (`p`) to store the plot. We specify what layers we want to add to the object `p` by using the `+` sign.
+
 ## Variable 1: Global $CO_2$ concentration in the atmosphere
 
 The data source for this variable is [NASA's Global Climate Change Vital Signs of the Planet Program](https://climate.nasa.gov/vital-signs/carbon-dioxide/).
 
 ```{r keeling, eval=F}
-p <- ggplot(keelingCO2, aes(x=year,y=meanCO2ppm))
-p <- p + geom_point()
-p <- p + geom_line()
-p <- p + labs(x="Year",y="CO2 (ppm)")
-p <- p + theme_classic()
+p <- ggplot(keelingCO2, aes(x=year,y=meanCO2ppm)) # initiate the plot
+p <- p + geom_point() # add scatterplot points
+p <- p + geom_line() # add a trend line
+p <- p + labs(x="Year",y="CO2 (ppm)") # change axis labels
+p <- p + theme_classic() # change plot style
 p
 
 CO2mod <- lm(meanCO2ppm~year, data=keelingCO2) # we are running a "linear regression" statistical model. You can think of this like finding the line that fits our data the best.

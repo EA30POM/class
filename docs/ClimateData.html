@@ -10,7 +10,7 @@
 
 
 
-<meta name="date" content="2022-09-09" />
+<meta name="date" content="2022-09-12" />
 
 <title>Climate class activity</title>
 
@@ -308,7 +308,7 @@ $(document).ready(function () {
 
 <h1 class="title toc-ignore">Climate class activity</h1>
 <h4 class="author"></h4>
-<h4 class="date">2022-09-09</h4>
+<h4 class="date">2022-09-12</h4>
 
 </div>
 
@@ -344,6 +344,32 @@ library(ggplot2)
 sheet_url &lt;- &quot;https://github.com/EA30POM/Fall2021/blob/main/data/ClimateChangeSigns.xlsx?raw=true&quot; # location of the Excel spreadsheet
 
 keelingCO2 &lt;- openxlsx::read.xlsx(sheet_url,sheet=&quot;Keeling&quot;) # everyone needs to download the Keeling CO2 data because we will be combining that with the other variables too.</code></pre>
+<p>Visualization can help you get a feel for your data, and can be a
+very useful aid in exploring data. We will use the <code>ggplot2</code>
+package to create plots in <code>R</code>.</p>
+<p><code>ggplot2</code> creates plots based on different layers. The
+three necessary components are:</p>
+<ul>
+<li>the dataset with the data to be plotted</li>
+<li>the “aesthetics”, which map how the data will be associated with
+different plotting elements, such as the location of points in a
+scatterplot, or other features such as shape, size, color, transparency,
+etc.</li>
+<li>the geometric elements in the plot (points, boxplot, histogram)</li>
+</ul>
+<p>While there are additional layering components that one can include,
+we will confine our attention to these three layers. For more
+information, please consult the <a
+href="https://ggplot2-book.org/">free, online ggplot2 Book</a>.</p>
+<p>Scatterplots are most useful for visualizing two continuous, numeric
+variables. In defining a plot using <code>ggplot2</code>, we specify the
+data source (in the <code>ggplot</code> function), and the mapping of
+the variables (<code>aes</code>, short for aesthetic, within
+<code>ggplot</code>). Subsequently, we specify the type of
+<code>geom</code> (geometry) we want in the plot.</p>
+<p>Below, we will follow a convention where we assign an object
+(<code>p</code>) to store the plot. We specify what layers we want to
+add to the object <code>p</code> by using the <code>+</code> sign.</p>
 <div id="variable-1-global-co_2-concentration-in-the-atmosphere"
 class="section level2">
 <h2>Variable 1: Global <span class="math inline">\(CO_2\)</span>

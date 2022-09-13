@@ -13,6 +13,10 @@ knitr::opts_chunk$set(echo = TRUE, warning=F, message=F) # by default, print out
 
 # Preparing data
 
+Please start by logging into [sso.rstudio.cloud/pomona](https://sso.rstudio.cloud/pomona). Once you've logged in, you should see the option to open the `EA 30.1 - Fall 2022` workspace. You can also access [the `EA 30.1 - Fall 2022` workspace at this link](https://sso.rstudio.cloud/pomona?redirect=https%3A%2F%2Frstudio.cloud%2Fspaces%2F272090%2Fjoin%3Faccess_code%3DRH6FObo67WiGmhjuBirlncXZZYKYQBZW9K1HPSEV). 
+
+At the workspace, you should then see the "Assignment" `AirQualityLab`. Please click on that Assignment. Here is a [direct link to the `AirQualityLab` project](https://rstudio.cloud/spaces/272090/content/4496680), but it may not work if this is the first time in a while that you're logging into RStudio.Cloud. If it doesn't work, no worries - just log in through the [sso.rstudio.cloud/pomona](https://sso.rstudio.cloud/pomona) link.
+
 ## Load packages
 
 Below, we will start by loading packages that we'll need.
@@ -24,8 +28,6 @@ library("dplyr") # data wrangling functions
 library("readr") # reading in tables, including ones online
 library("lubridate") # a package to specify date-time stamps
 library("mosaic") # shuffle (permute) our data
-
-### note to self - throw in a boxplot of light vs day/night and scatter of light vs temp
 ```
 
 ## Read data
@@ -64,10 +66,10 @@ Now we'll use that handy `%>%` operator to clean our data. We'll also use a very
 ### Pre-processing steps
   # We want the Date and Time columns to be datetime objects
 airDF <- airDF %>%
-  mutate(Date = lubridate::dmy(Date), Time=lubridate::hms(Time))
+  mutate(Date = lubridate::ymd(Date), Time=lubridate::hms(Time))
   # We want to code which observations are made in the day vs. night
-  # using 5pm as our cut-off
-pm_limit <- lubridate::hms("17:00:00")
+  # using 6pm as our cut-off
+pm_limit <- lubridate::hms("18:00:00")
 
 ### Add on a new column to note whether or not the data is day or night
 airDF <- airDF %>%
@@ -94,6 +96,17 @@ airDF %>%
 
 ## Do day and night differ in their light levels?
 
+How do light levels vary across day and night? We can visualize that using a boxplot. Boxplots are useful for depicting how different discrete categories within a variable exhibit variation. Below, we will specify the variable that we use to group our data (Day/Night) as the x variable, and the values of interest as the y variable (Lux, or light).
+
+```{r}
+p <- ggplot(airDF, aes(x=DayNight, y=Lux))
+p <- p + geom_boxplot()
+p <- p + labs(x="",y="Light (lux)")
+p <- p + theme_minimal()
+p
+```
+
+
 Let's calculate the difference between Day and Night in terms of their mean `Lux` values.
 
 ```{r}
@@ -118,13 +131,13 @@ airDF %>%
 Here's what the data look like if we shuffle it by randomizing the assignment of observations as day or night. This is like a chaos agent coming around and slapping a new label for day or night on at random for every row in the data table. (But if we think `mean(Lux)` is the same for `Day` and `Night`, then that should be a perfectly OK action by the chaos agent.)
 
 ```{r}
-resample(airDF[,c("Date","Time","Lux","DayNight")],groups=DayNight,shuffled=c("Lux"))
+print(resample(airDF[,c("Date","Time","Lux","DayNight")],groups=DayNight,shuffled=c("Lux")))
 ```
 
 We can repeat that procedure again and see how the data shifts if we do another shuffle.
 
 ```{r}
-resample(airDF[,c("Date","Time","Lux","DayNight")],groups=DayNight,shuffled=c("Lux"))
+print(resample(airDF[,c("Date","Time","Lux","DayNight")],groups=DayNight,shuffled=c("Lux")))
 ```
 
 Let's shuffle the data and see what that means for the distribution of mean `Lux` differences between day and night.
@@ -139,7 +152,7 @@ names(randomizing_diffs)[1] <- "DiffMeans" # change the name of the variable
 head(randomizing_diffs)
 ```
 
-Now we can visualize the distribution of simulated differences in mean soil density and our observed difference between CSS and CHAP.
+Now we can visualize the distribution of simulated differences in mean light levels. Where would our observed difference in mean light levels fall?
 
 ```{r diffHist}
 gf_histogram(~ DiffMeans, fill = ~ (DiffMeans >= obs_diff),
@@ -159,7 +172,17 @@ prop( ~ DiffMeans >= obs_diff, data = randomizing_diffs)
 
 Let's say that instead of comparing light across day and night, I want to compare light against temperature. Light and temperature are both numeric variables. There aren't obvious categories for either variable.
 
-If I'm interested in seeing if `lower temperature is associated with lower (or higher) light levels` I can measure that by calculating a correlation coefficient.
+What do these two variables look like? What does the potential relationship between them look like? We can use a scatterplot to find out.
+
+```{r}
+p <- ggplot(airDF, aes(x=TempC, y=Lux))
+p <- p + geom_point()
+p <- p + labs(x="Temperature (*C)",y="Light (lux)")
+p <- p + theme_bw()
+p
+```
+
+If I'm interested in seeing if `lower temperature is associated with lower (or higher) light levels`. I can measure that by calculating a correlation coefficient.
 
 ```{r obs_cor}
 ### Calculate observed correlation
