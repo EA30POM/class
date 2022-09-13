@@ -347,7 +347,7 @@ airDF &lt;- readr::read_tsv(&quot;https://raw.githubusercontent.com/EA30POM/site
 
 ### How many observations and columns do we have?
 dim(airDF)</code></pre>
-<pre><code>## [1] 19010    23</code></pre>
+<pre><code>## [1] 28531    23</code></pre>
 <div id="using-the-view-command" class="section level3" number="1.2.1">
 <h3><span class="header-section-number">1.2.1</span> Using the
 <code>View</code> command</h3>
@@ -437,12 +437,12 @@ their mean <code>Lux</code> values.</p>
 <pre class="r"><code>### Calculating differences in mean Lux values
 obs_diff &lt;- diff( mean( Lux ~ DayNight, data=airDF, na.rm=T ) )
 obs_diff # print out the value</code></pre>
-<pre><code>##     Night 
-## 0.9264511</code></pre>
-<p>OK, so we see that there is a difference of 0.93 in mean light levels
-across day and night. Is this a meaningful difference though? Our null
-hypothesis is that there is <strong>no difference</strong> in mean light
-levels between day and night (again, a silly example, I know).</p>
+<pre><code>##      Night 
+## -0.5770775</code></pre>
+<p>OK, so we see that there is a difference of -0.58 in mean light
+levels across day and night. Is this a meaningful difference though? Our
+null hypothesis is that there is <strong>no difference</strong> in mean
+light levels between day and night (again, a silly example, I know).</p>
 <p>Logically, if there is a meaningful difference, then if we shuffle
 our data around, that should lead to different results than what we see.
 That is one way to <em>simulate</em> statistics to test the null
@@ -455,20 +455,20 @@ another function, <code>select</code>, to pull out particular columns of
 interest from the data.</p>
 <pre class="r"><code>airDF %&gt;%
   dplyr::select(Date,Time,Lux,DayNight)</code></pre>
-<pre><code>## # A tibble: 19,010 x 4
+<pre><code>## # A tibble: 28,531 x 4
 ##    Date       Time         Lux DayNight
 ##    &lt;date&gt;     &lt;Period&gt;   &lt;dbl&gt; &lt;chr&gt;   
-##  1 2022-12-09 13H 9M 24S  24   Day     
-##  2 2022-12-09 13H 9M 25S   7.2 Day     
-##  3 2022-12-09 13H 9M 26S   7.2 Day     
-##  4 2022-12-09 13H 9M 27S   7.2 Day     
-##  5 2022-12-09 13H 9M 28S   7.2 Day     
-##  6 2022-12-09 13H 9M 29S  24   Day     
-##  7 2022-12-09 13H 9M 30S   7.2 Day     
-##  8 2022-12-09 13H 9M 31S   7.2 Day     
-##  9 2022-12-09 13H 9M 32S   7.2 Day     
-## 10 2022-12-09 13H 9M 33S   7.3 Day     
-## # … with 19,000 more rows</code></pre>
+##  1 2022-07-09 22H 0M 3S   11.1 Night   
+##  2 2022-07-09 22H 0M 4S    9.1 Night   
+##  3 2022-07-09 22H 0M 5S   11.1 Night   
+##  4 2022-07-09 22H 0M 6S   11.1 Night   
+##  5 2022-07-09 22H 0M 7S   11.1 Night   
+##  6 2022-07-09 22H 0M 8S    9.1 Night   
+##  7 2022-07-09 22H 0M 9S    9.1 Night   
+##  8 2022-07-09 22H 0M 10S   9.1 Night   
+##  9 2022-07-09 22H 0M 11S  11.1 Night   
+## 10 2022-07-09 22H 0M 12S  11.1 Night   
+## # … with 28,521 more rows</code></pre>
 <p>Here’s what the data look like if we shuffle it by randomizing the
 assignment of observations as day or night. This is like a chaos agent
 coming around and slapping a new label for day or night on at random for
@@ -476,37 +476,37 @@ every row in the data table. (But if we think <code>mean(Lux)</code> is
 the same for <code>Day</code> and <code>Night</code>, then that should
 be a perfectly OK action by the chaos agent.)</p>
 <pre class="r"><code>print(resample(airDF[,c(&quot;Date&quot;,&quot;Time&quot;,&quot;Lux&quot;,&quot;DayNight&quot;)],groups=DayNight,shuffled=c(&quot;Lux&quot;)))</code></pre>
-<pre><code>## # A tibble: 19,010 x 5
+<pre><code>## # A tibble: 28,531 x 5
 ##    Date       Time        DayNight   Lux orig.id    
 ##    &lt;date&gt;     &lt;Period&gt;    &lt;chr&gt;    &lt;dbl&gt; &lt;chr&gt;      
-##  1 2022-08-09 1H 35M 51S  Day        3.6 17796.8606 
-##  2 2022-08-09 12H 5M 2S   Day        5.5 8793.18225 
-##  3 2022-09-09 12H 16M 34S Day        7.2 3623.603   
-##  4 2022-09-09 12H 58M 11S Day       14.9 15754.6227 
-##  5 2022-07-09 12H 50M 5S  Day        3.6 7264.8563  
-##  6 2022-08-09 11H 28M 41S Day        7.2 6298.17    
-##  7 2022-08-09 12H 3M 50S  Day        1.8 8721.17432 
-##  8 2022-08-09 12H 33M 32S Day        1.8 14269.7141 
-##  9 2022-08-09 11H 57M 20S Day        1.8 18128.18002
-## 10 2022-12-09 13H 18M 31S Day        1.8 548.17461  
-## # … with 19,000 more rows</code></pre>
+##  1 2022-07-09 12H 44M 59S Day        3.1 5851.16135 
+##  2 2022-08-09 12H 1M 24S  Day       16.8 23827.22894
+##  3 2022-09-09 12H 58M 52S Day        9.1 16535.27681
+##  4 2022-08-09 15H 7M 50S  Day        1.8 27766.14249
+##  5 2022-08-09 15H 9M 55S  Day        1.8 27891.17774
+##  6 2022-09-09 12H 54M 32S Day       11.1 16275.25576
+##  7 2022-09-09 13H 5M 15S  Day        1.8 11197.18405
+##  8 2022-09-09 13H 14M 38S Day       13   11760.2401 
+##  9 2022-09-09 12H 16M 25S Day        3.1 2536.16692 
+## 10 2022-12-09 13H 19M 59S Day       16.8 27168.22894
+## # … with 28,521 more rows</code></pre>
 <p>We can repeat that procedure again and see how the data shifts if we
 do another shuffle.</p>
 <pre class="r"><code>print(resample(airDF[,c(&quot;Date&quot;,&quot;Time&quot;,&quot;Lux&quot;,&quot;DayNight&quot;)],groups=DayNight,shuffled=c(&quot;Lux&quot;)))</code></pre>
-<pre><code>## # A tibble: 19,010 x 5
+<pre><code>## # A tibble: 28,531 x 5
 ##    Date       Time        DayNight   Lux orig.id    
 ##    &lt;date&gt;     &lt;Period&gt;    &lt;chr&gt;    &lt;dbl&gt; &lt;chr&gt;      
-##  1 2022-08-09 1H 30M 6S   Day        3.6 17451.11028
-##  2 2022-09-09 12H 20M 38S Day       22.1 3867.726   
-##  3 2022-08-09 12H 6M 42S  Day        1.8 18690.7052 
-##  4 2022-08-09 1H 29M 16S  Day        3.6 17401.8693 
-##  5 2022-08-09 12H 3M 42S  Day        1.8 8713.16724 
-##  6 2022-08-09 12H 19M 45S Day        1.8 13442.6795 
-##  7 2022-08-09 11H 32M 52S Day       16.3 6549.8824  
-##  8 2022-08-09 12H 6M 7S   Day       11.1 8858.6334  
-##  9 2022-08-09 12H 5M 10S  Day        1.8 8801.16407 
-## 10 2022-08-09 12H 33M 18S Day        3.6 14255.9202 
-## # … with 19,000 more rows</code></pre>
+##  1 2022-09-09 13H 4M 3S   Day        3.1 11125.16626
+##  2 2022-07-09 12H 50M 12S Day        3.6 8011.9453  
+##  3 2022-12-09 2H 15M 9S   Day        5.5 25900.23695
+##  4 2022-08-09 12H 6M 39S  Day       16.8 24142.23171
+##  5 2022-07-09 12H 57M 8S  Day       11.1 17247.2205 
+##  6 2022-08-09 12H 6M 0S   Day        9.1 9591.28489 
+##  7 2022-08-09 11H 30M 47S Day        3.1 5346.16608 
+##  8 2022-08-09 12H 26M 11S Day        3.6 14568.11222
+##  9 2022-08-09 12H 9M 36S  Day       16.8 9807.22870 
+## 10 2022-08-09 11H 59M 55S Day       13   9226.5218  
+## # … with 28,521 more rows</code></pre>
 <p>Let’s shuffle the data and see what that means for the distribution
 of mean <code>Lux</code> differences between day and night.</p>
 <pre class="r"><code>### Create random differences by shuffling the data
@@ -516,17 +516,17 @@ names(randomizing_diffs)[1] &lt;- &quot;DiffMeans&quot; # change the name of the
 
 # View first few rows of data
 head(randomizing_diffs)</code></pre>
-<pre><code>##       DiffMeans
-## 1 -0.0364445938
-## 2 -0.0003672704
-## 3  0.1118709363
-## 4 -0.0492263953
-## 5  0.0300080554
-## 6  0.0069033066</code></pre>
+<pre><code>##      DiffMeans
+## 1 -0.066659941
+## 2  0.008660025
+## 3 -0.059106846
+## 4 -0.032157630
+## 5  0.027563859
+## 6  0.042571591</code></pre>
 <p>Now we can visualize the distribution of simulated differences in
 mean light levels. Where would our observed difference in mean light
 levels fall?</p>
-<pre class="r"><code>gf_histogram(~ DiffMeans, fill = ~ (DiffMeans &gt;= obs_diff),
+<pre class="r"><code>gf_histogram(~ DiffMeans, fill = ~ (DiffMeans &lt;= obs_diff),
              data = randomizing_diffs,
              xlab=&quot;Difference in mean light across day/night under null&quot;,
              ylab=&quot;Count&quot;)</code></pre>
@@ -539,7 +539,7 @@ class="math inline">\(p\)</span>-value &lt; 0.05, that we reject the
 null hypothesis. There is a difference in mean light level between day
 and night.</p>
 <pre class="r"><code># What proportion of simulated values were larger than our observed difference?
-prop( ~ DiffMeans &gt;= obs_diff, data = randomizing_diffs)</code></pre>
+prop( ~ DiffMeans &lt;= obs_diff, data = randomizing_diffs)</code></pre>
 <pre><code>## prop_TRUE 
 ##         0</code></pre>
 </div>
@@ -566,8 +566,8 @@ I can measure that by calculating a correlation coefficient.</p>
 <pre class="r"><code>### Calculate observed correlation
 obs_cor &lt;- cor(Lux ~ TempC, data=airDF, use=&quot;complete.obs&quot;) # store observed correlation in obs_cor of Lux and Temperature
 obs_cor # print out value</code></pre>
-<pre><code>## [1] 0.1917319</code></pre>
-<p>Is this value of a correlation coefficient of 0.19 meaningful? Let’s
+<pre><code>## [1] 0.1308332</code></pre>
+<p>Is this value of a correlation coefficient of 0.13 meaningful? Let’s
 test that against a null hypothesis. Our null is that there’s no
 meaningful association. That is, the correlation coefficient is actually
 0.</p>
@@ -593,7 +593,7 @@ when we shuffle our data?</p>
 <pre class="r"><code>quantiles_cor &lt;- qdata( ~ cor, p = c(0.025, 0.975), data=randomizing_cor) # calculate the 2.5% and 97.5% quantiles in our simulated correlation coefficient data (note that 97.5-2.5 = 95!)
 quantiles_cor # display the quantiles</code></pre>
 <pre><code>##      2.5%     97.5% 
-## 0.1734142 0.2098956</code></pre>
+## 0.1168158 0.1455141</code></pre>
 <p>The values above give us a 95% confidence interval estimate for our
 correlation coefficient!</p>
 <p>Do we clearly see that our correlation coefficient distribution does

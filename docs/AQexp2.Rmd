@@ -155,7 +155,7 @@ head(randomizing_diffs)
 Now we can visualize the distribution of simulated differences in mean light levels. Where would our observed difference in mean light levels fall?
 
 ```{r diffHist}
-gf_histogram(~ DiffMeans, fill = ~ (DiffMeans >= obs_diff),
+gf_histogram(~ DiffMeans, fill = ~ (DiffMeans <= obs_diff),
              data = randomizing_diffs,
              xlab="Difference in mean light across day/night under null",
              ylab="Count")
@@ -165,7 +165,7 @@ In the end, how many of the simulated mean differences were larger than the valu
 
 ```{r obsDiffP}
 # What proportion of simulated values were larger than our observed difference?
-prop( ~ DiffMeans >= obs_diff, data = randomizing_diffs)
+prop( ~ DiffMeans <= obs_diff, data = randomizing_diffs)
 ```
 
 ## Calculating correlations between numeric variables
