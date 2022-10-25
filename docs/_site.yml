@@ -25,10 +25,10 @@ navbar:
         - text: "Week 3"
         - text: "Air Quality: Analysis"
           href: AQexp2.html
-    # - text: "Soil science"
-    #   menu:
-    #     - text: "Analyzing data"
-    #       href: soil.html
+    - text: "Soil science"
+      menu:
+        - text: "Analyzing data"
+          href: soil.html
     # - text: "Environmental communications"
     #   menu:
     #     - text: "Visualization"
