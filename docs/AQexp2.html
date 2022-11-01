@@ -10,7 +10,7 @@
 
 
 
-<meta name="date" content="2022-10-24" />
+<meta name="date" content="2022-11-01" />
 
 <title>Week 3</title>
 
@@ -320,17 +320,29 @@ $(document).ready(function () {
 
 <h1 class="title toc-ignore">Week 3</h1>
 <h4 class="author"></h4>
-<h4 class="date">2022-10-24</h4>
+<h4 class="date">2022-11-01</h4>
 
 </div>
 
 
 <div id="preparing-data" class="section level1" number="1">
-<h1 number="1"><span class="header-section-number">1</span> Preparing data</h1>
-<p>Please start by logging into <a href="https://sso.rstudio.cloud/pomona">sso.rstudio.cloud/pomona</a>. Once you’ve logged in, you should see the option to open the <code>EA 30.1 - Fall 2022</code> workspace. You can also access <a href="https://sso.rstudio.cloud/pomona?redirect=https%3A%2F%2Frstudio.cloud%2Fspaces%2F272090%2Fjoin%3Faccess_code%3DRH6FObo67WiGmhjuBirlncXZZYKYQBZW9K1HPSEV">the <code>EA 30.1 - Fall 2022</code> workspace at this link</a>.</p>
-<p>At the workspace, you should then see the “Assignment” <code>AirQualityLab</code>. Please click on that Assignment. Here is a <a href="https://rstudio.cloud/spaces/272090/content/4496680">direct link to the <code>AirQualityLab</code> project</a>, but it may not work if this is the first time in a while that you’re logging into RStudio.Cloud. If it doesn’t work, no worries - just log in through the <a href="https://sso.rstudio.cloud/pomona">sso.rstudio.cloud/pomona</a> link.</p>
+<h1><span class="header-section-number">1</span> Preparing data</h1>
+<p>Please start by logging into <a
+href="https://sso.rstudio.cloud/pomona">sso.rstudio.cloud/pomona</a>.
+Once you’ve logged in, you should see the option to open the
+<code>EA 30.1 - Fall 2022</code> workspace. You can also access <a
+href="https://sso.rstudio.cloud/pomona?redirect=https%3A%2F%2Frstudio.cloud%2Fspaces%2F272090%2Fjoin%3Faccess_code%3DRH6FObo67WiGmhjuBirlncXZZYKYQBZW9K1HPSEV">the
+<code>EA 30.1 - Fall 2022</code> workspace at this link</a>.</p>
+<p>At the workspace, you should then see the “Assignment”
+<code>AirQualityLab</code>. Please click on that Assignment. Here is a
+<a href="https://rstudio.cloud/spaces/272090/content/4496680">direct
+link to the <code>AirQualityLab</code> project</a>, but it may not work
+if this is the first time in a while that you’re logging into
+RStudio.Cloud. If it doesn’t work, no worries - just log in through the
+<a href="https://sso.rstudio.cloud/pomona">sso.rstudio.cloud/pomona</a>
+link.</p>
 <div id="load-packages" class="section level2" number="1.1">
-<h2 number="1.1"><span class="header-section-number">1.1</span> Load packages</h2>
+<h2><span class="header-section-number">1.1</span> Load packages</h2>
 <p>Below, we will start by loading packages that we’ll need.</p>
 <pre class="r"><code>### Load packages
 library(&quot;ggplot2&quot;) # plotting functions
@@ -340,7 +352,7 @@ library(&quot;lubridate&quot;) # a package to specify date-time stamps
 library(&quot;mosaic&quot;) # shuffle (permute) our data</code></pre>
 </div>
 <div id="read-data" class="section level2" number="1.2">
-<h2 number="1.2"><span class="header-section-number">1.2</span> Read data</h2>
+<h2><span class="header-section-number">1.2</span> Read data</h2>
 <p>Next, we will pull in our data.</p>
 <pre class="r"><code>### Load in dataset
 airDF &lt;- readr::read_tsv(&quot;https://raw.githubusercontent.com/EA30POM/site/main/data/PLairData.tsv&quot;)
@@ -349,19 +361,33 @@ airDF &lt;- readr::read_tsv(&quot;https://raw.githubusercontent.com/EA30POM/site
 dim(airDF)</code></pre>
 <pre><code>## [1] 28531    23</code></pre>
 <div id="using-the-view-command" class="section level3" number="1.2.1">
-<h3 number="1.2.1"><span class="header-section-number">1.2.1</span> Using the <code>View</code> command</h3>
-<p>Oftentimes, we may want a more intuitive way to see our data tables. It can be really annoying when <code>R</code> is too clever and only displays a subset of the columns of your spreadsheet. The <code>View()</code> function pulls up an Excel-style data viewer. Let’s try it below:</p>
+<h3><span class="header-section-number">1.2.1</span> Using the
+<code>View</code> command</h3>
+<p>Oftentimes, we may want a more intuitive way to see our data tables.
+It can be really annoying when <code>R</code> is too clever and only
+displays a subset of the columns of your spreadsheet. The
+<code>View()</code> function pulls up an Excel-style data viewer. Let’s
+try it below:</p>
 <pre><code>View( head( airDF ) )</code></pre>
-<p>I’m going to use the pipe operator <code>%&gt;%</code> to daisy chain commands together into a sequence. It is a handy way to make a complex operation with intermediate steps more transparent. The visualization below describes what pipes do in <code>R</code> in linking up functions:</p>
+<p>I’m going to use the pipe operator <code>%&gt;%</code> to daisy chain
+commands together into a sequence. It is a handy way to make a complex
+operation with intermediate steps more transparent. The visualization
+below describes what pipes do in <code>R</code> in linking up
+functions:</p>
 <div class="figure">
 <img src="figures/Rpipeoperator.png" alt="" />
-<p class="caption">Schematic of the pipe <code>%&gt;%</code> operator in <code>R</code> (Altaf Ali)</p>
+<p class="caption">Schematic of the pipe <code>%&gt;%</code> operator in
+<code>R</code> (Altaf Ali)</p>
 </div>
 <pre><code>airDF %&gt;% head() %&gt;% View()</code></pre>
 </div>
 <div id="pre-processing-the-data" class="section level3" number="1.2.2">
-<h3 number="1.2.2"><span class="header-section-number">1.2.2</span> Pre-processing the data</h3>
-<p>Now we’ll use that handy <code>%&gt;%</code> operator to clean our data. We’ll also use a very helpful function called <code>mutate</code>. <code>mutate</code> is a command to either alter an existing column or create a new column in the data.</p>
+<h3><span class="header-section-number">1.2.2</span> Pre-processing the
+data</h3>
+<p>Now we’ll use that handy <code>%&gt;%</code> operator to clean our
+data. We’ll also use a very helpful function called <code>mutate</code>.
+<code>mutate</code> is a command to either alter an existing column or
+create a new column in the data.</p>
 <pre class="r"><code>### Pre-processing steps
   # We want the Date and Time columns to be datetime objects
 airDF &lt;- airDF %&gt;%
@@ -378,9 +404,22 @@ airDF &lt;- airDF %&gt;%
 </div>
 </div>
 <div id="analyzing-the-data" class="section level1" number="2">
-<h1 number="2"><span class="header-section-number">2</span> Analyzing the data</h1>
-<p>Below, I provide fully-worked examples of different ways of inspecting your data and performing analyses <strong>assuming that <code>Lux</code> is the variable of interest</strong>. In applying this code to your own data, you will want to think about what variable name should <em>replace</em> <code>Lux</code> in the commands below.</p>
-<p>Let’s start with exploratory data analysis where you calculate summary statistics and visualize your variable. Let’s say that I’m interested in understanding how the values of light (<code>Lux</code>) vary across day and night (a silly example, I know). We’ll use another function: <code>group_by</code> splits a data table into groups based on distinct values a variable that has <strong>categories</strong>. In this case, we tell <code>group_by</code> to divide up the <code>airDF</code> data table into groups based on the values of <code>DayNight</code>. We then will use a function <code>summarize</code> to get summary statistics of <code>Lux</code> in the day and night.</p>
+<h1><span class="header-section-number">2</span> Analyzing the data</h1>
+<p>Below, I provide fully-worked examples of different ways of
+inspecting your data and performing analyses <strong>assuming that
+<code>Lux</code> is the variable of interest</strong>. In applying this
+code to your own data, you will want to think about what variable name
+should <em>replace</em> <code>Lux</code> in the commands below.</p>
+<p>Let’s start with exploratory data analysis where you calculate
+summary statistics and visualize your variable. Let’s say that I’m
+interested in understanding how the values of light (<code>Lux</code>)
+vary across day and night (a silly example, I know). We’ll use another
+function: <code>group_by</code> splits a data table into groups based on
+distinct values a variable that has <strong>categories</strong>. In this
+case, we tell <code>group_by</code> to divide up the <code>airDF</code>
+data table into groups based on the values of <code>DayNight</code>. We
+then will use a function <code>summarize</code> to get summary
+statistics of <code>Lux</code> in the day and night.</p>
 <pre class="r"><code>### Calculate summary statistics for Lux
 ### for each DayNight condition
 airDF %&gt;%
@@ -389,25 +428,43 @@ airDF %&gt;%
   # use DayNight as the grouping variable
   # for Lux and then summarize Lux
   # for each value of DayNight</code></pre>
-<div id="do-day-and-night-differ-in-their-light-levels" class="section level2" number="2.1">
-<h2 number="2.1"><span class="header-section-number">2.1</span> Do day and night differ in their light levels?</h2>
-<p>How do light levels vary across day and night? We can visualize that using a boxplot. Boxplots are useful for depicting how different discrete categories within a variable exhibit variation. Below, we will specify the variable that we use to group our data (Day/Night) as the x variable, and the values of interest as the y variable (Lux, or light).</p>
+<div id="do-day-and-night-differ-in-their-light-levels"
+class="section level2" number="2.1">
+<h2><span class="header-section-number">2.1</span> Do day and night
+differ in their light levels?</h2>
+<p>How do light levels vary across day and night? We can visualize that
+using a boxplot. Boxplots are useful for depicting how different
+discrete categories within a variable exhibit variation. Below, we will
+specify the variable that we use to group our data (Day/Night) as the x
+variable, and the values of interest as the y variable (Lux, or
+light).</p>
 <pre class="r"><code>p &lt;- ggplot(airDF, aes(x=DayNight, y=Lux))
 p &lt;- p + geom_boxplot()
 p &lt;- p + labs(x=&quot;&quot;,y=&quot;Light (lux)&quot;)
 p &lt;- p + theme_minimal()
 p</code></pre>
 <p><img src="AQexp2_files/figure-html/unnamed-chunk-3-1.png" width="672" /></p>
-<p>Let’s calculate the difference between Day and Night in terms of their mean <code>Lux</code> values.</p>
+<p>Let’s calculate the difference between Day and Night in terms of
+their mean <code>Lux</code> values.</p>
 <pre class="r"><code>### Calculating differences in mean Lux values
 obs_diff &lt;- diff( mean( Lux ~ DayNight, data=airDF, na.rm=T ) )
 obs_diff # print out the value</code></pre>
 <pre><code>##      Night 
 ## -0.5770775</code></pre>
-<p>OK, so we see that there is a difference of -0.58 in mean light levels across day and night. Is this a meaningful difference though? Our null hypothesis is that there is <strong>no difference</strong> in mean light levels between day and night (again, a silly example, I know).</p>
-<p>Logically, if there is a meaningful difference, then if we shuffle our data around, that should lead to different results than what we see. That is one way to <em>simulate</em> statistics to test the null hypothesis. And specifically, in this case, we would expect to see our observed difference is much larger than most of the simulated values.</p>
+<p>OK, so we see that there is a difference of -0.58 in mean light
+levels across day and night. Is this a meaningful difference though? Our
+null hypothesis is that there is <strong>no difference</strong> in mean
+light levels between day and night (again, a silly example, I know).</p>
+<p>Logically, if there is a meaningful difference, then if we shuffle
+our data around, that should lead to different results than what we see.
+That is one way to <em>simulate</em> statistics to test the null
+hypothesis. And specifically, in this case, we would expect to see our
+observed difference is much larger than most of the simulated
+values.</p>
 <p>What does simulating our data look like?</p>
-<p>Well, here is what the data look like initially. We’re going to use another function, <code>select</code>, to pull out particular columns of interest from the data.</p>
+<p>Well, here is what the data look like initially. We’re going to use
+another function, <code>select</code>, to pull out particular columns of
+interest from the data.</p>
 <pre class="r"><code>airDF %&gt;%
   dplyr::select(Date,Time,Lux,DayNight)</code></pre>
 <pre><code>## # A tibble: 28,531 x 4
@@ -424,39 +481,46 @@ obs_diff # print out the value</code></pre>
 ##  9 2022-07-09 22H 0M 11S  11.1 Night   
 ## 10 2022-07-09 22H 0M 12S  11.1 Night   
 ## # … with 28,521 more rows</code></pre>
-<p>Here’s what the data look like if we shuffle it by randomizing the assignment of observations as day or night. This is like a chaos agent coming around and slapping a new label for day or night on at random for every row in the data table. (But if we think <code>mean(Lux)</code> is the same for <code>Day</code> and <code>Night</code>, then that should be a perfectly OK action by the chaos agent.)</p>
+<p>Here’s what the data look like if we shuffle it by randomizing the
+assignment of observations as day or night. This is like a chaos agent
+coming around and slapping a new label for day or night on at random for
+every row in the data table. (But if we think <code>mean(Lux)</code> is
+the same for <code>Day</code> and <code>Night</code>, then that should
+be a perfectly OK action by the chaos agent.)</p>
 <pre class="r"><code>print(resample(airDF[,c(&quot;Date&quot;,&quot;Time&quot;,&quot;Lux&quot;,&quot;DayNight&quot;)],groups=DayNight,shuffled=c(&quot;Lux&quot;)))</code></pre>
 <pre><code>## # A tibble: 28,531 x 5
 ##    Date       Time        DayNight   Lux orig.id    
 ##    &lt;date&gt;     &lt;Period&gt;    &lt;chr&gt;    &lt;dbl&gt; &lt;chr&gt;      
-##  1 2022-08-09 12H 4M 32S  Day        1.8 9503.14485 
-##  2 2022-08-09 15H 19M 10S Day        1.8 28446.11469
-##  3 2022-08-09 1H 39M 59S  Day        5.5 18784.24336
-##  4 2022-07-09 12H 45M 47S Day        1.8 7746.18694 
-##  5 2022-08-09 1H 26M 1S   Day        1.8 17946.18351
-##  6 2022-07-09 12H 51M 52S Day        1.8 6264.20014 
-##  7 2022-08-09 1H 34M 54S  Day        9.1 18479.27985
-##  8 2022-09-09 12H 56M 6S  Day        1.8 16369.11016
-##  9 2022-08-09 11H 30M 58S Day       16.8 5357.23241 
-## 10 2022-07-09 12H 55M 19S Day       16.3 17138.4891 
+##  1 2022-12-09 2H 15M 14S  Day        1.8 25905.8054 
+##  2 2022-07-09 12H 33M 41S Day        1.8 23033.18063
+##  3 2022-07-09 12H 49M 33S Day        1.8 7972.15075 
+##  4 2022-08-09 1H 33M 19S  Day        1.8 18384.7702 
+##  5 2022-08-09 15H 10M 17S Day        1.8 27913.17939
+##  6 2022-07-09 12H 41M 53S Day       11.1 23525.5715 
+##  7 2022-08-09 11H 29M 42S Day       11.1 5281.5907  
+##  8 2022-08-09 11H 23M 59S Day        9.1 4938.28323 
+##  9 2022-07-09 12H 52M 44S Day        3.1 6316.16289 
+## 10 2022-08-09 12H 24M 51S Day        1.8 14488.18671
 ## # … with 28,521 more rows</code></pre>
-<p>We can repeat that procedure again and see how the data shifts if we do another shuffle.</p>
+<p>We can repeat that procedure again and see how the data shifts if we
+do another shuffle.</p>
 <pre class="r"><code>print(resample(airDF[,c(&quot;Date&quot;,&quot;Time&quot;,&quot;Lux&quot;,&quot;DayNight&quot;)],groups=DayNight,shuffled=c(&quot;Lux&quot;)))</code></pre>
 <pre><code>## # A tibble: 28,531 x 5
 ##    Date       Time        DayNight   Lux orig.id    
 ##    &lt;date&gt;     &lt;Period&gt;    &lt;chr&gt;    &lt;dbl&gt; &lt;chr&gt;      
-##  1 2022-08-09 15H 15M 32S Day        1.8 28228.17332
-##  2 2022-09-09 12H 54M 21S Day        3.6 16264.9877 
-##  3 2022-12-09 2H 21M 50S  Day        1.8 26301.16921
-##  4 2022-12-09 2H 12M 27S  Day        9.1 25738.27895
-##  5 2022-08-09 12H 0M 16S  Day        1.8 9247.20226 
-##  6 2022-12-09 2H 21M 2S   Day        1.8 26253.19930
-##  7 2022-08-09 12H 20M 5S  Day        5.5 14202.24284
-##  8 2022-07-09 12H 49M 39S Day        1.8 6131.14824 
-##  9 2022-08-09 15H 7M 32S  Day        1.8 27748.7979 
-## 10 2022-08-09 11H 30M 11S Day        1.8 5310.17770 
+##  1 2022-09-09 11H 59M 48S Day       11.1 19890.25613
+##  2 2022-09-09 12H 0M 36S  Day       11.1 19938.25526
+##  3 2022-08-09 12H 0M 42S  Day       16.8 23785.4872 
+##  4 2022-08-09 12H 21M 42S Day        7.3 14299.23614
+##  5 2022-09-09 12H 17M 45S Day        3.6 2616.9873  
+##  6 2022-07-09 12H 30M 17S Day        1.8 22829.11014
+##  7 2022-08-09 11H 29M 29S Day        3.6 5268.9771  
+##  8 2022-08-09 15H 19M 37S Day       13   28473.1960 
+##  9 2022-08-09 12H 7M 32S  Day        1.8 9683.17430 
+## 10 2022-08-09 12H 6M 38S  Day        9.1 24141.27919
 ## # … with 28,521 more rows</code></pre>
-<p>Let’s shuffle the data and see what that means for the distribution of mean <code>Lux</code> differences between day and night.</p>
+<p>Let’s shuffle the data and see what that means for the distribution
+of mean <code>Lux</code> differences between day and night.</p>
 <pre class="r"><code>### Create random differences by shuffling the data
 randomizing_diffs &lt;- do(1000) * diff( mean( Lux ~ shuffle(DayNight),na.rm=T, data = airDF) ) # calculate the mean in Lux when we&#39;re shuffling the day/night values around 1000 times
   # Clean up our shuffled data
@@ -465,42 +529,69 @@ names(randomizing_diffs)[1] &lt;- &quot;DiffMeans&quot; # change the name of the
 # View first few rows of data
 head(randomizing_diffs)</code></pre>
 <pre><code>##      DiffMeans
-## 1  0.157823093
-## 2 -0.026433031
-## 3  0.002204028
-## 4 -0.013732017
-## 5  0.065807554
-## 6  0.048141470</code></pre>
-<p>Now we can visualize the distribution of simulated differences in mean light levels. Where would our observed difference in mean light levels fall?</p>
+## 1  0.026776199
+## 2  0.003146406
+## 3 -0.049232968
+## 4  0.035454522
+## 5 -0.067560123
+## 6  0.068268991</code></pre>
+<p>Now we can visualize the distribution of simulated differences in
+mean light levels. Where would our observed difference in mean light
+levels fall?</p>
 <pre class="r"><code>gf_histogram(~ DiffMeans, fill = ~ (DiffMeans &lt;= obs_diff),
              data = randomizing_diffs,
              xlab=&quot;Difference in mean light across day/night under null&quot;,
              ylab=&quot;Count&quot;)</code></pre>
 <p><img src="AQexp2_files/figure-html/diffHist-1.png" width="672" /></p>
-<p>In the end, how many of the simulated mean differences were larger than the value we observed? Based on this value, if we were using the conventional <span class="math inline">\(p\)</span>-value (probability value) of 0.05, we would conclude that because this simulated <span class="math inline">\(p\)</span>-value &lt; 0.05, that we reject the null hypothesis. There is a difference in mean light level between day and night.</p>
+<p>In the end, how many of the simulated mean differences were larger
+than the value we observed? Based on this value, if we were using the
+conventional <span class="math inline">\(p\)</span>-value (probability
+value) of 0.05, we would conclude that because this simulated <span
+class="math inline">\(p\)</span>-value &lt; 0.05, that we reject the
+null hypothesis. There is a difference in mean light level between day
+and night.</p>
 <pre class="r"><code># What proportion of simulated values were larger than our observed difference?
 prop( ~ DiffMeans &lt;= obs_diff, data = randomizing_diffs)</code></pre>
 <pre><code>## prop_TRUE 
 ##         0</code></pre>
 </div>
-<div id="calculating-correlations-between-numeric-variables" class="section level2" number="2.2">
-<h2 number="2.2"><span class="header-section-number">2.2</span> Calculating correlations between numeric variables</h2>
-<p>Let’s say that instead of comparing light across day and night, I want to compare light against temperature. Light and temperature are both numeric variables. There aren’t obvious categories for either variable.</p>
-<p>What do these two variables look like? What does the potential relationship between them look like? We can use a scatterplot to find out.</p>
+<div id="calculating-correlations-between-numeric-variables"
+class="section level2" number="2.2">
+<h2><span class="header-section-number">2.2</span> Calculating
+correlations between numeric variables</h2>
+<p>Let’s say that instead of comparing light across day and night, I
+want to compare light against temperature. Light and temperature are
+both numeric variables. There aren’t obvious categories for either
+variable.</p>
+<p>What do these two variables look like? What does the potential
+relationship between them look like? We can use a scatterplot to find
+out.</p>
 <pre class="r"><code>p &lt;- ggplot(airDF, aes(x=TempC, y=Lux))
 p &lt;- p + geom_point()
 p &lt;- p + labs(x=&quot;Temperature (*C)&quot;,y=&quot;Light (lux)&quot;)
 p &lt;- p + theme_bw()
 p</code></pre>
 <p><img src="AQexp2_files/figure-html/unnamed-chunk-8-1.png" width="672" /></p>
-<p>If I’m interested in seeing if <code>lower temperature is associated with lower (or higher) light levels</code>. I can measure that by calculating a correlation coefficient.</p>
+<p>If I’m interested in seeing if
+<code>lower temperature is associated with lower (or higher) light levels</code>.
+I can measure that by calculating a correlation coefficient.</p>
 <pre class="r"><code>### Calculate observed correlation
 obs_cor &lt;- cor(Lux ~ TempC, data=airDF, use=&quot;complete.obs&quot;) # store observed correlation in obs_cor of Lux and Temperature
 obs_cor # print out value</code></pre>
 <pre><code>## [1] 0.1308332</code></pre>
-<p>Is this value of a correlation coefficient of 0.13 meaningful? Let’s test that against a null hypothesis. Our null is that there’s no meaningful association. That is, the correlation coefficient is actually 0.</p>
-<p>How then do I know that my correlation coefficient of 0 is significantly different from 0? We can tackle this question by simulating a ton of correlation coefficient values from our data by shuffling it!</p>
-<p>In this case, the shuffling here lets us estimate the variation in the correlation coefficient given our data. So we are curious now if the distribution of simulated values does or does not include 0 (that is, is it clearly <span class="math inline">\(&lt; 0\)</span> or <span class="math inline">\(&gt; 0\)</span>?).</p>
+<p>Is this value of a correlation coefficient of 0.13 meaningful? Let’s
+test that against a null hypothesis. Our null is that there’s no
+meaningful association. That is, the correlation coefficient is actually
+0.</p>
+<p>How then do I know that my correlation coefficient of 0 is
+significantly different from 0? We can tackle this question by
+simulating a ton of correlation coefficient values from our data by
+shuffling it!</p>
+<p>In this case, the shuffling here lets us estimate the variation in
+the correlation coefficient given our data. So we are curious now if the
+distribution of simulated values does or does not include 0 (that is, is
+it clearly <span class="math inline">\(&lt; 0\)</span> or <span
+class="math inline">\(&gt; 0\)</span>?).</p>
 <pre class="r"><code>### Calculate correlation coefs for shuffled data
 randomizing_cor &lt;- do(1000) * cor(Lux ~ TempC, 
                                  data = resample(airDF), 
@@ -509,20 +600,30 @@ randomizing_cor &lt;- do(1000) * cor(Lux ~ TempC,
 # Calculate the correlation coefficient each time
 # By correlating Lux to TempC from the
 # data table airDF</code></pre>
-<p>What are the distribution of correlation coefficients that we see when we shuffle our data?</p>
+<p>What are the distribution of correlation coefficients that we see
+when we shuffle our data?</p>
 <pre class="r"><code>quantiles_cor &lt;- qdata( ~ cor, p = c(0.025, 0.975), data=randomizing_cor) # calculate the 2.5% and 97.5% quantiles in our simulated correlation coefficient data (note that 97.5-2.5 = 95!)
 quantiles_cor # display the quantiles</code></pre>
 <pre><code>##      2.5%     97.5% 
-## 0.1159644 0.1453094</code></pre>
-<p>The values above give us a 95% confidence interval estimate for our correlation coefficient!</p>
-<p>Do we clearly see that our correlation coefficient distribution does or doesn’t include 0?</p>
+## 0.1160545 0.1457511</code></pre>
+<p>The values above give us a 95% confidence interval estimate for our
+correlation coefficient!</p>
+<p>Do we clearly see that our correlation coefficient distribution does
+or doesn’t include 0?</p>
 <pre class="r"><code>gf_histogram(~ cor,
              data = randomizing_cor,
              xlab=&quot;Simulated correlation coefficients&quot;,
              ylab=&quot;Count&quot;)</code></pre>
 <p><img src="AQexp2_files/figure-html/simCorHist-1.png" width="672" /></p>
-<p>In this case, our simulated correlation coefficient does not include in its 95% simulated confidence interval (we actually never see any values close to 0 here!). We can also see this in the plot. So given these data, we would also reject the null hypothesis that <code>there is no association between light and temperature</code>.</p>
-<p>On the other hand, if we had seen 0 in the interval, then we would conclude that given the data, we cannot reject the null hypothesis. In that case, there is not sufficiently strong data that light correlates with temperature in any clear way.</p>
+<p>In this case, our simulated correlation coefficient does not include
+in its 95% simulated confidence interval (we actually never see any
+values close to 0 here!). We can also see this in the plot. So given
+these data, we would also reject the null hypothesis that
+<code>there is no association between light and temperature</code>.</p>
+<p>On the other hand, if we had seen 0 in the interval, then we would
+conclude that given the data, we cannot reject the null hypothesis. In
+that case, there is not sufficiently strong data that light correlates
+with temperature in any clear way.</p>
 </div>
 </div>
 
