@@ -29,10 +29,10 @@ navbar:
       menu:
         - text: "Analyzing data"
           href: soil.html
-    # - text: "Environmental communications"
-    #   menu:
-    #     - text: "Visualization"
-    #       href: EnvComm1.html
+    - text: "Bioacoustics"
+      menu:
+        - text: "Bioacoustic data"
+          href: Sound.html
     #     - text: "Analysis"
     #       href: EnvComm2.html
     #     - text: "Groups"
