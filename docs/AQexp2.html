@@ -10,7 +10,7 @@
 
 
 
-<meta name="date" content="2022-11-14" />
+<meta name="date" content="2022-11-28" />
 
 <title>Week 3</title>
 
@@ -316,6 +316,9 @@ $(document).ready(function () {
     <li>
       <a href="Sound.html">Bioacoustic data</a>
     </li>
+    <li>
+      <a href="bioaco.html">Analyzing sound data</a>
+    </li>
   </ul>
 </li>
       </ul>
@@ -332,7 +335,7 @@ $(document).ready(function () {
 
 <h1 class="title toc-ignore">Week 3</h1>
 <h4 class="author"></h4>
-<h4 class="date">2022-11-14</h4>
+<h4 class="date">2022-11-28</h4>
 
 </div>
 
@@ -441,32 +444,32 @@ obs_diff # print out the value</code></pre>
 <pre><code>## # A tibble: 28,531 x 5
 ##    Date       Time        DayNight   Lux orig.id    
 ##    &lt;date&gt;     &lt;Period&gt;    &lt;chr&gt;    &lt;dbl&gt; &lt;chr&gt;      
-##  1 2022-12-09 2H 20M 51S  Day        1.8 26242.20218
-##  2 2022-08-09 11H 57M 7S  Day        3.6 23570.9370 
-##  3 2022-07-09 12H 52M 19S Day        9.1 16958.27864
-##  4 2022-12-09 13H 12M 11S Day        5.2 26700.16295
-##  5 2022-07-09 12H 54M 6S  Day        3.6 17065.9591 
-##  6 2022-07-09 12H 42M 14S Day        1.8 7533.14686 
-##  7 2022-08-09 12H 9M 29S  Day        9.1 9800.27629 
-##  8 2022-08-09 11H 29M 59S Day        1.8 5298.16912 
-##  9 2022-08-09 15H 8M 48S  Day       11.1 27824.2178 
-## 10 2022-07-09 12H 41M 16S Day        1.8 7475.17213 
+##  1 2022-07-09 13H 1M 16S  Day        1.8 17495.18817
+##  2 2022-09-09 13H 12M 30S Day        5.2 11632.16676
+##  3 2022-09-09 13H 8M 49S  Day       11.1 11411.25590
+##  4 2022-07-09 12H 43M 24S Day        1.8 7603.11444 
+##  5 2022-09-09 12H 18M 1S  Day        1.8 2632.20111 
+##  6 2022-12-09 13H 19M 2S  Day        7.2 27111.26684
+##  7 2022-07-09 12H 31M 55S Day        9.1 22927.28210
+##  8 2022-12-09 2H 16M 49S  Day       11.1 26000.6096 
+##  9 2022-07-09 12H 43M 52S Day        1.8 5784.7647  
+## 10 2022-09-09 12H 8M 15S  Day        1.8 2046.18125 
 ## # … with 28,521 more rows</code></pre>
 <p>We can repeat that procedure again and see how the data shifts if we do another shuffle.</p>
 <pre class="r"><code>print(resample(airDF[,c(&quot;Date&quot;,&quot;Time&quot;,&quot;Lux&quot;,&quot;DayNight&quot;)],groups=DayNight,shuffled=c(&quot;Lux&quot;)))</code></pre>
 <pre><code>## # A tibble: 28,531 x 5
 ##    Date       Time        DayNight   Lux orig.id    
 ##    &lt;date&gt;     &lt;Period&gt;    &lt;chr&gt;    &lt;dbl&gt; &lt;chr&gt;      
-##  1 2022-07-09 12H 49M 10S Day       14.9 6102.5027  
-##  2 2022-08-09 15H 17M 52S Day       11.1 28368.6266 
-##  3 2022-07-09 12H 47M 8S  Day        9.1 5980.25424 
-##  4 2022-09-09 12H 52M 34S Day        1.8 16157.11084
-##  5 2022-08-09 15H 11M 0S  Day        1.8 27956.17712
-##  6 2022-09-09 12H 51M 41S Day        1.8 16104.18683
-##  7 2022-09-09 12H 53M 7S  Day       11.1 16190.25867
-##  8 2022-09-09 13H 3M 17S  Day       11.1 16800.6077 
-##  9 2022-07-09 12H 40M 37S Day        5.5 7436.24077 
-## 10 2022-08-09 15H 9M 40S  Day       16.8 27876.23218
+##  1 2022-08-09 1H 33M 37S  Day        5.2 18402.16359
+##  2 2022-09-09 13H 11M 43S Day       11.1 11585.25557
+##  3 2022-12-09 2H 10M 6S   Day        1.8 25597.18103
+##  4 2022-12-09 13H 19M 16S Day        1.8 27125.17130
+##  5 2022-09-09 12H 1M 10S  Day        5.5 19972.23567
+##  6 2022-08-09 12H 11M 45S Day        5.5 24448.24233
+##  7 2022-08-09 12H 32M 28S Day        1.8 14945.20533
+##  8 2022-09-09 12H 10M 38S Day       13   20540.2373 
+##  9 2022-07-09 12H 41M 29S Day        1.8 5641.17320 
+## 10 2022-08-09 1H 35M 30S  Day        9.1 18515.28531
 ## # … with 28,521 more rows</code></pre>
 <p>Let’s shuffle the data and see what that means for the distribution of mean <code>Lux</code> differences between day and night.</p>
 <pre class="r"><code>### Create random differences by shuffling the data
@@ -476,13 +479,13 @@ names(randomizing_diffs)[1] &lt;- &quot;DiffMeans&quot; # change the name of the
 
 # View first few rows of data
 head(randomizing_diffs)</code></pre>
-<pre><code>##     DiffMeans
-## 1 -0.03319847
-## 2  0.04793049
-## 3 -0.02345118
-## 4  0.03885834
-## 5  0.07638470
-## 6 -0.06372028</code></pre>
+<pre><code>##      DiffMeans
+## 1 -0.084016586
+## 2 -0.001129461
+## 3  0.077960019
+## 4 -0.025729763
+## 5  0.024778919
+## 6  0.054203638</code></pre>
 <p>Now we can visualize the distribution of simulated differences in mean light levels. Where would our observed difference in mean light levels fall?</p>
 <pre class="r"><code>gf_histogram(~ DiffMeans, fill = ~ (DiffMeans &lt;= obs_diff),
              data = randomizing_diffs,
@@ -525,7 +528,7 @@ randomizing_cor &lt;- do(1000) * cor(Lux ~ TempC,
 <pre class="r"><code>quantiles_cor &lt;- qdata( ~ cor, p = c(0.025, 0.975), data=randomizing_cor) # calculate the 2.5% and 97.5% quantiles in our simulated correlation coefficient data (note that 97.5-2.5 = 95!)
 quantiles_cor # display the quantiles</code></pre>
 <pre><code>##      2.5%     97.5% 
-## 0.1166061 0.1459111</code></pre>
+## 0.1168233 0.1453339</code></pre>
 <p>The values above give us a 95% confidence interval estimate for our correlation coefficient!</p>
 <p>Do we clearly see that our correlation coefficient distribution does or doesn’t include 0?</p>
 <pre class="r"><code>gf_histogram(~ cor,

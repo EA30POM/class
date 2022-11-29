@@ -10,7 +10,7 @@
 
 
 
-<meta name="date" content="2022-11-14" />
+<meta name="date" content="2022-11-28" />
 
 <title>Soil science analyses</title>
 
@@ -316,6 +316,9 @@ $(document).ready(function () {
     <li>
       <a href="Sound.html">Bioacoustic data</a>
     </li>
+    <li>
+      <a href="bioaco.html">Analyzing sound data</a>
+    </li>
   </ul>
 </li>
       </ul>
@@ -332,7 +335,7 @@ $(document).ready(function () {
 
 <h1 class="title toc-ignore">Soil science analyses</h1>
 <h4 class="author"></h4>
-<h4 class="date">2022-11-14</h4>
+<h4 class="date">2022-11-28</h4>
 
 </div>
 
@@ -579,32 +582,32 @@ obs_diff # display the value of obs_diff</code></pre>
 <pre><code>## # A tibble: 24 x 8
 ##    SampleID Species Group CSS   PlantComm SoilDensity  soilC orig.id 
 ##    &lt;chr&gt;    &lt;chr&gt;   &lt;dbl&gt; &lt;fct&gt; &lt;chr&gt;           &lt;dbl&gt;  &lt;dbl&gt; &lt;chr&gt;   
-##  1 Mallau1  Mallau      1 0     CHAP            1.14   1.07  3.4.4   
-##  2 Mallau5  Mallau      5 0     CHAP            1.36   3.34  19.3.3  
-##  3 Mallau2  Mallau      2 0     CHAP            0.929 13.9   7.20.11 
-##  4 Mallau6  Mallau      6 0     CHAP            0.929  1.07  23.20.4 
-##  5 Mallau3  Mallau      3 0     CHAP            1.13   0.315 11.15.23
-##  6 Samnig4  Samnig      4 0     CHAP            0.666  3.24  16.11.15
-##  7 Samnig1  Samnig      1 0     CHAP            1.46   0.315 4.19.23 
-##  8 Mallau4  Mallau      4 0     CHAP            0.542  2.57  15.23.16
-##  9 Samnig5  Samnig      5 0     CHAP            0.542  1.62  20.23.20
-## 10 Samnig5  Samnig      5 0     CHAP            0.899  1.62  20.7.20 
+##  1 Mallau2  Mallau      2 0     CHAP            0.899  3.90  7.7.7   
+##  2 Mallau4  Mallau      4 0     CHAP            1.09   3.34  15.8.3  
+##  3 Mallau6  Mallau      6 0     CHAP            0.542 10.4   23.23.12
+##  4 Samnig1  Samnig      1 0     CHAP            1.46   1.07  4.19.4  
+##  5 Mallau5  Mallau      5 0     CHAP            1.36   3.90  19.3.7  
+##  6 Mallau1  Mallau      1 0     CHAP            1.12   2.07  3.12.8  
+##  7 Mallau6  Mallau      6 0     CHAP            1.46   0.315 23.19.23
+##  8 Mallau2  Mallau      2 0     CHAP            0.899  2.07  7.7.8   
+##  9 Samnig3  Samnig      3 0     CHAP            1.13   0.315 12.15.23
+## 10 Mallau5  Mallau      5 0     CHAP            1.14   3.09  19.4.19 
 ## # … with 14 more rows</code></pre>
 <p>We can repeat that procedure again and see how the data shifts when we do another shuffle.</p>
 <pre class="r"><code>resample(soilDF[,c(1:4,18:20)],groups=PlantComm,shuffled=c(&quot;SoilDensity&quot;,&quot;soilC&quot;))</code></pre>
 <pre><code>## # A tibble: 24 x 8
 ##    SampleID Species Group CSS   PlantComm SoilDensity  soilC orig.id 
 ##    &lt;chr&gt;    &lt;chr&gt;   &lt;dbl&gt; &lt;fct&gt; &lt;chr&gt;           &lt;dbl&gt;  &lt;dbl&gt; &lt;chr&gt;   
-##  1 Samnig4  Samnig      4 0     CHAP            1.12  13.9   16.12.11
-##  2 Mallau6  Mallau      6 0     CHAP            0.929  0.315 23.20.23
-##  3 Samnig5  Samnig      5 0     CHAP            1.09   1.62  20.8.20 
-##  4 Mallau3  Mallau      3 0     CHAP            1.36  10.4   11.3.12 
-##  5 Mallau1  Mallau      1 0     CHAP            1.07   3.90  3.16.7  
-##  6 Mallau6  Mallau      6 0     CHAP            0.929  2.57  23.20.16
-##  7 Samnig5  Samnig      5 0     CHAP            0.899  1.62  20.7.20 
-##  8 Samnig1  Samnig      1 0     CHAP            0.542  3.34  4.23.3  
-##  9 Samnig6  Samnig      6 0     CHAP            1.14   2.07  24.4.8  
-## 10 Samnig2  Samnig      2 0     CHAP            1.17   2.95  8.24.24 
+##  1 Samnig4  Samnig      4 0     CHAP            1.07   2.07  16.16.8 
+##  2 Samnig1  Samnig      1 0     CHAP            0.929  1.07  4.20.4  
+##  3 Mallau1  Mallau      1 0     CHAP            1.12   2.07  3.12.8  
+##  4 Samnig3  Samnig      3 0     CHAP            1.36   2.57  12.3.16 
+##  5 Mallau2  Mallau      2 0     CHAP            1.36   3.90  7.3.7   
+##  6 Samnig2  Samnig      2 0     CHAP            0.899  1.62  8.7.20  
+##  7 Samnig2  Samnig      2 0     CHAP            0.542  3.34  8.23.3  
+##  8 Samnig5  Samnig      5 0     CHAP            1.07   0.315 20.16.23
+##  9 Mallau1  Mallau      1 0     CHAP            1.09   3.90  3.8.7   
+## 10 Mallau2  Mallau      2 0     CHAP            1.14  10.4   7.4.12  
 ## # … with 14 more rows</code></pre>
 <p>Let’s shuffle the data and see what that means for the distribution of mean <code>SoilDensity</code> differences between <code>CSS</code> and <code>CHAP</code>.</p>
 <pre class="r"><code>### Create random differences by shuffling the data
@@ -615,12 +618,12 @@ names(randomizing_diffs)[1] &lt;- &quot;DiffMeans&quot; # change the name of the
 # View first few rows of data
 head(randomizing_diffs)</code></pre>
 <pre><code>##     DiffMeans
-## 1  0.15482090
-## 2  0.09815063
-## 3 -0.07899201
-## 4  0.02190489
-## 5 -0.07268831
-## 6 -0.02739811</code></pre>
+## 1 -0.01179862
+## 2 -0.02245818
+## 3 -0.04216567
+## 4  0.03161914
+## 5 -0.02217865
+## 6  0.06866587</code></pre>
 <p>Now we can visualize the distribution of simulated differences in mean soil density and our observed difference between CSS and CHAP.</p>
 <pre class="r"><code>gf_histogram(~ DiffMeans, fill = ~ (DiffMeans &gt;= obs_diff),
              data = randomizing_diffs,
@@ -631,7 +634,7 @@ head(randomizing_diffs)</code></pre>
 <pre class="r"><code># What proportion of simulated values were larger than our observed difference
 prop( ~ DiffMeans &gt;= obs_diff, data = randomizing_diffs) # ~0.03 was the observed difference value - see obs_diff</code></pre>
 <pre><code>## prop_TRUE 
-##      0.42</code></pre>
+##     0.399</code></pre>
 </div>
 <div id="calculating-correlation-coefficients" class="section level2" number="3.2">
 <h2 number="3.2"><span class="header-section-number">3.2</span> 2: Calculating correlation coefficients</h2>
@@ -654,7 +657,7 @@ randomizing_cor &lt;- do(1000) * cor(BacterialPerc ~ SoilDensity,
 <pre class="r"><code>quantiles_cor &lt;- qdata( ~ cor, p = c(0.025, 0.975), data=randomizing_cor) # calculate the 2.5% and 97.5% quantiles in our simulated correlation coefficient data (note that 97.5-2.5 = 95!)
 quantiles_cor # display the quantiles</code></pre>
 <pre><code>##       2.5%      97.5% 
-## -0.5290238  0.2476788</code></pre>
+## -0.5288802  0.2217759</code></pre>
 <p>The values above give us a 95% confidence interval estimate for our correlation coefficient!</p>
 <p>Do we clearly see that our correlation coefficient distribution does or doesn’t include 0?</p>
 <pre class="r"><code>gf_histogram(~ cor,
@@ -688,13 +691,13 @@ lm_mod # print object</code></pre>
 <p>In the table below, we’d focus on rows 2-3 in particular.</p>
 <pre class="r"><code>lm_boot &lt;- do(1000) * lm(SoilDensity ~ BacterialPerc + SOM, data=resample(soilDF)) # shuffle our data 1000 times and re-run the linear model each time and store the outputs in lm_boot
 confint(lm_boot) # generate a 95% confidence interval from the simulated values for the linear regression coefficients</code></pre>
-<pre><code>##            name        lower       upper level     method     estimate
-## 1     Intercept  0.536225801  2.32410518  0.95 percentile  1.557138470
-## 2 BacterialPerc -0.015135233  0.00616606  0.95 percentile -0.004718324
-## 3           SOM -7.197206655  3.09299031  0.95 percentile -4.067413529
-## 4         sigma  0.126258366  0.31861068  0.95 percentile  0.257846423
-## 5     r.squared  0.008022401  0.69602768  0.95 percentile  0.159460192
-## 6             F  0.084916456 24.04267022  0.95 percentile  1.991972295</code></pre>
+<pre><code>##            name        lower        upper level     method     estimate
+## 1     Intercept  0.636625147  2.335351358  0.95 percentile  1.557138470
+## 2 BacterialPerc -0.015790722  0.005553617  0.95 percentile -0.004718324
+## 3           SOM -7.160797035  3.037437189  0.95 percentile -4.067413529
+## 4         sigma  0.128758625  0.315910727  0.95 percentile  0.257846423
+## 5     r.squared  0.006230317  0.651408223  0.95 percentile  0.159460192
+## 6             F  0.065828566 19.621230945  0.95 percentile  1.991972295</code></pre>
 <p>Based on the values above, as soil organic matter (SOM) increases by one unit, soil density decreases by as much as 7.1 g/mL or increases as much as 5.3 g/mL. Because the confidence interval for this coefficient crosses 0, we would conclude that there is not a clear directional association between SOM and soil density. Similarly, it looks like bacterial percentage does not have a clear directional effect on soil density.</p>
 </div>
 </div>

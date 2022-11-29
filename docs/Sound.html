@@ -391,6 +391,9 @@ div.tocify {
     <li>
       <a href="Sound.html">Bioacoustic data</a>
     </li>
+    <li>
+      <a href="bioaco.html">Analyzing sound data</a>
+    </li>
   </ul>
 </li>
       </ul>
@@ -405,48 +408,27 @@ div.tocify {
 
 
 
-<h1 class="title toc-ignore">Acoustic ecology - studying environments
-through sound</h1>
+<h1 class="title toc-ignore">Acoustic ecology - studying environments through sound</h1>
 <h4 class="author"></h4>
 
 </div>
 
 
 <div id="overview" class="section level1 tabset tabset-fade" number="1">
-<h1 class="tabset tabset-fade"><span
-class="header-section-number">1</span> Overview</h1>
-<p>Please start by logging into <a
-href="https://sso.rstudio.cloud/pomona">sso.rstudio.cloud/pomona</a>.
-Once you’ve logged in, you should see the option to open the
-<code>EA 30.1 - Fall 2022</code> workspace. You can also access <a
-href="https://sso.rstudio.cloud/pomona?redirect=https%3A%2F%2Frstudio.cloud%2Fspaces%2F272090%2Fjoin%3Faccess_code%3DRH6FObo67WiGmhjuBirlncXZZYKYQBZW9K1HPSEV">the
-<code>EA 30.1 - Fall 2022</code> workspace at this link</a>.</p>
-<p>At the workspace, you should then see the “Assignment”
-<code>Acoustics</code>. Please click on that Assignment. Here is a <a
-href="https://rstudio.cloud/spaces/272090/content/4961814">direct link
-to the <code>Acoustics</code> project</a>, but it may not work if this
-is the first time in a while that you’re logging into RStudio.Cloud. If
-it doesn’t work, no worries - just log in through the <a
-href="https://sso.rstudio.cloud/pomona">sso.rstudio.cloud/pomona</a>
-link.</p>
-<p>In this tutorial, we’ll take a look at sound data collected at the
-Bernard Field Station this past October, or earlier this year.</p>
+<h1 class="tabset tabset-fade" number="1"><span class="header-section-number">1</span> Overview</h1>
+<p>Please start by logging into <a href="https://sso.rstudio.cloud/pomona">sso.rstudio.cloud/pomona</a>. Once you’ve logged in, you should see the option to open the <code>EA 30.1 - Fall 2022</code> workspace. You can also access <a href="https://sso.rstudio.cloud/pomona?redirect=https%3A%2F%2Frstudio.cloud%2Fspaces%2F272090%2Fjoin%3Faccess_code%3DRH6FObo67WiGmhjuBirlncXZZYKYQBZW9K1HPSEV">the <code>EA 30.1 - Fall 2022</code> workspace at this link</a>.</p>
+<p>At the workspace, you should then see the “Assignment” <code>Acoustics</code>. Please click on that Assignment. Here is a <a href="https://rstudio.cloud/spaces/272090/content/4961814">direct link to the <code>Acoustics</code> project</a>, but it may not work if this is the first time in a while that you’re logging into RStudio.Cloud. If it doesn’t work, no worries - just log in through the <a href="https://sso.rstudio.cloud/pomona">sso.rstudio.cloud/pomona</a> link.</p>
+<p>In this tutorial, we’ll take a look at sound data collected at the Bernard Field Station this past October, or earlier this year.</p>
 <p>In this tutorial, you will learn:</p>
 <ul>
-<li>what are different ways to interact with sound data in
-<code>R</code>?</li>
+<li>what are different ways to interact with sound data in <code>R</code>?</li>
 <li>how can we visualize sound data using spectrograms?</li>
 <li>how can we calculate indices of acoustic diversity?</li>
 </ul>
 </div>
-<div id="a-brief-description-of-sound" class="section level1"
-number="2">
-<h1><span class="header-section-number">2</span> A brief description of
-sound</h1>
-<p>When we vocalize, we are making vibrations that move through the air
-like a wave. Microphones detect these vibrations. These vibrations are
-then recorded into numbers which can be processed by computers. It turns
-out that we can get quite a bit of information from these numbers.</p>
+<div id="a-brief-description-of-sound" class="section level1" number="2">
+<h1 number="2"><span class="header-section-number">2</span> A brief description of sound</h1>
+<p>When we vocalize, we are making vibrations that move through the air like a wave. Microphones detect these vibrations. These vibrations are then recorded into numbers which can be processed by computers. It turns out that we can get quite a bit of information from these numbers.</p>
 <p>Let’s start by loading the packages that we will need.</p>
 <pre class="r"><code>### Loading packages
 library(seewave)
@@ -454,16 +436,12 @@ library(tuneR)
 library(dplyr)
 library(readr)</code></pre>
 <div id="waveforms" class="section level2" number="2.1">
-<h2><span class="header-section-number">2.1</span> Waveforms</h2>
-<p>Let’s pull in one of the recorded files from the BFS. You can play
-the recording below.</p>
+<h2 number="2.1"><span class="header-section-number">2.1</span> Waveforms</h2>
+<p>Let’s pull in one of the recorded files from the BFS. You can play the recording below.</p>
 <audio controls="">
 <source src="20220313_063000.WAV" type="audio/wav"/>
 </audio>
-<p>Now, let’s visualize this recording using an oscillogram. The output
-from the function <code>oscillo</code> shows how how the amplitude (or
-loudness) changes over the whole recording. We’re going to focus on
-visualizing the recording from 0:00 to 0:05</p>
+<p>Now, let’s visualize this recording using an oscillogram. The output from the function <code>oscillo</code> shows how how the amplitude (or loudness) changes over the whole recording. We’re going to focus on visualizing the recording from 0:00 to 0:05</p>
 <pre class="r"><code>## Read in the sound data
 BFS_am_1 &lt;-tuneR::readWave(&#39;20221103_062700.WAV&#39;)
 
@@ -471,21 +449,12 @@ BFS_am_1 &lt;-tuneR::readWave(&#39;20221103_062700.WAV&#39;)
 ## which is a plot of amplitude over time
 oscillo(BFS_am_1, from=0, to= 5, fastdisp=TRUE)</code></pre>
 <p><img src="Sound_files/figure-html/unnamed-chunk-3-1.png" width="672" /></p>
-<p>One thing to note is that these data were recorded at a frequency of
-48,000 records per second. So even though each sound file is only 30
-seconds long, it has a total of 1,440,000 data points! (This is equal to
-30 seconds / minute * 48000 records/second.)</p>
+<p>One thing to note is that these data were recorded at a frequency of 48,000 records per second. So even though each sound file is only 30 seconds long, it has a total of 1,440,000 data points! (This is equal to 30 seconds / minute * 48000 records/second.)</p>
 </div>
 <div id="spectrogram" class="section level2" number="2.2">
-<h2><span class="header-section-number">2.2</span> Spectrogram</h2>
-<p>Another way that we can visualize sound is to use the fact that sound
-has the property of frequency (pitch) at particular times. We can also
-include amplitude (loudness) as a color. A spectrogram let’s us display
-all three elements of an acoustic signal: its time/duration, the
-frequency (pitch) of the sound, and the loudness of the sound at each
-frequency (pitch).</p>
-<p>We see that the frequencies in this sound recording are mostly
-located from 0 to 5000 Hz (or 5 kHz).</p>
+<h2 number="2.2"><span class="header-section-number">2.2</span> Spectrogram</h2>
+<p>Another way that we can visualize sound is to use the fact that sound has the property of frequency (pitch) at particular times. We can also include amplitude (loudness) as a color. A spectrogram let’s us display all three elements of an acoustic signal: its time/duration, the frequency (pitch) of the sound, and the loudness of the sound at each frequency (pitch).</p>
+<p>We see that the frequencies in this sound recording are mostly located from 0 to 5000 Hz (or 5 kHz).</p>
 <pre class="r"><code>## Use spectro to display the spectogram of this data
 spectro(BFS_am_1, fastdisp=TRUE)</code></pre>
 <p><img src="Sound_files/figure-html/unnamed-chunk-4-1.png" width="672" /></p>
@@ -493,46 +462,28 @@ spectro(BFS_am_1, fastdisp=TRUE)</code></pre>
 </div>
 </div>
 <div id="soundscape-indices" class="section level1" number="3">
-<h1><span class="header-section-number">3</span> Soundscape indices</h1>
-<p>From observational data of species, we can calculate metrics such as
-species richness, Shannon’s index, etc. Similarly, from sound data, we
-can calculate metrics of acoustic complexity, which theoretically should
-be related to the overall biodiversity of vocalizing animals.</p>
+<h1 number="3"><span class="header-section-number">3</span> Soundscape indices</h1>
+<p>From observational data of species, we can calculate metrics such as species richness, Shannon’s index, etc. Similarly, from sound data, we can calculate metrics of acoustic complexity, which theoretically should be related to the overall biodiversity of vocalizing animals.</p>
 <p>First, let’s now also read in an evening recording.</p>
 <audio controls="">
 <source src="20220313_205000.WAV" type="audio/wav"/>
 </audio>
 <pre class="r"><code>## Read in the sound data for the evening
 BFS_pm_1 &lt;-tuneR::readWave(&#39;20221020_191500.WAV&#39;)</code></pre>
-<p>Here, we will use the function <code>ACI</code> to calculate the
-acoustic complexity of a morning versus evening recording from the
-BFS.</p>
+<p>Here, we will use the function <code>ACI</code> to calculate the acoustic complexity of a morning versus evening recording from the BFS.</p>
 <pre class="r"><code>ACI(BFS_am_1)</code></pre>
 <pre><code>## [1] 150.2826</code></pre>
 <pre class="r"><code>ACI(BFS_pm_1)</code></pre>
 <pre><code>## [1] 167.0415</code></pre>
 </div>
 <div id="processed-data" class="section level1" number="4">
-<h1><span class="header-section-number">4</span> Processed data</h1>
-<p>In addition to using numeric metrics such as <code>ACI</code> to
-calculate the acoustic diversity of audio recordings, we can use new
-computer vision models to identify (bird) species in the recordings. We
-have and will process/ed the raw recording data to:</p>
+<h1 number="4"><span class="header-section-number">4</span> Processed data</h1>
+<p>In addition to using numeric metrics such as <code>ACI</code> to calculate the acoustic diversity of audio recordings, we can use new computer vision models to identify (bird) species in the recordings. We have and will process/ed the raw recording data to:</p>
 <ul>
-<li>Calculate ACI for each 30 second recording - <em>in progress</em>;
-<em>to be done for the class recordings</em></li>
-<li>Identify bird vocalizations in each 30 second recording -
-<em>complete</em>; <em>to be done for the class recordings</em></li>
+<li>Calculate ACI for each 30 second recording - <em>in progress</em>; <em>to be done for the class recordings</em></li>
+<li>Identify bird vocalizations in each 30 second recording - <em>complete</em>; <em>to be done for the class recordings</em></li>
 </ul>
-<p>We have used Cornell Lab of Ornithology’s <a
-href="https://birdnet.cornell.edu/">BirdNET</a> neural network model,
-which is trained on data such as identified acoustic recordings from <a
-href="https://xeno-canto.org/">xeno-canto</a>. This model extracts
-distinct bird vocalizations from the spectrographic representation of
-each sound file. Those bird vocalizations are then pattern matched
-against known bird vocalizations to generate the most likely species (of
-the 3000 species supported by the model) with some probability (a.k.a.
-<code>confidence</code>).</p>
+<p>We have used Cornell Lab of Ornithology’s <a href="https://birdnet.cornell.edu/">BirdNET</a> neural network model, which is trained on data such as identified acoustic recordings from <a href="https://xeno-canto.org/">xeno-canto</a>. This model extracts distinct bird vocalizations from the spectrographic representation of each sound file. Those bird vocalizations are then pattern matched against known bird vocalizations to generate the most likely species (of the 3000 species supported by the model) with some probability (a.k.a. <code>confidence</code>).</p>
 <p>Let’s take a look at the data.</p>
 <pre class="r"><code># Read in a spreadsheet from a URL using read_tsv from the readr package
 birdnetDF &lt;- readr::read_tsv(&quot;https://github.com/EA30POM/site/raw/main/data/birdnet10-22.tsv&quot;)</code></pre>
@@ -566,16 +517,11 @@ birdnetDF %&gt;% head() # look at the first 6 rows</code></pre>
 ## 6         6 Spectr…       1         15       18       150      12000 caltow     
 ## # … with 6 more variables: CommonName &lt;chr&gt;, Confidence &lt;dbl&gt;, unit &lt;chr&gt;,
 ## #   date &lt;date&gt;, time &lt;chr&gt;, DayNight &lt;chr&gt;</code></pre>
-<p>Below, I’ll walk you through some possible analyses with the BirdNET
-identifications, so that this can be grist for the mill for thinking
-about a hypothesis that your group can take on. Let’s start by removing
-low confidence recordings (e.g. confidence <span class="math display">\[
-&lt; 0.5\]</span>).</p>
+<p>Below, I’ll walk you through some possible analyses with the BirdNET identifications, so that this can be grist for the mill for thinking about a hypothesis that your group can take on. Let’s start by removing low confidence recordings (e.g. confidence <span class="math display">\[ &lt; 0.5\]</span>).</p>
 <pre class="r"><code># Filter out low confidence identifications
 birdnetDF &lt;- birdnetDF %&gt;%
   dplyr::filter(Confidence &gt;= 0.5) # only retain the rows (observations) where Confidence &gt;= 0.5</code></pre>
-<p>Now, let’s say that we were interested in evaluating the number of
-species identified during the day or night. How would we do that?</p>
+<p>Now, let’s say that we were interested in evaluating the number of species identified during the day or night. How would we do that?</p>
 <pre class="r"><code># Analyzing number of species during the day or night
 birdnetDF %&gt;%
   group_by(DayNight) %&gt;% # group by the Day or Night categories
@@ -586,56 +532,35 @@ birdnetDF %&gt;%
 ##   &lt;chr&gt;         &lt;int&gt;
 ## 1 Day             195
 ## 2 Night           144</code></pre>
-<p>Below is a summary of what the relevant columns in the class data are
-or will be:</p>
+<p>Below is a summary of what the relevant columns in the class data are or will be:</p>
 <p><em><code>birdnet</code> Data</em>:</p>
 <ul>
-<li><code>SpeciesCode</code>: A <a
-href="https://www.birdpop.org/pages/birdSpeciesCodes.php">six letter
-short-hand code for species</a>, determined by groups such as the
-American Ornithological Society</li>
-<li><code>CommonName</code>: The common name for different species
-identified in each 3 second window of the recording</li>
-<li><code>Confidence</code>: The confidence of the identification for
-each species in each 3 second window</li>
+<li><code>SpeciesCode</code>: A <a href="https://www.birdpop.org/pages/birdSpeciesCodes.php">six letter short-hand code for species</a>, determined by groups such as the American Ornithological Society</li>
+<li><code>CommonName</code>: The common name for different species identified in each 3 second window of the recording</li>
+<li><code>Confidence</code>: The confidence of the identification for each species in each 3 second window</li>
 <li><code>unit</code>: Which unit recorded the data</li>
 <li><code>date</code>: What was the date of the recording?</li>
 <li><code>time</code>: What was the time of the recording?</li>
-<li><code>DayNight</code>: Was the recording made during the daytime or
-nighttime?</li>
+<li><code>DayNight</code>: Was the recording made during the daytime or nighttime?</li>
 </ul>
 <p><em><code>ACI</code> Data</em> (forthcoming):</p>
-<p>Many of the columns will be the same as the <code>birdnet</code>
-data, though some column names may be capitalized
-(e.g. <code>Unit</code> instead of <code>unit</code>).</p>
+<p>Many of the columns will be the same as the <code>birdnet</code> data, though some column names may be capitalized (e.g. <code>Unit</code> instead of <code>unit</code>).</p>
 <ul>
-<li><code>ACI</code>: the acoustic complexity index value for each 30
-second recording.</li>
+<li><code>ACI</code>: the acoustic complexity index value for each 30 second recording.</li>
 </ul>
-<p>Each of your groups is required to submit 3 hypotheses by the end of
-Week 3 of this lab (Week 13 of class). Please confer with your groups on
-possible hypotheses that you can explore with these data. Some
-additional variables beyond the bird identification or <code>ACI</code>
-variables that we can obtain as a class include:</p>
+<p>Each of your groups is required to submit 3 hypotheses by the end of Week 3 of this lab (Week 13 of class). Please confer with your groups on possible hypotheses that you can explore with these data. Some additional variables beyond the bird identification or <code>ACI</code> variables that we can obtain as a class include:</p>
 <ul>
 <li>Precipitation</li>
 <li>Temperature</li>
 <li>Time of year (<code>date</code>)</li>
-<li><a
-href="https://dashboard.birdcast.info/region/US-CA-037?night=2022-11-14">BirdCast</a>
-migration estimates for Los Angeles County (see the <em>Birds in flight
-(nightly avg.)</em> plot FMI)</li>
-<li>Habitat type in the BFS (determined by the <code>unit</code>’s
-location)</li>
-<li>Distance to road or edge of the BFS (determined by the
-<code>unit</code>’s location)</li>
-<li>… other variables that you may think of and are feasible for us to
-collect!</li>
+<li><a href="https://dashboard.birdcast.info/region/US-CA-037?night=2022-11-14">BirdCast</a> migration estimates for Los Angeles County (see the <em>Birds in flight (nightly avg.)</em> plot FMI)</li>
+<li>Habitat type in the BFS (determined by the <code>unit</code>’s location)</li>
+<li>Distance to road or edge of the BFS (determined by the <code>unit</code>’s location)</li>
+<li>… other variables that you may think of and are feasible for us to collect!</li>
 </ul>
 </div>
 <div id="r-script" class="section level1" number="5">
-<h1><span class="header-section-number">5</span> <code>R</code>
-script</h1>
+<h1 number="5"><span class="header-section-number">5</span> <code>R</code> script</h1>
 <p>Below is the <code>R</code> script in its entirety.</p>
 <pre class="r"><code>### Loading packages
 library(seewave)

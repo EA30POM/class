@@ -33,22 +33,8 @@ navbar:
       menu:
         - text: "Bioacoustic data"
           href: Sound.html
-    #     - text: "Analysis"
-    #       href: EnvComm2.html
-    #     - text: "Groups"
-    #       menu:
-    #         - text: "Group1"
-    #           href: Group1.html
-    #         - text: "Group2"
-    #           href: Group2.html
-    #         - text: "Group3"
-    #           href: Group3.html
-    #         - text: "Group4"
-    #           href: Group4.html
-    #         - text: "Group5"
-    #           href: Group5.html
-    #         - text: "Group6"
-    #           href: Group6.html
+        - text: "Analyzing sound data"
+          href: bioaco.html
 output:
   html_document:
     theme: flatly
