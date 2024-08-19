@@ -30,13 +30,13 @@ By the end of the course, a successful learner will be able to:
 
 **Lecture location**: Seaver South Room 121
 
-**Lab location**: Seaver South Room 113 (or Bernard Field Station South Outdoors Classroom when noted)
+**Lab location**: Seaver South 211 (or Bernard Field Station South Outdoors Classroom when noted)
 
-**Lecture Schedule**: Tuesdays and Thursdays, 9:35-10:50am PT
+**Lecture Schedule**: Tuesdays and Thursdays, 8:10-9:25am PT
 
 **Lab Schedule**: Tuesdays 1:15-5:00pm PT
 
-**Office Hours**: I am always happy to talk to you. My open-doors office hours will typically be **Thursdays 11:00am-12:00pm and 2-3pm**. If these times do not work for your schedule, please reach out via Slack. While you are welcome to show up at my office, it can be helpful to use my [Calendly](https://calendly.com/chchang47/small-group-meetings) to let me know if you want to meet via Zoom or have a particular agenda item you'd like to discuss.
+**Office Hours**: I am always happy to talk to you. My open-doors office hours will typically be **Thursdays 10:00am-12:00pm**. If these times do not work for your schedule, please reach out via Slack.
 
 **Prerequisites**: None
 
@@ -65,20 +65,11 @@ I will strive to provide an equitable and inclusive learning environment. My ove
 
 A key component of my role as an instructor is office hours. During office hours, I am available to help you work through any problems, questions, or thoughts you have about the course. I am also more than happy to chat about broader questions such as career paths in environmental science, ecology, and conservation, next steps after Pomona College/the Claremont Colleges, or other academic or professional topics of interest to you.
 
-**Student Well-Being**: Our health, both mental and physical, is paramount. We must consider the health of others inside and outside the classroom. All Claremont Colleges students have signed agreements regulating on-campus behavior during the pandemic; in the classroom, we will uphold these agreements. We need to take care of each other for this course to be successful. I ask you therefore to adhere to the following principles: 
-
-* There is a mask mandate for all indoor spaces on campus. You must wear a mask for the entire class; eating and drinking in indoors classroom spaces are not permitted. Your mask must cover your mouth and nose. The college has zero-tolerance for violations of this policy, and our shared commitment to the health and safety of our community members means if you come to class unmasked you will have to leave class for the day. 
-* Class attendance is important, but if you need to miss class for health reasons, concerning symptoms, suspected COVID exposure, unexpected dependent care, technology issues, or other emergency reasons I will work with you. Let me underscore this: **please make your decisions always based on health, safety, and wellness—yours and others**—and I will work with you at the other end. *Take any potential symptoms seriously; we’re counting on each other.*
-* When not in class, avoid closed public spaces, and if you can't avoid them: wear your mask properly, wash your hands, and maintain social distance.    
-* If you, or a family member, are experiencing hardship because of the pandemic, talk to me or to someone in the Dean of Students office. You are not alone during this time. 
-
-In addition to the course policies, I seek to prioritize your health and well-being. Physical or mental illness, personal crises, family care, and other responsibilities can strongly impact your ability to participate in this course. Please let me and/or staff in the Student Affairs or related offices know if any of these issues pose severe obstacles to you and we will work together to come up with solutions. I am also more than happy to work with you and a representative from Student Affairs in situations where sensitive information is involved.
-
 ## General course policies
 
 *Office hours, email, and class Slack channel*: During office hours, I am available to help you work through any problems, questions, or thoughts you have about the course. If you would like to discuss a particular problem or topic that would benefit from preparation on my part, please give me advance notice via [Calendly](https://calendly.com/chchang47/small-group-meetings). 
 
-I have email boundaries and I encourage you to find your own. Mine include not answering emails after 6pm, or on weekends or holidays. Finally, I request that emails only be used for interactions that are truly one-on-one (e.g. requesting extensions to assignments or accomodations); in general, to help create an atmosphere of transparency and group learning, I request that questions about content and assignments be directed to the #ea30f22 Slack channel.
+I have email boundaries and I encourage you to find your own. Mine include not answering emails after 5pm, or on weekends or holidays. Finally, I request that emails only be used for interactions that are truly one-on-one (e.g. requesting extensions to assignments or accomodations); in general, to help create an atmosphere of transparency and group learning, I request that questions about content and assignments be directed to the `#ea30f24` Slack channel.
 
 *Learning diversity & accommodations*: Pomona College welcomes and accommodates students with disabilities. As your instructor, I aim to see you succeed in your growth as an environmental scholar. If you encounter obstacles to your success, please let me know immediately so that we can work together to identify ways to overcome any limitations of current course design. If you feel you need a reasonable accommodation to participate in this class, complete course requirements, or benefit from the College’s programs or services, you are also welcome to contact the student accessibility resource office at your College to begin this conversation or to establish accommodations for this or other courses.
 
@@ -99,9 +90,7 @@ Below is a list of the relevant accessibility resource offices at each of the Co
 4. [PZ Writing Center](https://www.pitzer.edu/writing-center/)
 5. [SC Writing Center](https://www.scrippscollege.edu/departments/writing-program/writing-center)
 
-**All students in any Pomona class are welcome to use the Pomona College Writing Center**. The following is a description from the Writing Center's director, Prof. Kara Wittman.
-
-The Writing Center is open this semester! We open at full capacity after the second week of the semester, but we will be holding limited hours as soon as classes begin. Writing and Speaking Partners meet one-on-one with students to talk about their work and provide feedback at any stage of their preparation process. Trained to think deeply about rhetoric and communication across the curriculum, these student peers facilitate conversations about everything from ID1 papers to senior theses, lab reports to creative writing, giving presentations to developing strategies for reading and engaging more deeply in class discussions. Additionally, Jenny Thomas, our Assistant Director of College Writing and Language Diversity, offers specialized writing and speaking support for multilingual students navigating English as an additional language. To make an appointment with a Writing or Speaking Partner, please log on to the Portal and go to Academics > Writing Center, or contact us at [writing.center@pomona.edu](writing.center@pomona.edu). All appointments will be made through the Portal as usual, will be online--or sometimes in-person but outdoors--and our Writing and Speaking Partners will be flexible both about the mode of consultation (phone, Zoom, email, Google docs, walk and talk, etc.) and about their hours in order to accommodate student need.  
+**All students in any Pomona class are welcome to use the Pomona College Center For Speaking, Writing, and the Image** and I strongly encourage you to take advantage of this great resource.
 
 *Late assignments*:  When assignments are handed in late without prior notice, I reserve the right to apply a grade deduction penalty (1 grade reduction for each day late).
 
@@ -117,7 +106,7 @@ library(googlesheets4)
 library(htmlTable)
 
 ## Pull in Google sheet schedule
-schedDF <- googlesheets4::read_sheet("https://docs.google.com/spreadsheets/d/1dK_8Z8O84QNcyY4Kn2j6nm41ZSQlLf9TEO2foBkuFF4/edit?usp=sharing",sheet = "ScheduleF22",col_types="ccccc")
+schedDF <- googlesheets4::read_sheet("https://docs.google.com/spreadsheets/d/1dK_8Z8O84QNcyY4Kn2j6nm41ZSQlLf9TEO2foBkuFF4/edit?usp=sharing",sheet = "Schedule",col_types="ccccc")
 
 ## Hack-y workaround to do zebra banding color automagically (based on NA values)
 zebra_cols <- rep("none",dim(schedDF)[1])

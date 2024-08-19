@@ -9,12 +9,13 @@
 <meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
 
 
+<meta name="author" content="" />
 
-<meta name="date" content="2022-11-28" />
+<meta name="date" content="2024-08-19" />
 
 <title>Syllabus</title>
 
-<script src="site_libs/header-attrs-2.13/header-attrs.js"></script>
+<script src="site_libs/header-attrs-2.27/header-attrs.js"></script>
 <script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <link href="site_libs/bootstrap-3.3.5/css/flatly.min.css" rel="stylesheet" />
@@ -33,8 +34,8 @@
 <script src="site_libs/navigation-1.1/tabsets.js"></script>
 <link href="site_libs/highlightjs-9.12.0/default.css" rel="stylesheet" />
 <script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
-<link href="site_libs/font-awesome-5.1.0/css/all.css" rel="stylesheet" />
-<link href="site_libs/font-awesome-5.1.0/css/v4-shims.css" rel="stylesheet" />
+<link href="site_libs/font-awesome-6.4.2/css/all.min.css" rel="stylesheet" />
+<link href="site_libs/font-awesome-6.4.2/css/v4-shims.min.css" rel="stylesheet" />
 
 <style type="text/css">
   code{white-space: pre-wrap;}
@@ -145,11 +146,15 @@ $(document).ready(function () {
     href = "index.html";
   var menuAnchor = $('a[href="' + href + '"]');
 
-  // mark it active
-  menuAnchor.tab('show');
-
-  // if it's got a parent navbar menu mark it active as well
-  menuAnchor.closest('li.dropdown').addClass('active');
+  // mark the anchor link active (and if it's in a dropdown, also mark that active)
+  var dropdown = menuAnchor.closest('li.dropdown');
+  if (window.bootstrap) { // Bootstrap 4+
+    menuAnchor.addClass('active');
+    dropdown.find('> .dropdown-toggle').addClass('active');
+  } else { // Bootstrap 3
+    menuAnchor.parent().addClass('active');
+    dropdown.addClass('active');
+  }
 
   // Navbar adjustments
   var navHeight = $(".navbar").first().height() + 15;
@@ -178,8 +183,8 @@ $(document).ready(function () {
   border-radius: 4px;
 }
 
-.tabset-dropdown > .nav-tabs > li.active:before {
-  content: "";
+.tabset-dropdown > .nav-tabs > li.active:before, .tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "\e259";
   font-family: 'Glyphicons Halflings';
   display: inline-block;
   padding: 10px;
@@ -187,16 +192,9 @@ $(document).ready(function () {
 }
 
 .tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
-  content: "&#xe258;";
-  border: none;
-}
-
-.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
-  content: "";
+  content: "\e258";
   font-family: 'Glyphicons Halflings';
-  display: inline-block;
-  padding: 10px;
-  border-right: 1px solid #ddd;
+  border: none;
 }
 
 .tabset-dropdown > .nav-tabs > li.active {
@@ -296,18 +294,6 @@ $(document).ready(function () {
 </li>
 <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-    Soil science
-     
-    <span class="caret"></span>
-  </a>
-  <ul class="dropdown-menu" role="menu">
-    <li>
-      <a href="soil.html">Analyzing data</a>
-    </li>
-  </ul>
-</li>
-<li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     Bioacoustics
      
     <span class="caret"></span>
@@ -335,35 +321,62 @@ $(document).ready(function () {
 
 <h1 class="title toc-ignore">Syllabus</h1>
 <h4 class="author"></h4>
-<h4 class="date">2022-11-28</h4>
+<h4 class="date">2024-08-19</h4>
 
 </div>
 
 
 <div id="overview" class="section level1">
 <h1>Overview</h1>
-<p><em>Environmental Science</em> introduces the scientific, socio-political, and technological dimensions of environmental problems that pose unprecedented challenges to humanity and the environment: climate change, biodiversity loss, and providing food and water for 7.8 billion people. In this class, we will examine fundamental changes in the biosphere, and their implications for climate, land, water, and species, while emphasizing a systems-view of problems and potential solutions.</p>
-<p>Over the coming semester, we will look at environmental issues at a local and global scale, examining how individual and collective decisions lead to environmental changes. We will use case studies to illustrate the different dimensions of environmental problems. In the laboratory, you will learn some core techniques for environmental science, including the use and analysis of spatial and environmental data, as well as the uncertainty and limitations of real-world data.</p>
+<p><em>Environmental Science</em> introduces the scientific,
+socio-political, and technological dimensions of environmental problems
+that pose unprecedented challenges to humanity and the environment:
+climate change, biodiversity loss, and providing food and water for 7.8
+billion people. In this class, we will examine fundamental changes in
+the biosphere, and their implications for climate, land, water, and
+species, while emphasizing a systems-view of problems and potential
+solutions.</p>
+<p>Over the coming semester, we will look at environmental issues at a
+local and global scale, examining how individual and collective
+decisions lead to environmental changes. We will use case studies to
+illustrate the different dimensions of environmental problems. In the
+laboratory, you will learn some core techniques for environmental
+science, including the use and analysis of spatial and environmental
+data, as well as the uncertainty and limitations of real-world data.</p>
 <div id="learning-outcomes" class="section level2">
 <h2>Learning outcomes</h2>
 <p>By the end of the course, a successful learner will be able to:</p>
 <ul>
-<li>Describe how anthropogenic factors affect climate, air, biota, water, and soils;</li>
-<li>Apply systems science thinking and techniques to environmental science issues;</li>
-<li>Interpret and critically analyze environmental data using quantitative and qualitative approaches;</li>
+<li>Describe how anthropogenic factors affect climate, air, biota,
+water, and soils;</li>
+<li>Apply systems science thinking and techniques to environmental
+science issues;</li>
+<li>Interpret and critically analyze environmental data using
+quantitative and qualitative approaches;</li>
 <li>Communicate scientific information to broad audiences;</li>
-<li>Understand issues such as risk, uncertainty, and trade-offs that that underlie all environmental challenges and the search for effective solutions to environmental problems.</li>
+<li>Understand issues such as risk, uncertainty, and trade-offs that
+that underlie all environmental challenges and the search for effective
+solutions to environmental problems.</li>
 </ul>
 </div>
 <div id="general-information" class="section level2">
 <h2>General information</h2>
 <p><strong>Lecture location</strong>: Seaver South Room 121</p>
-<p><strong>Lab location</strong>: Seaver South Room 113 (or Bernard Field Station South Outdoors Classroom when noted)</p>
-<p><strong>Lecture Schedule</strong>: Tuesdays and Thursdays, 9:35-10:50am PT</p>
+<p><strong>Lab location</strong>: Seaver South 211 (or Bernard Field
+Station South Outdoors Classroom when noted)</p>
+<p><strong>Lecture Schedule</strong>: Tuesdays and Thursdays,
+8:10-9:25am PT</p>
 <p><strong>Lab Schedule</strong>: Tuesdays 1:15-5:00pm PT</p>
-<p><strong>Office Hours</strong>: I am always happy to talk to you. My open-doors office hours will typically be <strong>Thursdays 11:00am-12:00pm and 2-3pm</strong>. If these times do not work for your schedule, please reach out via Slack. While you are welcome to show up at my office, it can be helpful to use my <a href="https://calendly.com/chchang47/small-group-meetings">Calendly</a> to let me know if you want to meet via Zoom or have a particular agenda item you’d like to discuss.</p>
+<p><strong>Office Hours</strong>: I am always happy to talk to you. My
+open-doors office hours will typically be <strong>Thursdays
+10:00am-12:00pm</strong>. If these times do not work for your schedule,
+please reach out via Slack.</p>
 <p><strong>Prerequisites</strong>: None</p>
-<p><strong>Readings</strong>: This course will use a combination of the primary literature, popular science books, and textbooks, chief among them <em>Living in the Environment</em> (LITE for short). Please note that you <strong>do not need to purchase</strong> <em>Living in the Environment</em> – all readings will be available online.</p>
+<p><strong>Readings</strong>: This course will use a combination of the
+primary literature, popular science books, and textbooks, chief among
+them <em>Living in the Environment</em> (LITE for short). Please note
+that you <strong>do not need to purchase</strong> <em>Living in the
+Environment</em> – all readings will be available online.</p>
 </div>
 <div id="course-assessment" class="section level2">
 <h2>Course assessment</h2>
@@ -380,54 +393,137 @@ $(document).ready(function () {
 <h2>Mutual expectations</h2>
 <div id="what-i-expect-from-you" class="section level3">
 <h3>What I expect from you</h3>
-<p>I welcome individuals of all ages, backgrounds, beliefs, ethnicities, genders, gender identities, gender expressions, national origins, religious affiliations, sexual orientations, ability – and any other visible and non-visible differences. As an instructor, I strongly emphasize student agency; this class is <strong>your</strong> learning journey, and as such, I expect students to take leadership in their own learning and to keep track of assignments and examination dates. I expect we will respectfully consider differing opinions and engage in constructive discourse. As such, I expect that everyone will help create a collegial environment where all students feel welcome and their rights to learn are respected. Please refer to the <a href="http://catalog.pomona.edu/content.php?catoid=38&amp;navoid=7668">Pomona College Student Code</a> for official policy.</p>
-<p><strong>Digital ethics</strong>: One of the tools we will use from time to time in this course is Zoom. To facilitate access, I may occasionally record Zoom meetings. I will inform students when recordings are in progress. I expect that students in my class will respect one another and my privacy. To that end, students in EA 30 will not record any other member of the class–including the instructor–without obtaining their consent in advance. Students in EA 30 will also not share information about other members of this course in any type of public fora, such as social media. As the instructor, I own the copyright to my instructional materials. These materials cannot be distributed in whole or in part to any person or entity other than other members of the current class without my prior written consent.</p>
+<p>I welcome individuals of all ages, backgrounds, beliefs, ethnicities,
+genders, gender identities, gender expressions, national origins,
+religious affiliations, sexual orientations, ability – and any other
+visible and non-visible differences. As an instructor, I strongly
+emphasize student agency; this class is <strong>your</strong> learning
+journey, and as such, I expect students to take leadership in their own
+learning and to keep track of assignments and examination dates. I
+expect we will respectfully consider differing opinions and engage in
+constructive discourse. As such, I expect that everyone will help create
+a collegial environment where all students feel welcome and their rights
+to learn are respected. Please refer to the <a
+href="http://catalog.pomona.edu/content.php?catoid=38&amp;navoid=7668">Pomona
+College Student Code</a> for official policy.</p>
+<p><strong>Digital ethics</strong>: One of the tools we will use from
+time to time in this course is Zoom. To facilitate access, I may
+occasionally record Zoom meetings. I will inform students when
+recordings are in progress. I expect that students in my class will
+respect one another and my privacy. To that end, students in EA 30 will
+not record any other member of the class–including the
+instructor–without obtaining their consent in advance. Students in EA 30
+will also not share information about other members of this course in
+any type of public fora, such as social media. As the instructor, I own
+the copyright to my instructional materials. These materials cannot be
+distributed in whole or in part to any person or entity other than other
+members of the current class without my prior written consent.</p>
 </div>
 <div id="what-you-can-expect-from-me" class="section level3">
 <h3>What you can expect from me</h3>
-<p>I will strive to provide an equitable and inclusive learning environment. My overarching goal is to help you succeed in your exploration of environmental science. To that end, you can expect me to be responsive to your feedback and ideas about course content and design.</p>
-<p>A key component of my role as an instructor is office hours. During office hours, I am available to help you work through any problems, questions, or thoughts you have about the course. I am also more than happy to chat about broader questions such as career paths in environmental science, ecology, and conservation, next steps after Pomona College/the Claremont Colleges, or other academic or professional topics of interest to you.</p>
-<p><strong>Student Well-Being</strong>: Our health, both mental and physical, is paramount. We must consider the health of others inside and outside the classroom. All Claremont Colleges students have signed agreements regulating on-campus behavior during the pandemic; in the classroom, we will uphold these agreements. We need to take care of each other for this course to be successful. I ask you therefore to adhere to the following principles:</p>
-<ul>
-<li>There is a mask mandate for all indoor spaces on campus. You must wear a mask for the entire class; eating and drinking in indoors classroom spaces are not permitted. Your mask must cover your mouth and nose. The college has zero-tolerance for violations of this policy, and our shared commitment to the health and safety of our community members means if you come to class unmasked you will have to leave class for the day.</li>
-<li>Class attendance is important, but if you need to miss class for health reasons, concerning symptoms, suspected COVID exposure, unexpected dependent care, technology issues, or other emergency reasons I will work with you. Let me underscore this: <strong>please make your decisions always based on health, safety, and wellness—yours and others</strong>—and I will work with you at the other end. <em>Take any potential symptoms seriously; we’re counting on each other.</em></li>
-<li>When not in class, avoid closed public spaces, and if you can’t avoid them: wear your mask properly, wash your hands, and maintain social distance.<br />
-</li>
-<li>If you, or a family member, are experiencing hardship because of the pandemic, talk to me or to someone in the Dean of Students office. You are not alone during this time.</li>
-</ul>
-<p>In addition to the course policies, I seek to prioritize your health and well-being. Physical or mental illness, personal crises, family care, and other responsibilities can strongly impact your ability to participate in this course. Please let me and/or staff in the Student Affairs or related offices know if any of these issues pose severe obstacles to you and we will work together to come up with solutions. I am also more than happy to work with you and a representative from Student Affairs in situations where sensitive information is involved.</p>
+<p>I will strive to provide an equitable and inclusive learning
+environment. My overarching goal is to help you succeed in your
+exploration of environmental science. To that end, you can expect me to
+be responsive to your feedback and ideas about course content and
+design.</p>
+<p>A key component of my role as an instructor is office hours. During
+office hours, I am available to help you work through any problems,
+questions, or thoughts you have about the course. I am also more than
+happy to chat about broader questions such as career paths in
+environmental science, ecology, and conservation, next steps after
+Pomona College/the Claremont Colleges, or other academic or professional
+topics of interest to you.</p>
 </div>
 </div>
 <div id="general-course-policies" class="section level2">
 <h2>General course policies</h2>
-<p><em>Office hours, email, and class Slack channel</em>: During office hours, I am available to help you work through any problems, questions, or thoughts you have about the course. If you would like to discuss a particular problem or topic that would benefit from preparation on my part, please give me advance notice via <a href="https://calendly.com/chchang47/small-group-meetings">Calendly</a>.</p>
-<p>I have email boundaries and I encourage you to find your own. Mine include not answering emails after 6pm, or on weekends or holidays. Finally, I request that emails only be used for interactions that are truly one-on-one (e.g. requesting extensions to assignments or accomodations); in general, to help create an atmosphere of transparency and group learning, I request that questions about content and assignments be directed to the #ea30f22 Slack channel.</p>
-<p><em>Learning diversity &amp; accommodations</em>: Pomona College welcomes and accommodates students with disabilities. As your instructor, I aim to see you succeed in your growth as an environmental scholar. If you encounter obstacles to your success, please let me know immediately so that we can work together to identify ways to overcome any limitations of current course design. If you feel you need a reasonable accommodation to participate in this class, complete course requirements, or benefit from the College’s programs or services, you are also welcome to contact the student accessibility resource office at your College to begin this conversation or to establish accommodations for this or other courses.</p>
-<p>Below is a list of the relevant accessibility resource offices at each of the Colleges:</p>
+<p><em>Office hours, email, and class Slack channel</em>: During office
+hours, I am available to help you work through any problems, questions,
+or thoughts you have about the course. If you would like to discuss a
+particular problem or topic that would benefit from preparation on my
+part, please give me advance notice via <a
+href="https://calendly.com/chchang47/small-group-meetings">Calendly</a>.</p>
+<p>I have email boundaries and I encourage you to find your own. Mine
+include not answering emails after 5pm, or on weekends or holidays.
+Finally, I request that emails only be used for interactions that are
+truly one-on-one (e.g. requesting extensions to assignments or
+accomodations); in general, to help create an atmosphere of transparency
+and group learning, I request that questions about content and
+assignments be directed to the <code>#ea30f24</code> Slack channel.</p>
+<p><em>Learning diversity &amp; accommodations</em>: Pomona College
+welcomes and accommodates students with disabilities. As your
+instructor, I aim to see you succeed in your growth as an environmental
+scholar. If you encounter obstacles to your success, please let me know
+immediately so that we can work together to identify ways to overcome
+any limitations of current course design. If you feel you need a
+reasonable accommodation to participate in this class, complete course
+requirements, or benefit from the College’s programs or services, you
+are also welcome to contact the student accessibility resource office at
+your College to begin this conversation or to establish accommodations
+for this or other courses.</p>
+<p>Below is a list of the relevant accessibility resource offices at
+each of the Colleges:</p>
 <ol style="list-style-type: decimal">
-<li><a href="https://www.cmc.edu/dean-of-students/accessibility-services">Claremont McKenna College (CMC) Accessibility Services</a></li>
-<li><a href="https://www.hmc.edu/student-life/disability-resources/">Harvey Mudd College (HMC) Disability Resources Office</a></li>
-<li><a href="https://www.pitzer.edu/student-life/academic-support-services/">Pitzer College (PZ) Academic Support Services</a></li>
-<li><a href="https://www.pomona.edu/accessibility/student-accessibility">Pomona College (POM) Student Accessibility Resources and Services Office</a></li>
-<li><a href="https://www.scrippscollege.edu/academics/students-with-disabilities">Scripps College (SC) Accommodations for Students with Disabilities</a></li>
-<li><a href="https://services.claremont.edu/sdrc/">The 7 College (7C) Student Disability Resource Center</a> and <a href="mailto:SDRC@claremont.edu">7C Student Disability Resource Center email</a></li>
+<li><a
+href="https://www.cmc.edu/dean-of-students/accessibility-services">Claremont
+McKenna College (CMC) Accessibility Services</a></li>
+<li><a
+href="https://www.hmc.edu/student-life/disability-resources/">Harvey
+Mudd College (HMC) Disability Resources Office</a></li>
+<li><a
+href="https://www.pitzer.edu/student-life/academic-support-services/">Pitzer
+College (PZ) Academic Support Services</a></li>
+<li><a
+href="https://www.pomona.edu/accessibility/student-accessibility">Pomona
+College (POM) Student Accessibility Resources and Services
+Office</a></li>
+<li><a
+href="https://www.scrippscollege.edu/academics/students-with-disabilities">Scripps
+College (SC) Accommodations for Students with Disabilities</a></li>
+<li><a href="https://services.claremont.edu/sdrc/">The 7 College (7C)
+Student Disability Resource Center</a> and <a
+href="mailto:SDRC@claremont.edu">7C Student Disability Resource Center
+email</a></li>
 </ol>
-<p><em>Writing center and student support services</em>: I urge all students to make use of your home campus’ Writing Center and other student support services. A list of relevant resources in included below. For example, the Writing Center is a great resource to workshop and improve your writing whether that is for classwork, for public consumption (e.g. op-eds), graduate school or funding applications, or any other domain.</p>
+<p><em>Writing center and student support services</em>: I urge all
+students to make use of your home campus’ Writing Center and other
+student support services. A list of relevant resources in included
+below. For example, the Writing Center is a great resource to workshop
+and improve your writing whether that is for classwork, for public
+consumption (e.g. op-eds), graduate school or funding applications, or
+any other domain.</p>
 <ol style="list-style-type: decimal">
-<li><a href="https://www.cmc.edu/writing">CMC Center for Writing and Public Discourse</a></li>
-<li><a href="https://www.hmc.edu/learning-programs/writing-center/">HMC Writing Center</a></li>
-<li><a href="https://www.pomona.edu/administration/writing-center">POM Writing Center</a></li>
-<li><a href="https://www.pitzer.edu/writing-center/">PZ Writing Center</a></li>
-<li><a href="https://www.scrippscollege.edu/departments/writing-program/writing-center">SC Writing Center</a></li>
+<li><a href="https://www.cmc.edu/writing">CMC Center for Writing and
+Public Discourse</a></li>
+<li><a href="https://www.hmc.edu/learning-programs/writing-center/">HMC
+Writing Center</a></li>
+<li><a href="https://www.pomona.edu/administration/writing-center">POM
+Writing Center</a></li>
+<li><a href="https://www.pitzer.edu/writing-center/">PZ Writing
+Center</a></li>
+<li><a
+href="https://www.scrippscollege.edu/departments/writing-program/writing-center">SC
+Writing Center</a></li>
 </ol>
-<p><strong>All students in any Pomona class are welcome to use the Pomona College Writing Center</strong>. The following is a description from the Writing Center’s director, Prof. Kara Wittman.</p>
-<p>The Writing Center is open this semester! We open at full capacity after the second week of the semester, but we will be holding limited hours as soon as classes begin. Writing and Speaking Partners meet one-on-one with students to talk about their work and provide feedback at any stage of their preparation process. Trained to think deeply about rhetoric and communication across the curriculum, these student peers facilitate conversations about everything from ID1 papers to senior theses, lab reports to creative writing, giving presentations to developing strategies for reading and engaging more deeply in class discussions. Additionally, Jenny Thomas, our Assistant Director of College Writing and Language Diversity, offers specialized writing and speaking support for multilingual students navigating English as an additional language. To make an appointment with a Writing or Speaking Partner, please log on to the Portal and go to Academics &gt; Writing Center, or contact us at <a href="writing.center@pomona.edu">writing.center@pomona.edu</a>. All appointments will be made through the Portal as usual, will be online–or sometimes in-person but outdoors–and our Writing and Speaking Partners will be flexible both about the mode of consultation (phone, Zoom, email, Google docs, walk and talk, etc.) and about their hours in order to accommodate student need.</p>
-<p><em>Late assignments</em>: When assignments are handed in late without prior notice, I reserve the right to apply a grade deduction penalty (1 grade reduction for each day late).</p>
-<p><em>Academic integrity</em>: Academic honesty is a core value of Pomona College and the Claremont Colleges. Plagiarism undermines academic integrity and is a threat to communal ethics. I will assign plagiarized assignments a failing grade and will report any instance of plagiarism to the College.</p>
+<p><strong>All students in any Pomona class are welcome to use the
+Pomona College Center For Speaking, Writing, and the Image</strong> and
+I strongly encourage you to take advantage of this great resource.</p>
+<p><em>Late assignments</em>: When assignments are handed in late
+without prior notice, I reserve the right to apply a grade deduction
+penalty (1 grade reduction for each day late).</p>
+<p><em>Academic integrity</em>: Academic honesty is a core value of
+Pomona College and the Claremont Colleges. Plagiarism undermines
+academic integrity and is a threat to communal ethics. I will assign
+plagiarized assignments a failing grade and will report any instance of
+plagiarism to the College.</p>
 </div>
 <div id="course-schedule" class="section level2">
 <h2>Course Schedule</h2>
-<p>Please note that this schedule is subject to change; this syllabus is very much a <em>living document</em> that will change to reflect the unique conditions of this semester. I reserve the right to exercise some flexibility in scheduling, usually in favor of giving more time to students.</p>
+<p>Please note that this schedule is subject to change; this syllabus is
+very much a <em>living document</em> that will change to reflect the
+unique conditions of this semester. I reserve the right to exercise some
+flexibility in scheduling, usually in favor of giving more time to
+students.</p>
 <table class="gmisc_table" style="border-collapse: collapse; margin-top: 1em; margin-bottom: 1em;">
 <thead>
 <tr>
@@ -454,7 +550,7 @@ Lab
 1
 </td>
 <td style="text-align: center;">
-8/30
+8/27
 </td>
 <td style="text-align: center;">
 Introduction to environmental science
@@ -471,16 +567,17 @@ RStudio.Cloud setup; PocketLab Air Setup
 2
 </td>
 <td style="text-align: center;">
-9/6
+9/3
 </td>
 <td style="text-align: center;">
 Climate change &amp; air pollution; library tour
 </td>
 <td style="text-align: center;">
-LITE 18.1-18.2, 18.4-18.5, 19.1-19.3, Washington 2019 excerpt of Chapter 3
+LITE 18.1-18.2, 18.4-18.5, 19.1-19.3, Washington 2019 excerpt of Chapter
+3
 </td>
 <td style="text-align: center;">
-Air quality data collection
+PocketLab Air experiment; Purple Air data download
 </td>
 </tr>
 <tr>
@@ -488,7 +585,7 @@ Air quality data collection
 3
 </td>
 <td style="text-align: center;">
-9/13
+9/10
 </td>
 <td style="text-align: center;">
 Nonrenewable energy
@@ -497,7 +594,7 @@ Nonrenewable energy
 LITE 15 &amp; McKinney 7 excerpt
 </td>
 <td style="text-align: center;">
-Air quality - processing data, interpreting article
+Analyzing PurpleAir data; (tentative) SCAQMD visit
 </td>
 </tr>
 <tr>
@@ -505,28 +602,28 @@ Air quality - processing data, interpreting article
 4
 </td>
 <td style="text-align: center;">
-9/20
+9/17
 </td>
 <td style="text-align: center;">
 Renewable energy, climate adaptation/mitigation
 </td>
 <td style="text-align: center;">
-McKinney 8 excerpt, EITHER LITE excerpt (18.6, 19.4-5) OR Kolbert 2021 interview, Taiwo interview
+McKinney 8 excerpt, EITHER LITE excerpt (18.6, 19.4-5) OR Kolbert 2021
+interview, Taiwo interview
 </td>
 <td style="text-align: center;">
-Air quality - drafting presentations; SCAQMD visit
+Air quality - drafting presentations
 </td>
 </tr>
 <tr style="background-color: #adc2d8;">
 <td style="background-color: #adc2d8; text-align: center;">
 </td>
 <td style="background-color: #adc2d8; text-align: center;">
-9/22
 </td>
 <td style="background-color: #adc2d8; text-align: center;">
 </td>
 <td style="background-color: #adc2d8; text-align: center;">
-Air quality presentations due
+Air quality lab due
 </td>
 <td style="background-color: #adc2d8; text-align: center;">
 </td>
@@ -536,7 +633,7 @@ Air quality presentations due
 5
 </td>
 <td style="text-align: center;">
-9/27
+9/24
 </td>
 <td style="text-align: center;">
 Environmental issues as collective action problems
@@ -545,7 +642,7 @@ Environmental issues as collective action problems
 LITE 18.7, 19.4, Dietz et al. 2003, Hardin 1968, TedEd video
 </td>
 <td style="text-align: center;">
-Soil science: collecting data
+Bioacoustics lab
 </td>
 </tr>
 <tr>
@@ -553,7 +650,7 @@ Soil science: collecting data
 6
 </td>
 <td style="text-align: center;">
-10/4
+10/1
 </td>
 <td style="text-align: center;">
 Biodiversity overview
@@ -562,14 +659,13 @@ Biodiversity overview
 LITE 4
 </td>
 <td style="text-align: center;">
-Soil science: processing data
+Bioacoustics lab
 </td>
 </tr>
 <tr style="background-color: #adc2d8;">
 <td style="background-color: #adc2d8; text-align: center;">
 </td>
 <td style="background-color: #adc2d8; text-align: center;">
-10/6
 </td>
 <td style="background-color: #adc2d8; text-align: center;">
 </td>
@@ -584,95 +680,13 @@ Exam #1
 7
 </td>
 <td style="text-align: center;">
-10/11
+10/8
 </td>
 <td style="text-align: center;">
 Global crop production
 </td>
 <td style="text-align: center;">
 Godfray et al. 2010; Foley et al. 2011; LITE 3.3, 3.4, 12.1-12.4
-</td>
-<td style="text-align: center;">
-Soil science: processing C/N, generating hypotheses
-</td>
-</tr>
-<tr>
-<td style="text-align: center;">
-8
-</td>
-<td style="text-align: center;">
-10/18
-</td>
-<td style="text-align: center;">
-Human demography and global crop demand
-</td>
-<td style="text-align: center;">
-LITE 6, Rosa et al. 2004, Pontecorvo 2020, Searchinger 2009
-</td>
-<td style="text-align: center;">
-Fall break
-</td>
-</tr>
-<tr>
-<td style="text-align: center;">
-9
-</td>
-<td style="text-align: center;">
-10/25
-</td>
-<td style="text-align: center;">
-Land use and land management impacts on the environment
-</td>
-<td style="text-align: center;">
-LITE 12.3, 12.4, Jeezer et al. 2019; Warren-Thomas et al. 2019; Runting et al. 2019
-</td>
-<td style="text-align: center;">
-Soil science: final data processing, analyzing data
-</td>
-</tr>
-<tr>
-<td style="text-align: center;">
-10
-</td>
-<td style="text-align: center;">
-11/1
-</td>
-<td style="text-align: center;">
-Designing a better food system
-</td>
-<td style="text-align: center;">
-West et al. 2014; LITE 12.5-12.6
-</td>
-<td style="text-align: center;">
-Soil science: drafting reports
-</td>
-</tr>
-<tr style="background-color: #adc2d8;">
-<td style="background-color: #adc2d8; text-align: center;">
-</td>
-<td style="background-color: #adc2d8; text-align: center;">
-11/6
-</td>
-<td style="background-color: #adc2d8; text-align: center;">
-</td>
-<td style="background-color: #adc2d8; text-align: center;">
-Soil science lab report due
-</td>
-<td style="background-color: #adc2d8; text-align: center;">
-</td>
-</tr>
-<tr>
-<td style="text-align: center;">
-11
-</td>
-<td style="text-align: center;">
-11/8
-</td>
-<td style="text-align: center;">
-The hydrological cycle and freshwater resources
-</td>
-<td style="text-align: center;">
-LITE 3.4, 13.1-13.2
 </td>
 <td style="text-align: center;">
 Bioacoustics lab
@@ -682,7 +696,100 @@ Bioacoustics lab
 <td style="background-color: #adc2d8; text-align: center;">
 </td>
 <td style="background-color: #adc2d8; text-align: center;">
-11/10
+</td>
+<td style="background-color: #adc2d8; text-align: center;">
+</td>
+<td style="background-color: #adc2d8; text-align: center;">
+</td>
+<td style="background-color: #adc2d8; text-align: center;">
+</td>
+</tr>
+<tr>
+<td style="text-align: center;">
+8
+</td>
+<td style="text-align: center;">
+10/15
+</td>
+<td style="text-align: center;">
+Human demography and global crop demand
+</td>
+<td style="text-align: center;">
+LITE 6, Rosa et al. 2004, Pontecorvo 2020, Searchinger 2009
+</td>
+<td style="text-align: center;">
+Fall break Tuesday - no lab
+</td>
+</tr>
+<tr>
+<td style="text-align: center;">
+9
+</td>
+<td style="text-align: center;">
+10/22
+</td>
+<td style="text-align: center;">
+Land use and land management impacts on the environment
+</td>
+<td style="text-align: center;">
+LITE 12.3, 12.4, Jeezer et al. 2019; Warren-Thomas et al. 2019; Runting
+et al. 2019
+</td>
+<td style="text-align: center;">
+Bioacoustics lab
+</td>
+</tr>
+<tr>
+<td style="text-align: center;">
+10
+</td>
+<td style="text-align: center;">
+10/29
+</td>
+<td style="text-align: center;">
+Designing a better food system
+</td>
+<td style="text-align: center;">
+West et al. 2014; LITE 12.5-12.6
+</td>
+<td style="text-align: center;">
+Bioacoustics/social media lab
+</td>
+</tr>
+<tr style="background-color: #adc2d8;">
+<td style="background-color: #adc2d8; text-align: center;">
+</td>
+<td style="background-color: #adc2d8; text-align: center;">
+</td>
+<td style="background-color: #adc2d8; text-align: center;">
+</td>
+<td style="background-color: #adc2d8; text-align: center;">
+Bioacoustics lab due
+</td>
+<td style="background-color: #adc2d8; text-align: center;">
+</td>
+</tr>
+<tr>
+<td style="text-align: center;">
+11
+</td>
+<td style="text-align: center;">
+11/5
+</td>
+<td style="text-align: center;">
+The hydrological cycle and freshwater resources
+</td>
+<td style="text-align: center;">
+LITE 3.4, 13.1-13.2
+</td>
+<td style="text-align: center;">
+Social media lab
+</td>
+</tr>
+<tr style="background-color: #adc2d8;">
+<td style="background-color: #adc2d8; text-align: center;">
+</td>
+<td style="background-color: #adc2d8; text-align: center;">
 </td>
 <td style="background-color: #adc2d8; text-align: center;">
 </td>
@@ -697,16 +804,16 @@ Exam #2
 12
 </td>
 <td style="text-align: center;">
-11/15
+11/12
 </td>
 <td style="text-align: center;">
-Guest lectures (M. Hoeger, Pachama; N. Deshmukh, Turntide); Stressors to water quality and quantity
+Stressors to water quality and quantity
 </td>
 <td style="text-align: center;">
 LITE 20, Pew Trend Magazine 2019
 </td>
 <td style="text-align: center;">
-Bioacoustics lab
+Social media lab
 </td>
 </tr>
 <tr>
@@ -714,23 +821,37 @@ Bioacoustics lab
 13
 </td>
 <td style="text-align: center;">
-11/22
+11/19
 </td>
 <td style="text-align: center;">
-Lecture catch-up day
+Guest lecture (M. Mariko Embrey); Marine and freshwater habitats and
+conservation
 </td>
 <td style="text-align: center;">
-Catch up (can join by Zoom if that is better for your travel plans)
 </td>
 <td style="text-align: center;">
-Bioacoustics lab (likely will be shortened, can join via Zoom if necessary)
+Social media lab
+</td>
+</tr>
+<tr>
+<td style="text-align: center;">
+14
+</td>
+<td style="text-align: center;">
+11/26
+</td>
+<td style="text-align: center;">
+Catch-up day
+</td>
+<td style="text-align: center;">
+</td>
+<td style="text-align: center;">
 </td>
 </tr>
 <tr style="background-color: #adc2d8;">
 <td style="background-color: #adc2d8; text-align: center;">
 </td>
 <td style="background-color: #adc2d8; text-align: center;">
-11/24
 </td>
 <td style="background-color: #adc2d8; text-align: center;">
 </td>
@@ -742,42 +863,10 @@ Thanksgiving Break (no class)
 </tr>
 <tr>
 <td style="text-align: center;">
-14
-</td>
-<td style="text-align: center;">
-11/29
-</td>
-<td style="text-align: center;">
-Guest lecture (M. Mariko Embrey); Marine and freshwater habitats and conservation
-</td>
-<td style="text-align: center;">
-TBD
-</td>
-<td style="text-align: center;">
-Bioacoustics lab
-</td>
-</tr>
-<tr>
-<td style="text-align: center;">
-</td>
-<td style="text-align: center;">
-11/30
-</td>
-<td style="text-align: center;">
-Biology department seminar: Dr. Grace Wu (land use optimization for agriculture, climate change mitigation and renewable energy, and biodiversity conservation)
-</td>
-<td style="text-align: center;">
-Not a class activity but you are strongly encouraged to participate
-</td>
-<td style="text-align: center;">
-</td>
-</tr>
-<tr>
-<td style="text-align: center;">
 15
 </td>
 <td style="text-align: center;">
-12/6
+12/3
 </td>
 <td style="text-align: center;">
 Class retrospective
@@ -785,19 +874,17 @@ Class retrospective
 <td style="text-align: center;">
 </td>
 <td style="text-align: center;">
-Bioacoustics presentations
 </td>
 </tr>
 <tr style="background-color: #adc2d8;">
 <td style="background-color: #adc2d8; text-align: center;">
 </td>
 <td style="background-color: #adc2d8; text-align: center;">
-12/6
 </td>
 <td style="background-color: #adc2d8; text-align: center;">
 </td>
 <td style="background-color: #adc2d8; text-align: center;">
-Bioacoustics presentations in lab
+Final presentations in lab
 </td>
 <td style="background-color: #adc2d8; text-align: center;">
 </td>
@@ -806,7 +893,7 @@ Bioacoustics presentations in lab
 <td style="background-color: #adc2d8; border-bottom: 2px solid grey; text-align: center;">
 </td>
 <td style="background-color: #adc2d8; border-bottom: 2px solid grey; text-align: center;">
-12/15
+12/10
 </td>
 <td style="background-color: #adc2d8; border-bottom: 2px solid grey; text-align: center;">
 </td>

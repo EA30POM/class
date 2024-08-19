@@ -25,10 +25,6 @@ navbar:
         - text: "Week 3"
         - text: "Air Quality: Analysis"
           href: AQexp2.html
-    - text: "Soil science"
-      menu:
-        - text: "Analyzing data"
-          href: soil.html
     - text: "Bioacoustics"
       menu:
         - text: "Bioacoustic data"
