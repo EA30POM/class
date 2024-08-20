@@ -1,4 +1,4 @@
-name: "EA30 FA22"
+name: "EA30"
 output_dir: "."
 navbar:
   title: "Environmental Science"
@@ -12,6 +12,8 @@ navbar:
         - text: "The R and RStudio environments"
           href: Rintro.html
         - text: "Class activities"
+        - text: "Tidyverse intro"
+          href: tidyTutorial.html
         - text: "Climate data"
           href: ClimateData.html
     - text: "Climate science"

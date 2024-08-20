@@ -9,12 +9,13 @@
 <meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
 
 
+<meta name="author" content="" />
 
-<meta name="date" content="2022-11-28" />
+<meta name="date" content="2024-08-19" />
 
 <title>Climate class activity</title>
 
-<script src="site_libs/header-attrs-2.13/header-attrs.js"></script>
+<script src="site_libs/header-attrs-2.27/header-attrs.js"></script>
 <script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <link href="site_libs/bootstrap-3.3.5/css/flatly.min.css" rel="stylesheet" />
@@ -33,8 +34,8 @@
 <script src="site_libs/navigation-1.1/tabsets.js"></script>
 <link href="site_libs/highlightjs-9.12.0/default.css" rel="stylesheet" />
 <script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
-<link href="site_libs/font-awesome-5.1.0/css/all.css" rel="stylesheet" />
-<link href="site_libs/font-awesome-5.1.0/css/v4-shims.css" rel="stylesheet" />
+<link href="site_libs/font-awesome-6.4.2/css/all.min.css" rel="stylesheet" />
+<link href="site_libs/font-awesome-6.4.2/css/v4-shims.min.css" rel="stylesheet" />
 
 <style type="text/css">
   code{white-space: pre-wrap;}
@@ -145,11 +146,15 @@ $(document).ready(function () {
     href = "index.html";
   var menuAnchor = $('a[href="' + href + '"]');
 
-  // mark it active
-  menuAnchor.tab('show');
-
-  // if it's got a parent navbar menu mark it active as well
-  menuAnchor.closest('li.dropdown').addClass('active');
+  // mark the anchor link active (and if it's in a dropdown, also mark that active)
+  var dropdown = menuAnchor.closest('li.dropdown');
+  if (window.bootstrap) { // Bootstrap 4+
+    menuAnchor.addClass('active');
+    dropdown.find('> .dropdown-toggle').addClass('active');
+  } else { // Bootstrap 3
+    menuAnchor.parent().addClass('active');
+    dropdown.addClass('active');
+  }
 
   // Navbar adjustments
   var navHeight = $(".navbar").first().height() + 15;
@@ -178,8 +183,8 @@ $(document).ready(function () {
   border-radius: 4px;
 }
 
-.tabset-dropdown > .nav-tabs > li.active:before {
-  content: "";
+.tabset-dropdown > .nav-tabs > li.active:before, .tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "\e259";
   font-family: 'Glyphicons Halflings';
   display: inline-block;
   padding: 10px;
@@ -187,16 +192,9 @@ $(document).ready(function () {
 }
 
 .tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
-  content: "&#xe258;";
-  border: none;
-}
-
-.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
-  content: "";
+  content: "\e258";
   font-family: 'Glyphicons Halflings';
-  display: inline-block;
-  padding: 10px;
-  border-right: 1px solid #ddd;
+  border: none;
 }
 
 .tabset-dropdown > .nav-tabs > li.active {
@@ -269,6 +267,9 @@ $(document).ready(function () {
     </li>
     <li class="dropdown-header">Class activities</li>
     <li>
+      <a href="tidyTutorial.html">Tidyverse intro</a>
+    </li>
+    <li>
       <a href="ClimateData.html">Climate data</a>
     </li>
   </ul>
@@ -291,18 +292,6 @@ $(document).ready(function () {
     <li class="dropdown-header">Week 3</li>
     <li>
       <a href="AQexp2.html">Air Quality: Analysis</a>
-    </li>
-  </ul>
-</li>
-<li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-    Soil science
-     
-    <span class="caret"></span>
-  </a>
-  <ul class="dropdown-menu" role="menu">
-    <li>
-      <a href="soil.html">Analyzing data</a>
     </li>
   </ul>
 </li>
@@ -335,17 +324,31 @@ $(document).ready(function () {
 
 <h1 class="title toc-ignore">Climate class activity</h1>
 <h4 class="author"></h4>
-<h4 class="date">2022-11-28</h4>
+<h4 class="date">2024-08-19</h4>
 
 </div>
 
 
 <div id="evaluating-the-signs-of-climate-change" class="section level1">
 <h1>Evaluating the signs of climate change</h1>
-<p>We are going to encounter some methods for interacting with, visualizing, and analyzing earth sciences data in this activity. At each table, one student will pick one of the datasets and run the code associated with that dataset. What do you see? Based on the course materials, how does this constitute evidence for global climate change?</p>
-<p>Please start by logging into <a href="https://sso.rstudio.cloud/pomona">sso.rstudio.cloud/pomona</a>. Once you’ve logged in, you should see the option to open the <code>EA 30.1 - Fall 2022</code> workspace. You can also access <a href="https://sso.rstudio.cloud/pomona?redirect=https%3A%2F%2Frstudio.cloud%2Fspaces%2F272090%2Fjoin%3Faccess_code%3DRH6FObo67WiGmhjuBirlncXZZYKYQBZW9K1HPSEV">the <code>EA 30.1 - Fall 2022</code> workspace at this link</a>.</p>
-<p>At the workspace, you should then see the “Assignment” <code>ClimateData</code>. Please click on that Assignment. Here is a <a href="https://rstudio.cloud/spaces/272090/content/4437518">direct link to the <code>ClimateData</code> project</a>, but it may not work if this is the first time in a while that you’re logging into RStudio.Cloud. If it doesn’t work, no worries - just log in through the <a href="https://sso.rstudio.cloud/pomona">sso.rstudio.cloud/pomona</a> link.</p>
-<p>First, we will all load these packages - make sure you run this code irrespective of whichever variable you select.</p>
+<p>We are going to encounter some methods for interacting with,
+visualizing, and analyzing earth sciences data in this activity. At each
+table, one student will pick one of the datasets and run the code
+associated with that dataset. What do you see? Based on the course
+materials, how does this constitute evidence for global climate
+change?</p>
+<p>Please start by logging into <a
+href="https://rstudio.pomona.edu">rstudio.pomona.edu</a>.</p>
+<p><strong>Note</strong>! If you run the command
+<code>library(package)</code> and see an error in red text stating
+<code>Error in library(package) : there is no package called ‘package’</code>,
+don’t worry! That simply means that the package is not installed in your
+<code>R</code> environment. All you need to do is just run
+<code>install.packages(package)</code> <strong>once</strong>. (Of
+course, replace <code>package</code> with the name of the package in
+question, such as <code>swirl</code>).</p>
+<p>First, we will all load these packages - make sure you run this code
+irrespective of whichever variable you select.</p>
 <pre class="r"><code>library(dplyr)
 library(openxlsx)
 library(ggplot2)
@@ -353,19 +356,43 @@ library(ggplot2)
 sheet_url &lt;- &quot;https://github.com/EA30POM/Fall2021/blob/main/data/ClimateChangeSigns.xlsx?raw=true&quot; # location of the Excel spreadsheet
 
 keelingCO2 &lt;- openxlsx::read.xlsx(sheet_url,sheet=&quot;Keeling&quot;) # everyone needs to download the Keeling CO2 data because we will be combining that with the other variables too.</code></pre>
-<p>Visualization can help you get a feel for your data, and can be a very useful aid in exploring data. We will use the <code>ggplot2</code> package to create plots in <code>R</code>.</p>
-<p><code>ggplot2</code> creates plots based on different layers. The three necessary components are:</p>
+<p>Visualization can help you get a feel for your data, and can be a
+very useful aid in exploring data. We will use the <code>ggplot2</code>
+package to create plots in <code>R</code>.</p>
+<p><code>ggplot2</code> creates plots based on different layers. The
+three necessary components are:</p>
 <ul>
 <li>the dataset with the data to be plotted</li>
-<li>the “aesthetics”, which map how the data will be associated with different plotting elements, such as the location of points in a scatterplot, or other features such as shape, size, color, transparency, etc.</li>
+<li>the “aesthetics”, which map how the data will be associated with
+different plotting elements, such as the location of points in a
+scatterplot, or other features such as shape, size, color, transparency,
+etc.</li>
 <li>the geometric elements in the plot (points, boxplot, histogram)</li>
 </ul>
-<p>While there are additional layering components that one can include, we will confine our attention to these three layers. For more information, please consult the <a href="https://ggplot2-book.org/">free, online ggplot2 Book</a>.</p>
-<p>Scatterplots are most useful for visualizing two continuous, numeric variables. In defining a plot using <code>ggplot2</code>, we specify the data source (in the <code>ggplot</code> function), and the mapping of the variables (<code>aes</code>, short for aesthetic, within <code>ggplot</code>). Subsequently, we specify the type of <code>geom</code> (geometry) we want in the plot.</p>
-<p>Below, we will follow a convention where we assign an object (<code>p</code>) to store the plot. We specify what layers we want to add to the object <code>p</code> by using the <code>+</code> sign.</p>
-<div id="variable-1-global-co_2-concentration-in-the-atmosphere" class="section level2">
-<h2>Variable 1: Global <span class="math inline">\(CO_2\)</span> concentration in the atmosphere</h2>
-<p>The data source for this variable is <a href="https://climate.nasa.gov/vital-signs/carbon-dioxide/">NASA’s Global Climate Change Vital Signs of the Planet Program</a>.</p>
+<p>While there are additional layering components that one can include,
+we will confine our attention to these three layers. For more
+information, please consult the <a
+href="https://ggplot2-book.org/">free, online ggplot2 Book</a>.</p>
+<p>Scatterplots are most useful for visualizing two continuous, numeric
+variables. In defining a plot using <code>ggplot2</code>, we specify the
+data source (in the <code>ggplot</code> function), and the mapping of
+the variables (<code>aes</code>, short for aesthetic, within
+<code>ggplot</code>). Subsequently, we specify the type of
+<code>geom</code> (geometry) we want in the plot.</p>
+<p>Below, we will follow a convention where we assign an object
+(<code>p</code>) to store the plot. We specify what layers we want to
+add to the object <code>p</code> by using the <code>+</code> sign.</p>
+<p>At each table, one student will pick one of the datasets and run the
+code associated with that dataset. What do you see? Based on the course
+materials, how does this constitute evidence for global climate
+change?</p>
+<div id="variable-1-global-co_2-concentration-in-the-atmosphere"
+class="section level2">
+<h2>Variable 1: Global <span class="math inline">\(CO_2\)</span>
+concentration in the atmosphere</h2>
+<p>The data source for this variable is <a
+href="https://climate.nasa.gov/vital-signs/carbon-dioxide/">NASA’s
+Global Climate Change Vital Signs of the Planet Program</a>.</p>
 <pre class="r"><code>p &lt;- ggplot(keelingCO2, aes(x=year,y=meanCO2ppm)) # initiate the plot
 p &lt;- p + geom_point() # add scatterplot points
 p &lt;- p + geom_line() # add a trend line
@@ -376,9 +403,12 @@ p
 CO2mod &lt;- lm(meanCO2ppm~year, data=keelingCO2) # we are running a &quot;linear regression&quot; statistical model. You can think of this like finding the line that fits our data the best.
 summary(CO2mod) # what do you see in the Coefficients: table for year?</code></pre>
 </div>
-<div id="variable-2-arctic-sea-ice-minimum-spatial-extent" class="section level2">
+<div id="variable-2-arctic-sea-ice-minimum-spatial-extent"
+class="section level2">
 <h2>Variable 2: Arctic sea ice minimum spatial extent</h2>
-<p>The <a href="https://climate.nasa.gov/vital-signs/arctic-sea-ice/">data source is here</a>.</p>
+<p>The <a
+href="https://climate.nasa.gov/vital-signs/arctic-sea-ice/">data source
+is here</a>.</p>
 <pre class="r"><code>seaIce &lt;- openxlsx::read.xlsx(sheet_url,&quot;SeaIce&quot;)
 seaIceCO2 &lt;- left_join(seaIce, keelingCO2, by=c(&quot;year&quot;=&quot;year&quot;)) # we are joining up the sea ice extent data with global CO2 level data, matching on each year
 
@@ -392,9 +422,12 @@ p # what do we see?
 seaIceMod &lt;- lm(extent ~ meanCO2ppm, data=seaIceCO2) # we are running a &quot;linear regression&quot; statistical model. You can think of this like finding the line that fits our data the best.
 summary(seaIceMod) # what do you see in the Coefficients: table for mean CO2 (ppm)? </code></pre>
 </div>
-<div id="variable-3-global-surface-temperature-land-and-ocean" class="section level2">
+<div id="variable-3-global-surface-temperature-land-and-ocean"
+class="section level2">
 <h2>Variable 3: Global surface temperature (land and ocean)</h2>
-<p>The <a href="https://climate.nasa.gov/vital-signs/global-temperature/">data source is here</a>.</p>
+<p>The <a
+href="https://climate.nasa.gov/vital-signs/global-temperature/">data
+source is here</a>.</p>
 <pre class="r"><code>globTemp &lt;- openxlsx::read.xlsx(sheet_url,&quot;GlobTemp&quot;)
 globTempCO2 &lt;- left_join(globTemp, keelingCO2, by=c(&quot;Year&quot;=&quot;year&quot;)) # we are joining up global temperature data with global CO2 level data, matching on each year
 
@@ -410,7 +443,14 @@ summary(tempMod) # what do you see in the Coefficients: table for mean CO2 (ppm)
 </div>
 <div id="variable-4-heat-content-of-the-oceans" class="section level2">
 <h2>Variable 4: Heat content of the oceans</h2>
-<p>The <a href="https://climate.nasa.gov/vital-signs/ocean-heat/">original data source is here</a> but the data I used came from the <a href="https://www.epa.gov/climate-indicators/climate-change-indicators-ocean-heat">EPA</a>. The ocean’s heat content is expressed in <em>zettajoules</em> or <span class="math inline">\(10^{22}\)</span> joules. In contrast, total global energy consumption is around 580 million terajoules, or 5.8 zettajoules.</p>
+<p>The <a
+href="https://climate.nasa.gov/vital-signs/ocean-heat/">original data
+source is here</a> but the data I used came from the <a
+href="https://www.epa.gov/climate-indicators/climate-change-indicators-ocean-heat">EPA</a>.
+The ocean’s heat content is expressed in <em>zettajoules</em> or <span
+class="math inline">\(10^{22}\)</span> joules. In contrast, total global
+energy consumption is around 580 million terajoules, or 5.8
+zettajoules.</p>
 <pre class="r"><code>oceanHeat &lt;- openxlsx::read.xlsx(sheet_url,&quot;OceanHeat&quot;)
 oceanHeatCO2 &lt;- left_join(oceanHeat, keelingCO2, by=c(&quot;Year&quot;=&quot;year&quot;)) # we are joining up global ocean heat content data with global CO2 level data, matching on each year
 
@@ -426,15 +466,25 @@ summary(oceanMod) # what do you see in the Coefficients: table for mean CO2 (ppm
 </div>
 <div id="taking-the-activity-further" class="section level2">
 <h2>Taking the activity further</h2>
+<p>The <a
+href="https://sjspielman.github.io/introverse/index.html">introverse
+package</a> makes super-useful help pages that can demystify the
+<code>tidyverse</code> commands that we’ll be using in this class.</p>
 <p>Time permitting, consider the following:</p>
 <ul>
-<li>for the <code>lm</code> coefficient outputs, what do those numbers represent? What do they tell us about the impact on some response variable for changes in <span class="math inline">\(CO_2\)</span>?
+<li>for the <code>lm</code> coefficient outputs, what do those numbers
+represent? What do they tell us about the impact on some response
+variable for changes in <span class="math inline">\(CO_2\)</span>?
 <ul>
-<li>what is the unit of change in <span class="math inline">\(CO_2\)</span> for the coefficients?</li>
-<li>how much would your variable change if <span class="math inline">\(CO_2\)</span> went up by 10 ppm?</li>
-<li>can we reasonably extrapolate those estimated valus into the future?</li>
+<li>what is the unit of change in <span
+class="math inline">\(CO_2\)</span> for the coefficients?</li>
+<li>how much would your variable change if <span
+class="math inline">\(CO_2\)</span> went up by 10 ppm?</li>
+<li>can we reasonably extrapolate those estimated valus into the
+future?</li>
 </ul></li>
-<li>how would you modify the code above to re-run the analyses with <code>Year</code> as the explanatory/predictive/x-axis variable?</li>
+<li>how would you modify the code above to re-run the analyses with
+<code>Year</code> as the explanatory/predictive/x-axis variable?</li>
 </ul>
 </div>
 </div>

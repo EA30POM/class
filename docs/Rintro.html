@@ -9,12 +9,13 @@
 <meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
 
 
+<meta name="author" content="" />
 
-<meta name="date" content="2022-11-28" />
+<meta name="date" content="2024-08-19" />
 
 <title>Introduction to R and RStudio</title>
 
-<script src="site_libs/header-attrs-2.13/header-attrs.js"></script>
+<script src="site_libs/header-attrs-2.27/header-attrs.js"></script>
 <script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <link href="site_libs/bootstrap-3.3.5/css/flatly.min.css" rel="stylesheet" />
@@ -33,8 +34,8 @@
 <script src="site_libs/navigation-1.1/tabsets.js"></script>
 <link href="site_libs/highlightjs-9.12.0/default.css" rel="stylesheet" />
 <script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
-<link href="site_libs/font-awesome-5.1.0/css/all.css" rel="stylesheet" />
-<link href="site_libs/font-awesome-5.1.0/css/v4-shims.css" rel="stylesheet" />
+<link href="site_libs/font-awesome-6.4.2/css/all.min.css" rel="stylesheet" />
+<link href="site_libs/font-awesome-6.4.2/css/v4-shims.min.css" rel="stylesheet" />
 
 <style type="text/css">
   code{white-space: pre-wrap;}
@@ -145,11 +146,15 @@ $(document).ready(function () {
     href = "index.html";
   var menuAnchor = $('a[href="' + href + '"]');
 
-  // mark it active
-  menuAnchor.tab('show');
-
-  // if it's got a parent navbar menu mark it active as well
-  menuAnchor.closest('li.dropdown').addClass('active');
+  // mark the anchor link active (and if it's in a dropdown, also mark that active)
+  var dropdown = menuAnchor.closest('li.dropdown');
+  if (window.bootstrap) { // Bootstrap 4+
+    menuAnchor.addClass('active');
+    dropdown.find('> .dropdown-toggle').addClass('active');
+  } else { // Bootstrap 3
+    menuAnchor.parent().addClass('active');
+    dropdown.addClass('active');
+  }
 
   // Navbar adjustments
   var navHeight = $(".navbar").first().height() + 15;
@@ -178,8 +183,8 @@ $(document).ready(function () {
   border-radius: 4px;
 }
 
-.tabset-dropdown > .nav-tabs > li.active:before {
-  content: "";
+.tabset-dropdown > .nav-tabs > li.active:before, .tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "\e259";
   font-family: 'Glyphicons Halflings';
   display: inline-block;
   padding: 10px;
@@ -187,16 +192,9 @@ $(document).ready(function () {
 }
 
 .tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
-  content: "&#xe258;";
-  border: none;
-}
-
-.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
-  content: "";
+  content: "\e258";
   font-family: 'Glyphicons Halflings';
-  display: inline-block;
-  padding: 10px;
-  border-right: 1px solid #ddd;
+  border: none;
 }
 
 .tabset-dropdown > .nav-tabs > li.active {
@@ -269,6 +267,9 @@ $(document).ready(function () {
     </li>
     <li class="dropdown-header">Class activities</li>
     <li>
+      <a href="tidyTutorial.html">Tidyverse intro</a>
+    </li>
+    <li>
       <a href="ClimateData.html">Climate data</a>
     </li>
   </ul>
@@ -291,18 +292,6 @@ $(document).ready(function () {
     <li class="dropdown-header">Week 3</li>
     <li>
       <a href="AQexp2.html">Air Quality: Analysis</a>
-    </li>
-  </ul>
-</li>
-<li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-    Soil science
-     
-    <span class="caret"></span>
-  </a>
-  <ul class="dropdown-menu" role="menu">
-    <li>
-      <a href="soil.html">Analyzing data</a>
     </li>
   </ul>
 </li>
@@ -335,7 +324,7 @@ $(document).ready(function () {
 
 <h1 class="title toc-ignore">Introduction to R and RStudio</h1>
 <h4 class="author"></h4>
-<h4 class="date">2022-11-28</h4>
+<h4 class="date">2024-08-19</h4>
 
 </div>
 
@@ -352,24 +341,51 @@ $(document).ready(function () {
 </div>
 <div id="how-do-i-access-rstudio" class="section level2">
 <h2>How do I access RStudio?</h2>
-<p>You will navigate to <a href="https://sso.rstudio.cloud/pomona">https://sso.rstudio.cloud/pomona</a> and use your Pomona credentials to log in. If you are a Pomona student, this is simply your Pomona email. If you are a non-Pomona student, ITS should have provided you a Pomona account. You may need to first activate this account. to be able to proceed.</p>
-<p>Subsequently, once you are able to log in to <code>RStudio.Cloud</code>, use <a href="https://sso.rstudio.cloud/pomona?redirect=https%3A%2F%2Frstudio.cloud%2Fspaces%2F272090%2Fjoin%3Faccess_code%3DRH6FObo67WiGmhjuBirlncXZZYKYQBZW9K1HPSEV">this link</a> to join the <code>EA 30.1 - Fall 2022</code> workspace.</p>
+<p>You will navigate to <a
+href="https://rstudio.pomona.edu">rstudio.pomona.edu</a> and use your
+Pomona credentials to log in. If you are a Pomona student, this is
+simply your Pomona email. If you are a non-Pomona student, ITS should
+have provided you a Pomona account. You may need to first activate this
+account to be able to proceed.</p>
+<p><strong>Note</strong>! If you run the command
+<code>library(package)</code> and see an error in red text stating
+<code>Error in library(package) : there is no package called ‘package’</code>,
+don’t worry! That simply means that the package is not installed in your
+<code>R</code> environment. All you need to do is just run
+<code>install.packages(package)</code> <strong>once</strong>. (Of
+course, replace <code>package</code> with the name of the package in
+question, such as <code>swirl</code>).</p>
 </div>
 <div id="what-are-r-and-rstudio" class="section level2">
 <h2>What are <code>R</code> and RStudio?</h2>
-<p>In this class, we will take a cookbook approach to environmental data science.What does a “cookbook approach” mean in this context? In this course, I do not assume that you have prior programming experience and instead I will provide worksheets and worked-through example code that you then execute and learn by doing (or code running). Where appropriate, I will also use <em>faded examples</em> to advance learning in a structured and scaffolded way (<a href="https://journals.plos.org/ploscompbiol/article?id=10.1371/journal.pcbi.1006915#sec008">see Section 7 in Wilson 2019</a> for more details if you are curious).</p>
-<p>Specifically, you will interact with <code>R</code>, a statistical programming language, using RStudio. RStudio is an “IDE” or an integrated development environment. Basically, if <code>R</code> is the engine of our (statistical programming) car, then RStudio is our dashboard, with all of the controls that we’d be more familiar with (plotting window, file visualization pane, help pane, etc.).</p>
-<div class="figure">
-<img src="figures/R_vs_RStudio_1.png" alt="" />
-<p class="caption">Image from Ismay <em>et al.</em> (2020)</p>
+<p>In this class, we will take a cookbook approach to environmental data
+science.What does a “cookbook approach” mean in this context? In this
+course, I do not assume that you have prior programming experience and
+instead I will provide worksheets and worked-through example code that
+you then execute and learn by doing (or code running). Where
+appropriate, I will also use <em>faded examples</em> to advance learning
+in a structured and scaffolded way (<a
+href="https://journals.plos.org/ploscompbiol/article?id=10.1371/journal.pcbi.1006915#sec008">see
+Section 7 in Wilson 2019</a> for more details if you are curious).</p>
+<p>Specifically, you will interact with <code>R</code>, a statistical
+programming language, using RStudio. RStudio is an “IDE” or an
+integrated development environment. Basically, if <code>R</code> is the
+engine of our (statistical programming) car, then RStudio is our
+dashboard, with all of the controls that we’d be more familiar with
+(plotting window, file visualization pane, help pane, etc.).</p>
+<div class="float">
+<img src="figures/R_vs_RStudio_1.png"
+alt="Image from Ismay et al. (2020)" />
+<div class="figcaption">Image from Ismay <em>et al.</em> (2020)</div>
 </div>
 </div>
 <div id="what-does-rstudio-have-anyway" class="section level2">
 <h2>What does RStudio have anyway?</h2>
 <p>RStudio has 3 different panes:</p>
-<div class="figure">
-<img src="figures/rstudio_ide_image.png" alt="" />
-<p class="caption">Image from Bailey (2018)</p>
+<div class="float">
+<img src="figures/rstudio_ide_image.png"
+alt="Image from Bailey (2018)" />
+<div class="figcaption">Image from Bailey (2018)</div>
 </div>
 </div>
 <div id="what-do-each-of-these-panes-do" class="section level2">
@@ -377,81 +393,140 @@ $(document).ready(function () {
 <ul>
 <li>Console: where you enter commands that <code>R</code> interprets
 <ul>
-<li>Running code: the act of telling <code>R</code> to perform an act by giving it commands in the console.</li>
+<li>Running code: the act of telling <code>R</code> to perform an act by
+giving it commands in the console.</li>
 </ul></li>
-<li>Environment: lists all objects/data/functions available to you in the current session
+<li>Environment: lists all objects/data/functions available to you in
+the current session
 <ul>
-<li>Session: the current instance that you have logged into RStudio (NB: unlike other software, the session doesn’t necessarily end when you close the browser window! Instead, it can preserve its state over time).</li>
+<li>Session: the current instance that you have logged into RStudio (NB:
+unlike other software, the session doesn’t necessarily end when you
+close the browser window! Instead, it can preserve its state over
+time).</li>
 </ul></li>
-<li>Output: later on, we will interact with this pane most often to display plots that you generate!
+<li>Output: later on, we will interact with this pane most often to
+display plots that you generate!
 <ul>
-<li>The other tabs in this pane can be used to navigate through files, see available packages that extend the functionality of <code>R</code>, view help, and view spreadsheets (<code>Viewer</code>).</li>
+<li>The other tabs in this pane can be used to navigate through files,
+see available packages that extend the functionality of <code>R</code>,
+view help, and view spreadsheets (<code>Viewer</code>).</li>
 </ul></li>
 </ul>
 </div>
 <div id="running-your-first-r-code" class="section level2">
 <h2>Running your first <code>R</code> code!</h2>
-<p>Copy the code below into the console and hit enter. What do you see?</p>
+<p>Copy the code below into the console and hit enter. What do you
+see?</p>
 <pre class="r"><code>x &lt;- c(1,2,3)
 x</code></pre>
 <p>You should see the following:</p>
 <pre><code>## [1] 1 2 3</code></pre>
-<p>Congratulations! You have created your first object in <code>R</code>: a vector storing the numbers 1, 2, and 3.</p>
-<p>You achieved that by using the assignment operator <code>&lt;-</code> to tell <code>R</code> to create a new object, <code>x</code>, that stores the values 1, 2, and 3 in a vector, denoted by <code>c(...)</code> where the <code>...</code> is just a placeholder for whatever you’d like to enter (where each element is separated by commas).</p>
+<p>Congratulations! You have created your first object in
+<code>R</code>: a vector storing the numbers 1, 2, and 3.</p>
+<p>You achieved that by using the assignment operator <code>&lt;-</code>
+to tell <code>R</code> to create a new object, <code>x</code>, that
+stores the values 1, 2, and 3 in a vector, denoted by
+<code>c(...)</code> where the <code>...</code> is just a placeholder for
+whatever you’d like to enter (where each element is separated by
+commas).</p>
 </div>
 <div id="learning-more-about-r-with-swirl" class="section level1">
 <h1>Learning more about <code>R</code> with <code>swirl</code></h1>
-<p>We will use the package <code>swirl</code> to learn more about several fundamental concepts in <code>R</code>.</p>
+<p>We will use the package <code>swirl</code> to learn more about
+several fundamental concepts in <code>R</code>.</p>
 <div id="steps" class="section level2">
 <h2>Steps</h2>
 <ol style="list-style-type: decimal">
-<li>Log-in at <a href="https://rstudio.pomona.edu">https://rstudio.pomona.edu</a></li>
+<li>Log-in at <a
+href="https://rstudio.pomona.edu">https://rstudio.pomona.edu</a></li>
 <li>In the console, type in <code>library(swirl)</code>
 <ul>
 <li>All subsequent steps should be run in the console.</li>
 </ul></li>
 <li>Type in <code>swirl()</code></li>
-<li>You will see a message in red text, reading <code>| Welcome to swirl!...call yourself something unique.</code>
+<li>You will see a message in red text, reading
+<code>| Welcome to swirl!...call yourself something unique.</code>
 <ul>
-<li>In the line below, you will see a prompt in blue asking <code>What shall I call you?</code></li>
+<li>In the line below, you will see a prompt in blue asking
+<code>What shall I call you?</code></li>
 <li>Please type in your first name or nickname.</li>
-<li>Note that if your name overlaps with commands in <code>R</code>, you may see functions popping up in auto-complete.</li>
-<li>The image below shows this exact problem for my nickname, <code>Char</code>.</li>
-<li>Type out your name and use the back-arrow to avoid auto-selecting a function or some other command if it does pop up as an auto-complete field. (This is–hopefully–very unlikely to happen!)</li>
+<li>Note that if your name overlaps with commands in <code>R</code>, you
+may see functions popping up in auto-complete.</li>
+<li>The image below shows this exact problem for my nickname,
+<code>Char</code>.</li>
+<li>Type out your name and use the back-arrow to avoid auto-selecting a
+function or some other command if it does pop up as an auto-complete
+field. (This is–hopefully–very unlikely to happen!)</li>
 </ul></li>
 </ol>
 <p><img src="figures/nameAutocompleteIssue.png" /></p>
 <ol start="5" style="list-style-type: decimal">
-<li>After you type in your name, you will see this message in red text. Basically, the gist of the message is that <code>swirl</code> will interact with you in the console, and any time you see three blue dots (an ellipsis), you should hit enter.</li>
+<li>After you type in your name, you will see this message in red text.
+Basically, the gist of the message is that <code>swirl</code> will
+interact with you in the console, and any time you see three blue dots
+(an ellipsis), you should hit enter.</li>
 </ol>
 <pre><code>| Thanks, &lt;FIRST NAME&gt;. Let&#39;s cover a couple of quick housekeeping items...</code></pre>
 <ol start="6" style="list-style-type: decimal">
-<li>Continue through the next two <code>swirl</code> steps, which lead to this query in red text: <code>| Please choose a course, or type 0 to exit swirl</code>
+<li>Continue through the next two <code>swirl</code> steps, which lead
+to this query in red text:
+<code>| Please choose a course, or type 0 to exit swirl</code>
 <ul>
-<li>NB (Nota bene): By this point, <code>swirl</code> has mentioned the <code>R prompt (&gt;)</code> several times.</li>
-<li>The character <code>&gt;</code> is an example of a <strong>command prompt</strong> where you tell a computer (in this case, the server hosting RStudio Server which is running <code>R</code> code) to execute your command.</li>
-<li><em>Examples from other languages</em>: In Python, the command prompt is denoted by <code>&gt;&gt;&gt;</code> (if you are interacting with Python on the command line in a terminal). In Unix operating systems (e.g. Linux distributions or Mac OS), the command prompt for the terminal is often denoted by <code>$</code>.</li>
-<li>TL;DR: The carat symbol <code>&gt;</code> in the <code>R</code> console within RStudio Server is where <code>R</code> awaits your instructions (commands).</li>
+<li>NB (Nota bene): By this point, <code>swirl</code> has mentioned the
+<code>R prompt (&gt;)</code> several times.</li>
+<li>The character <code>&gt;</code> is an example of a <strong>command
+prompt</strong> where you tell a computer (in this case, the server
+hosting RStudio Server which is running <code>R</code> code) to execute
+your command.</li>
+<li><em>Examples from other languages</em>: In Python, the command
+prompt is denoted by <code>&gt;&gt;&gt;</code> (if you are interacting
+with Python on the command line in a terminal). In Unix operating
+systems (e.g. Linux distributions or Mac OS), the command prompt for the
+terminal is often denoted by <code>$</code>.</li>
+<li>TL;DR: The carat symbol <code>&gt;</code> in the <code>R</code>
+console within RStudio Server is where <code>R</code> awaits your
+instructions (commands).</li>
 </ul></li>
-<li>In response to the query (<code>| Please choose a course...</code>), type <code>1</code> after the blue text reading <code>Selection:</code></li>
-<li>In response to the next query, <code>| Please choose a lesson...</code>, please type <code>1</code> after the blue text reading <code>Selection:</code>.
+<li>In response to the query (<code>| Please choose a course...</code>),
+type <code>1</code> after the blue text reading
+<code>Selection:</code></li>
+<li>In response to the next query,
+<code>| Please choose a lesson...</code>, please type <code>1</code>
+after the blue text reading <code>Selection:</code>.
 <ul>
-<li>We will be taking on the <code>1: Basic Building Blocks</code> lesson!</li>
+<li>We will be taking on the <code>1: Basic Building Blocks</code>
+lesson!</li>
 </ul></li>
-<li>You are ready to go and learn about fundamental programming concepts in <code>R</code> using this first class in <code>swirl</code>.</li>
-<li>If you encounter errors, don’t worry! Just try something different and think a bit more carefully about the <code>swirl</code> instructions at that step. You can always use the vertical navigation bar on the right-hand side of the console to roll back up and see what the last instruction was. For example, in response to this instruction:</li>
+<li>You are ready to go and learn about fundamental programming concepts
+in <code>R</code> using this first class in <code>swirl</code>.</li>
+<li>If you encounter errors, don’t worry! Just try something different
+and think a bit more carefully about the <code>swirl</code> instructions
+at that step. You can always use the vertical navigation bar on the
+right-hand side of the console to roll back up and see what the last
+instruction was. For example, in response to this instruction:</li>
 </ol>
 <pre><code>| To see another example of how this vector &#39;recycling&#39; works, try
 | adding c(1, 2, 3, 4) and c(0, 10). Don&#39;t worry about saving the
 | result in a new variable.</code></pre>
-<p>my command here was incorrectly specified (typed in at the <code>R</code> command prompt <code>&gt;</code>):</p>
+<p>my command here was incorrectly specified (typed in at the
+<code>R</code> command prompt <code>&gt;</code>):</p>
 <pre><code>c(1, 2, 3, 4) _ c(0, 10)</code></pre>
 <p>and threw an error:</p>
 <pre><code>Error: unexpected input in &quot;c(1, 2, 3, 4) _&quot;</code></pre>
 <p>In this case, I ended up fixing it by typing:</p>
 <pre><code>c(1, 2, 3, 4) + c(0, 10)</code></pre>
-<p>Unfortunately, with these types of <em>syntax</em> errors (akin to a grammatical error in a human language, like kluging your verb conjugation and forgetting the term for a conjunction to join two clauses together), <code>swirl</code> won’t jump in and “automagically” help you.</p>
-<p>If you get really stuck, first try entering something that is syntatically correct in the console at the command prompt. For instance, you could try <code>myName &lt;- "Char"</code>. While this isn’t the correct answer to this <code>swirl</code> instruction, because this command can be interpreted by <code>R</code>, you’ll get kicked back into <code>swirl</code> instructions that may offer you something that you could directly copy and paste into the console, e.g.:</p>
+<p>Unfortunately, with these types of <em>syntax</em> errors (akin to a
+grammatical error in a human language, like kluging your verb
+conjugation and forgetting the term for a conjunction to join two
+clauses together), <code>swirl</code> won’t jump in and “automagically”
+help you.</p>
+<p>If you get really stuck, first try entering something that is
+syntatically correct in the console at the command prompt. For instance,
+you could try <code>myName &lt;- "Char"</code>. While this isn’t the
+correct answer to this <code>swirl</code> instruction, because this
+command can be interpreted by <code>R</code>, you’ll get kicked back
+into <code>swirl</code> instructions that may offer you something that
+you could directly copy and paste into the console, e.g.:</p>
 <pre><code>| That&#39;s not exactly what I&#39;m looking for. Try again. Or, type info()
 | for more options.
 
@@ -459,27 +534,43 @@ x</code></pre>
 | vectors, when the shorter vector&#39;s length does not divide evenly
 | into the longer vector&#39;s length. Don&#39;t worry about assigning the
 | result to a variable.</code></pre>
-<p>(Note that here you would type or copy and paste <code>c(1, 2, 3, 4) + c(0, 10, 100)</code> into the console at the command prompt <code>&gt;</code>.)</p>
+<p>(Note that here you would type or copy and paste
+<code>c(1, 2, 3, 4) + c(0, 10, 100)</code> into the console at the
+command prompt <code>&gt;</code>.)</p>
 <ol start="11" style="list-style-type: decimal">
-<li>If you are in the middle of interacting with the command prompt (<code>&gt;</code>), you can exit the course and <code>swirl</code> at any time by typing <code>bye()</code> into the console.
+<li>If you are in the middle of interacting with the command prompt
+(<code>&gt;</code>), you can exit the course and <code>swirl</code> at
+any time by typing <code>bye()</code> into the console.
 <ul>
-<li>Don’t worry: <code>swirl</code> will save where you are in the course so you won’t lose your progress!</li>
+<li>Don’t worry: <code>swirl</code> will save where you are in the
+course so you won’t lose your progress!</li>
 </ul></li>
-<li>The course tracks your progress: when you see the black text displaying <code>|=========</code>, the number at the right hand side, after another <code>|</code> represents the percentage of this course that you have completed.</li>
-<li>At the end of the course, you will see a question from <code>swirl</code> asking:</li>
+<li>The course tracks your progress: when you see the black text
+displaying <code>|=========</code>, the number at the right hand side,
+after another <code>|</code> represents the percentage of this course
+that you have completed.</li>
+<li>At the end of the course, you will see a question from
+<code>swirl</code> asking:</li>
 </ol>
 <pre><code>| Would you like to receive credit for completing this course on
 | Coursera.org?</code></pre>
-<p>I recommend typing in <code>2</code> (representing “No”) at the <code>Selection:</code> field.</p>
+<p>I recommend typing in <code>2</code> (representing “No”) at the
+<code>Selection:</code> field.</p>
 <ol start="14" style="list-style-type: decimal">
-<li>Afterwards, <code>swirl</code> will tell you that you’ve completed the course, you will see the following in red text:</li>
+<li>Afterwards, <code>swirl</code> will tell you that you’ve completed
+the course, you will see the following in red text:</li>
 </ol>
 <pre><code>| Excellent work!
 | You&#39;ve reached the end of this lesson...
 | Please choose a course, or type 0 to exit swirl.</code></pre>
-<p>In response to the blue <code>Selection:</code> query, please type 0.</p>
+<p>In response to the blue <code>Selection:</code> query, please type
+0.</p>
 <ol start="15" style="list-style-type: decimal">
-<li>When you have completed the first <code>swirl</code> course, please navigate to the <a href="https://www.gradescope.com/courses/298727/assignments/1438680">Gradescope assignment</a> or the <a href="https://sakai.claremont.edu/portal/directtool/7ee1ca78-3c57-41f8-b14d-09a3f7a58503/">Gradescope POM subpage</a> in our Sakai site and select the correct option for the <code>Completion of swirl class (Basic Building Blocks)</code> assignment.</li>
+<li>When you have completed the first <code>swirl</code> course, please
+navigate to the Assignment page in our class website and select the
+correct option for the
+<code>Completion of swirl class (Basic Building Blocks)</code>
+assignment.</li>
 </ol>
 </div>
 </div>
