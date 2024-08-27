@@ -11,7 +11,7 @@
 
 <meta name="author" content="" />
 
-<meta name="date" content="2024-08-19" />
+<meta name="date" content="2024-08-27" />
 
 <title>Interacting with Climate Change Data using R</title>
 
@@ -325,7 +325,7 @@ $(document).ready(function () {
 <h1 class="title toc-ignore">Interacting with Climate Change Data using
 R</h1>
 <h4 class="author"></h4>
-<h4 class="date">2024-08-19</h4>
+<h4 class="date">2024-08-27</h4>
 
 </div>
 
@@ -357,6 +357,13 @@ don’t worry! That simply means that the package is not installed in your
 course, replace <code>package</code> with the name of the package in
 question, such as <code>swirl</code>).</p>
 <p>First, we will all load these packages.</p>
+<pre class="r"><code>library(dplyr)
+library(openxlsx)
+library(ggplot2)
+
+# Load the dataset from the web
+sheet_url &lt;- &quot;https://github.com/EA30POM/Fall2021/blob/main/data/ClimateChangeSigns.xlsx?raw=true&quot;
+keelingCO2 &lt;- openxlsx::read.xlsx(sheet_url, sheet=&quot;Keeling&quot;)</code></pre>
 </div>
 <div id="data-operations" class="section level1">
 <h1>Data operations</h1>

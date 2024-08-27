@@ -23,6 +23,9 @@ First, we will all load these packages.
 
 ```{r setup, include=FALSE, message=FALSE, warning=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r data, message=FALSE}
 library(dplyr)
 library(openxlsx)
 library(ggplot2)

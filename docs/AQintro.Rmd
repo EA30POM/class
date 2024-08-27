@@ -22,7 +22,7 @@ Ultimately, by working with your groups and incorporating the class' data, you w
 Our objective in the first week of lab is to:
 
 * Set up a [PocketLab Notebook account](https://app.thepocketlab.com/home)
-  + Note that the class code is `1T5MU5`
+  + Note that the class code is `5ACMNE`
   + You will log in as a `Student` using this class code and your FIRST NAME, SURNAME FIRST INITIAL (e.g. Cecil S. for Cecil Sagehen) as it is displayed in the Pomona Portal (if you would like that updated, please let me know and I can do that)
 * Connect to your group's PL Air sensor on a computer and record data
 * Upload your group's mobile phone data as a `.csv` (comma-separated values spreadsheet file) to the [Week 1 data folder](https://drive.google.com/drive/folders/1_sl0G6HRjXt8a1aFGjiD2L4VaEYQOSTu?usp=sharing).
