@@ -23,6 +23,7 @@ Below, we will start by loading packages that we'll need. Remember, you may need
 ### Load packages
 library("ggplot2") # plotting functions
 library("dplyr") # data wrangling functions
+library("tidyr") # data wrangling functions
 library("readr") # reading in tables, including ones online
 library("lubridate") # a package to specify date-time stamps
 library("mosaic") # shuffle (permute) our data
@@ -116,6 +117,9 @@ pm_limit <- lubridate::hms("18:00:00")
 airDF <- airDF %>%
   mutate(DayNight = case_when( Time >= pm_limit ~ "Night",
                                TRUE ~ "Day"))
+
+### Remove rows with missing values
+airDF <- tidyr::drop_na(airDF)
 ```
 
 # Analyzing the data
@@ -129,10 +133,11 @@ Let's start with exploratory data analysis where you calculate summary statistic
 ### for each DayNight condition
 airDF %>%
   group_by(DayNight) %>%
-  summarize(min=min(PM2_5), mean=mean(PM2_5), max=max(PM2_5))
+  summarize(min=min(PM2_5,na.rm=T), mean=mean(PM2_5,na.rm=T), max=max(PM2_5,na.rm=T))
   # use DayNight as the grouping variable
   # for PM2_5 and then summarize PM2_5
-  # for each value of DayNight
+  # for each value of DayNight and pass in the parameter
+  # na.rm=T to ignore missing values
 ```
 
 ## Do day and night differ in their PM2.5 levels?

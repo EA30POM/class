@@ -11,7 +11,7 @@
 
 <meta name="author" content="" />
 
-<meta name="date" content="2024-09-03" />
+<meta name="date" content="2024-09-17" />
 
 <title>Week 3</title>
 
@@ -324,7 +324,7 @@ $(document).ready(function () {
 
 <h1 class="title toc-ignore">Week 3</h1>
 <h4 class="author"></h4>
-<h4 class="date">2024-09-03</h4>
+<h4 class="date">2024-09-17</h4>
 
 </div>
 
@@ -343,6 +343,7 @@ once this semester if you get an error for a particular package.</p>
 <pre class="r"><code>### Load packages
 library(&quot;ggplot2&quot;) # plotting functions
 library(&quot;dplyr&quot;) # data wrangling functions
+library(&quot;tidyr&quot;) # data wrangling functions
 library(&quot;readr&quot;) # reading in tables, including ones online
 library(&quot;lubridate&quot;) # a package to specify date-time stamps
 library(&quot;mosaic&quot;) # shuffle (permute) our data</code></pre>
@@ -431,7 +432,10 @@ pm_limit &lt;- lubridate::hms(&quot;18:00:00&quot;)
 ### Add on a new column to note whether or not the data is day or night
 airDF &lt;- airDF %&gt;%
   mutate(DayNight = case_when( Time &gt;= pm_limit ~ &quot;Night&quot;,
-                               TRUE ~ &quot;Day&quot;))</code></pre>
+                               TRUE ~ &quot;Day&quot;))
+
+### Remove rows with missing values
+airDF &lt;- tidyr::drop_na(airDF)</code></pre>
 </div>
 </div>
 </div>
@@ -457,10 +461,11 @@ statistics of <code>PM2_5</code> in the day and night.</p>
 ### for each DayNight condition
 airDF %&gt;%
   group_by(DayNight) %&gt;%
-  summarize(min=min(PM2_5), mean=mean(PM2_5), max=max(PM2_5))
+  summarize(min=min(PM2_5,na.rm=T), mean=mean(PM2_5,na.rm=T), max=max(PM2_5,na.rm=T))
   # use DayNight as the grouping variable
   # for PM2_5 and then summarize PM2_5
-  # for each value of DayNight</code></pre>
+  # for each value of DayNight and pass in the parameter
+  # na.rm=T to ignore missing values</code></pre>
 <div id="do-day-and-night-differ-in-their-pm2.5-levels"
 class="section level2" number="2.1">
 <h2><span class="header-section-number">2.1</span> Do day and night
