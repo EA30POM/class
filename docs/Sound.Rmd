@@ -26,11 +26,7 @@ html_tag_audio <- function(file, type = c("wav")) {
 
 # Overview {.tabset .tabset-fade}
 
-Please start by logging into [sso.rstudio.cloud/pomona](https://sso.rstudio.cloud/pomona). Once you've logged in, you should see the option to open the `EA 30.1 - Fall 2022` workspace. You can also access [the `EA 30.1 - Fall 2022` workspace at this link](https://sso.rstudio.cloud/pomona?redirect=https%3A%2F%2Frstudio.cloud%2Fspaces%2F272090%2Fjoin%3Faccess_code%3DRH6FObo67WiGmhjuBirlncXZZYKYQBZW9K1HPSEV). 
-
-At the workspace, you should then see the "Assignment" `Acoustics`. Please click on that Assignment. Here is a [direct link to the `Acoustics` project](https://rstudio.cloud/spaces/272090/content/4961814), but it may not work if this is the first time in a while that you're logging into RStudio.Cloud. If it doesn't work, no worries - just log in through the [sso.rstudio.cloud/pomona](https://sso.rstudio.cloud/pomona) link.
-
-In this tutorial, we'll take a look at sound data collected at the Bernard Field Station this past October, or earlier this year.
+Please start by logging into [rstudio.pomona.edu](https://rstudio.pomona.edu). In this tutorial, we'll take a look at sound data collected at the Bernard Field Station.
 
 In this tutorial, you will learn:
 
@@ -38,9 +34,21 @@ In this tutorial, you will learn:
 * how can we visualize sound data using spectrograms?
 * how can we calculate indices of acoustic diversity?
 
+By the end of this lab, you should have:
+
+* gained some familiarity with pulling in acoustic data (`.WAV` files) into `R`;
+* interacted with the class bioacoustic dataset;
+* started to identify hypotheses that you would like to test in your groups.
+
 #  A brief description of sound
 
 When we vocalize, we are making vibrations that move through the air like a wave. Microphones detect these vibrations. These vibrations are then recorded into numbers which can be processed by computers. It turns out that we can get quite a bit of information from these numbers.
+
+These packages are not yet installed on the RStudio Server, so we will need to install them. Please run this **once** this semester in the console:
+
+```
+install.packages(c("seewave","tuneR"))
+```
 
 Let's start by loading the packages that we will need.
 
@@ -57,14 +65,16 @@ library(readr)
 Let's pull in one of the recorded files from the BFS. You can play the recording below.
 
 ```{r,echo=FALSE}
-html_tag_audio('20220313_063000.WAV')
+html_tag_audio('Sound_files/20220313_063000.WAV')
 ```
 
-Now, let's visualize this recording using an oscillogram. The output from the function `oscillo` shows how how the amplitude (or loudness) changes over the whole recording. We're going to focus on visualizing the recording from 0:00 to 0:05
+Now, let's visualize this recording using an oscillogram. The output from the function `oscillo` shows how how the amplitude (or loudness) changes over the whole recording. We're going to focus on visualizing the recording from 0:00 to 0:05.
+
+Please navigate to this [Github link to download the `20220313_063000.WAV` file](https://github.com/EA30POM/site/raw/refs/heads/main/docs/Sound_files/20220313_063000.WAV). Then upload this file to your RStudio Server workspace in the home directory.
 
 ```{r,echo=TRUE}
 ## Read in the sound data
-BFS_am_1 <-tuneR::readWave('20221103_062700.WAV')
+BFS_am_1 <-tuneR::readWave('20220313_063000.WAV')
 
 ## Show the oscillogram
 ## which is a plot of amplitude over time
@@ -89,7 +99,7 @@ spectro(BFS_am_1, fastdisp=TRUE)
 
 From observational data of species, we can calculate metrics such as species richness, Shannon's index, etc. Similarly, from sound data, we can calculate metrics of acoustic complexity, which theoretically should be related to the overall biodiversity of vocalizing animals.
 
-First, let's now also read in an evening recording.
+First, let's now also read in an evening recording. Please navigate to this [Github link to download the `20221020_191500.WAV` file](https://github.com/EA30POM/site/raw/refs/heads/main/docs/Sound_files/20221020_191500.WAV). Then upload this file to your RStudio Server workspace in the home directory.
 
 ```{r,echo=FALSE}
 html_tag_audio('20220313_205000.WAV')
@@ -99,6 +109,13 @@ html_tag_audio('20220313_205000.WAV')
 ## Read in the sound data for the evening
 BFS_pm_1 <-tuneR::readWave('20221020_191500.WAV')
 ```
+
+If the command above doesn't work `BFS_pm_1 <-tuneR::readWave('20221020_191500.WAV')`, then run `getwd()` to see which "working directory" (or folder) you are located in. If you do not see some variant of `/home/username` then you can either:
+
+* Move the recording to whichever directory (folder) you see in `getwd()`
+* Change your current directory to whichever directory (folder) you downloaded the `.WAV` file to.
+    + To swap back to the home directory, simply run `setwd("~")`. 
+    + (This assumes that you downloaded the WAV files to the home directory `/home/username` where `username` is likely something like `cesa2025`).
 
 Here, we will use the function `ACI` to calculate the acoustic complexity of a morning versus evening recording from the BFS.
 
@@ -111,8 +128,8 @@ ACI(BFS_pm_1)
 
 In addition to using numeric metrics such as `ACI` to calculate the acoustic diversity of audio recordings, we can use new computer vision models to identify (bird) species in the recordings. We have and will process/ed the raw recording data to:
 
-* Calculate ACI for each 30 second recording - *in progress*; *to be done for the class recordings*
-* Identify bird vocalizations in each 30 second recording - *complete*; *to be done for the class recordings*
+* Calculate ACI for each 30 second recording - *to be done for the class recordings*
+* Identify bird vocalizations in each 30 second recording - *to be done for the class recordings*
 
 We have used Cornell Lab of Ornithology's [BirdNET](https://birdnet.cornell.edu/) neural network model, which is trained on data such as identified acoustic recordings from [xeno-canto](https://xeno-canto.org/). This model extracts distinct bird vocalizations from the spectrographic representation of each sound file. Those bird vocalizations are then pattern matched against known bird vocalizations to generate the most likely species (of the 3000 species supported by the model) with some probability (a.k.a. `confidence`).
 
@@ -120,48 +137,57 @@ Let's take a look at the data.
 
 ```{r}
 # Read in a spreadsheet from a URL using read_tsv from the readr package
-birdnetDF <- readr::read_tsv("https://github.com/EA30POM/site/raw/main/data/birdnet10-22.tsv")
+soundDF <- readr::read_tsv("https://github.com/chchang47/BIOL104PO/raw/refs/heads/master/data/bioacousticAY22-23.tsv") # read in spreadsheet from its URL and store in soundDF
 
 # Inspect the data
-birdnetDF %>% head() # look at the first 6 rows
+soundDF %>% head() # look at the first 6 rows
 ```
 
-Below, I'll walk you through some possible analyses with the BirdNET identifications, so that this can be grist for the mill for thinking about a hypothesis that your group can take on. Let's start by removing low confidence recordings (e.g. confidence $$ < 0.5$$).
+What are the different variables in the data? We see that there are the following columns:
+
+* `unit`: Which AudioMoth collected the recordings
+  + Note that each AudioMoth had a particular location, so your group may use that attribute in your analyses. I'll show you how to do that below.
+* `date`: The date of the recording
+* `time`: The time of the recording
+* `ACI`: The Acoustic Complexity Index of the recording
+  + In a nutshell, ACI values typically increase with more diversity of sounds.
+  + The calculation for ACI introduced by Pieretti *et al.* (2011) is based on the following observations: 1) biological sounds (like bird song) tend to show fluctuations of intensities while 2) anthropogenic sounds (like cars passing or planes flying) tend to present a very constant droning sound at a less varying intensity.
+  + One potential confounding factor is the role of geophony, or environmental sounds like rainfall. Sometimes geophony like a low, constant wind can present at a very constant intensity, and therefore would not influence ACI. However, patterns that have high variation could influence ACI because they may have varying intensities. <!-- See table 1 here https://besjournals.onlinelibrary.wiley.com/doi/10.1111/2041-210X.13254-->
+* `SR`: The species richness in every 30 second recording
+* `DayNight`: Whether the recording occurred in the day or at night
+* `Month`: A variable that notes which month is associated with the recording.
+* `season`: A variable that notes if the recording was made in the spring or fall.
+
+How can I see an overview of the data?
+
+```{r, eval=F}
+str(soundDF) # see the data structure
+View(soundDF) # open up a spreadsheet viewer to see the data
+```
+
+Let's make sure that the data are in the correct format.
 
 ```{r}
-# Filter out low confidence identifications
-birdnetDF <- birdnetDF %>%
-  dplyr::filter(Confidence >= 0.5) # only retain the rows (observations) where Confidence >= 0.5
+# Cleaning up the data
+soundDF <- soundDF %>%
+  mutate(date = lubridate::ymd(date), # datetime format for date column
+         time = lubridate::hms(time), # HH:MM:SS time format for time column
+         Month = forcats::fct_relevel(Month, 
+                             c("January", "February", "March", "April", "May", "June", 
+                               "July", "August", "September", "October", "November", "December")) # ensure that month is ordered appropriately 
+         )
 ```
 
-Now, let's say that we were interested in evaluating the number of species identified during the day or night. How would we do that?
+How can I view the levels for different covariates of interest?
 
 ```{r}
-# Analyzing number of species during the day or night
-birdnetDF %>%
-  group_by(DayNight) %>% # group by the Day or Night categories
-  summarize(NumSpecies = length(unique(CommonName))) # number of distinct species per category
+soundDF %>% dplyr::select(DayNight) %>% # select the DayNight column from soundDF
+  unique() # get the unique values
+
+# How would I do this for month?
 ```
 
-Below is a summary of what the relevant columns in the class data are or will be:
-
-*`birdnet` Data*:
-
-* `SpeciesCode`: A [six letter short-hand code for species](https://www.birdpop.org/pages/birdSpeciesCodes.php), determined by groups such as the American Ornithological Society
-* `CommonName`: The common name for different species identified in each 3 second window of the recording
-* `Confidence`: The confidence of the identification for each species in each 3 second window
-* `unit`: Which unit recorded the data
-* `date`: What was the date of the recording?
-* `time`: What was the time of the recording?
-* `DayNight`: Was the recording made during the daytime or nighttime?
-
-*`ACI` Data* (forthcoming):
-
-Many of the columns will be the same as the `birdnet` data, though some column names may be capitalized (e.g. `Unit` instead of `unit`).
-
-* `ACI`: the acoustic complexity index value for each 30 second recording.
-
-Each of your groups is required to submit 3 hypotheses by the end of Week 3 of this lab (Week 13 of class). Please confer with your groups on possible hypotheses that you can explore with these data. Some additional variables beyond the bird identification or `ACI` variables that we can obtain as a class include:
+Each of your groups is required to submit 3 hypotheses by the end of Week 2 of this lab (Week 7/8 of class). Please confer with your groups on possible hypotheses that you can explore with these data. Some additional variables beyond the bird identification or `ACI` variables that we can obtain as a class include:
 
 * Precipitation
 * Temperature
@@ -170,6 +196,17 @@ Each of your groups is required to submit 3 hypotheses by the end of Week 3 of t
 * Habitat type in the BFS (determined by the `unit`'s location)
 * Distance to road or edge of the BFS (determined by the `unit`'s location)
 * ... other variables that you may think of and are feasible for us to collect!
+
+To that end, you might wonder--how can I start to look at different patterns in the data?
+
+```{r}
+# Examining and describing the number of species during the day or night
+soundDF %>%
+  group_by(DayNight) %>% # group by the Day or Night categories
+  summarize(meanSpecies = mean(SR)) # average species richness
+
+  # How would you build on this to look at other variables of interest?
+```
 
 # `R` script
 
@@ -200,18 +237,33 @@ ACI(BFS_am_1)
 ACI(BFS_pm_1)
 
 # Read in a spreadsheet from a URL using read_tsv from the readr package
-birdnetDF <- readr::read_tsv("https://github.com/EA30POM/site/raw/main/data/birdnet10-22.tsv")
+soundDF <- readr::read_tsv("https://raw.githubusercontent.com/chchang47/BIOL104PO/refs/heads/master/data/bioacousticAY22-23.tsv") # read in spreadsheet from its URL and store in soundDF
 
 # Inspect the data
-birdnetDF %>% head() # look at the first 6 rows
+soundDF %>% head() # look at the first 6 rows
+str(soundDF) # see the data structure
+View(soundDF) # open up a spreadsheet viewer to see the data
 
-# Filter out low confidence identifications
-birdnetDF <- birdnetDF %>%
-  dplyr::filter(Confidence >= 0.5) # only retain the rows (observations) where Confidence >= 0.5
+# Cleaning up the data
+soundDF <- soundDF %>%
+  mutate(date = lubridate::ymd(date), # datetime format for date column
+         time = lubridate::hms(time), # HH:MM:SS time format for time column
+         Month = forcats::fct_relevel(Month, 
+                             c("January", "February", "March", "April", "May", "June", 
+                               "July", "August", "September", "October", "November", "December")) # ensure that month is ordered appropriately 
+         )
 
-# Analyzing number of species during the day or night
-birdnetDF %>%
+# View attributes in the data
+soundDF %>% dplyr::select(DayNight) %>% # select the DayNight column from soundDF
+  unique() # get the unique values
+
+  # How would I do this for month?
+
+# Examining and describing the number of species during the day or night
+soundDF %>%
   group_by(DayNight) %>% # group by the Day or Night categories
-  summarize(NumSpecies = length(unique(CommonName))) # number of distinct species per category
+  summarize(meanSpecies = mean(SR)) # average species richness
+
+  # How would you build on this to look at other variables of interest?
 ```
 

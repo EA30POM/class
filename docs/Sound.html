@@ -9,11 +9,12 @@
 <meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
 
 
+<meta name="author" content="" />
 
 
 <title>Acoustic ecology - studying environments through sound</title>
 
-<script src="site_libs/header-attrs-2.13/header-attrs.js"></script>
+<script src="site_libs/header-attrs-2.27/header-attrs.js"></script>
 <script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <link href="site_libs/bootstrap-3.3.5/css/flatly.min.css" rel="stylesheet" />
@@ -29,14 +30,14 @@
        h6 {font-size: 12px;}
        code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
        pre:not([class]) { background-color: white }</style>
-<script src="site_libs/jqueryui-1.11.4/jquery-ui.min.js"></script>
+<script src="site_libs/jqueryui-1.13.2/jquery-ui.min.js"></script>
 <link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
 <script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
 <script src="site_libs/navigation-1.1/tabsets.js"></script>
 <link href="site_libs/highlightjs-9.12.0/default.css" rel="stylesheet" />
 <script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
-<link href="site_libs/font-awesome-5.1.0/css/all.css" rel="stylesheet" />
-<link href="site_libs/font-awesome-5.1.0/css/v4-shims.css" rel="stylesheet" />
+<link href="site_libs/font-awesome-6.4.2/css/all.min.css" rel="stylesheet" />
+<link href="site_libs/font-awesome-6.4.2/css/v4-shims.min.css" rel="stylesheet" />
 
 <style type="text/css">
   code{white-space: pre-wrap;}
@@ -147,11 +148,15 @@ $(document).ready(function () {
     href = "index.html";
   var menuAnchor = $('a[href="' + href + '"]');
 
-  // mark it active
-  menuAnchor.tab('show');
-
-  // if it's got a parent navbar menu mark it active as well
-  menuAnchor.closest('li.dropdown').addClass('active');
+  // mark the anchor link active (and if it's in a dropdown, also mark that active)
+  var dropdown = menuAnchor.closest('li.dropdown');
+  if (window.bootstrap) { // Bootstrap 4+
+    menuAnchor.addClass('active');
+    dropdown.find('> .dropdown-toggle').addClass('active');
+  } else { // Bootstrap 3
+    menuAnchor.parent().addClass('active');
+    dropdown.addClass('active');
+  }
 
   // Navbar adjustments
   var navHeight = $(".navbar").first().height() + 15;
@@ -180,8 +185,8 @@ $(document).ready(function () {
   border-radius: 4px;
 }
 
-.tabset-dropdown > .nav-tabs > li.active:before {
-  content: "";
+.tabset-dropdown > .nav-tabs > li.active:before, .tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "\e259";
   font-family: 'Glyphicons Halflings';
   display: inline-block;
   padding: 10px;
@@ -189,16 +194,9 @@ $(document).ready(function () {
 }
 
 .tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
-  content: "&#xe258;";
-  border: none;
-}
-
-.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
-  content: "";
+  content: "\e258";
   font-family: 'Glyphicons Halflings';
-  display: inline-block;
-  padding: 10px;
-  border-right: 1px solid #ddd;
+  border: none;
 }
 
 .tabset-dropdown > .nav-tabs > li.active {
@@ -344,6 +342,9 @@ div.tocify {
     </li>
     <li class="dropdown-header">Class activities</li>
     <li>
+      <a href="tidyTutorial.html">Tidyverse intro</a>
+    </li>
+    <li>
       <a href="ClimateData.html">Climate data</a>
     </li>
   </ul>
@@ -366,18 +367,6 @@ div.tocify {
     <li class="dropdown-header">Week 3</li>
     <li>
       <a href="AQexp2.html">Air Quality: Analysis</a>
-    </li>
-  </ul>
-</li>
-<li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-    Soil science
-     
-    <span class="caret"></span>
-  </a>
-  <ul class="dropdown-menu" role="menu">
-    <li>
-      <a href="soil.html">Analyzing data</a>
     </li>
   </ul>
 </li>
@@ -408,27 +397,48 @@ div.tocify {
 
 
 
-<h1 class="title toc-ignore">Acoustic ecology - studying environments through sound</h1>
+<h1 class="title toc-ignore">Acoustic ecology - studying environments
+through sound</h1>
 <h4 class="author"></h4>
 
 </div>
 
 
 <div id="overview" class="section level1 tabset tabset-fade" number="1">
-<h1 class="tabset tabset-fade" number="1"><span class="header-section-number">1</span> Overview</h1>
-<p>Please start by logging into <a href="https://sso.rstudio.cloud/pomona">sso.rstudio.cloud/pomona</a>. Once you’ve logged in, you should see the option to open the <code>EA 30.1 - Fall 2022</code> workspace. You can also access <a href="https://sso.rstudio.cloud/pomona?redirect=https%3A%2F%2Frstudio.cloud%2Fspaces%2F272090%2Fjoin%3Faccess_code%3DRH6FObo67WiGmhjuBirlncXZZYKYQBZW9K1HPSEV">the <code>EA 30.1 - Fall 2022</code> workspace at this link</a>.</p>
-<p>At the workspace, you should then see the “Assignment” <code>Acoustics</code>. Please click on that Assignment. Here is a <a href="https://rstudio.cloud/spaces/272090/content/4961814">direct link to the <code>Acoustics</code> project</a>, but it may not work if this is the first time in a while that you’re logging into RStudio.Cloud. If it doesn’t work, no worries - just log in through the <a href="https://sso.rstudio.cloud/pomona">sso.rstudio.cloud/pomona</a> link.</p>
-<p>In this tutorial, we’ll take a look at sound data collected at the Bernard Field Station this past October, or earlier this year.</p>
+<h1 class="tabset tabset-fade"><span
+class="header-section-number">1</span> Overview</h1>
+<p>Please start by logging into <a
+href="https://rstudio.pomona.edu">rstudio.pomona.edu</a>. In this
+tutorial, we’ll take a look at sound data collected at the Bernard Field
+Station.</p>
 <p>In this tutorial, you will learn:</p>
 <ul>
-<li>what are different ways to interact with sound data in <code>R</code>?</li>
+<li>what are different ways to interact with sound data in
+<code>R</code>?</li>
 <li>how can we visualize sound data using spectrograms?</li>
 <li>how can we calculate indices of acoustic diversity?</li>
 </ul>
+<p>By the end of this lab, you should have:</p>
+<ul>
+<li>gained some familiarity with pulling in acoustic data
+(<code>.WAV</code> files) into <code>R</code>;</li>
+<li>interacted with the class bioacoustic dataset;</li>
+<li>started to identify hypotheses that you would like to test in your
+groups.</li>
+</ul>
 </div>
-<div id="a-brief-description-of-sound" class="section level1" number="2">
-<h1 number="2"><span class="header-section-number">2</span> A brief description of sound</h1>
-<p>When we vocalize, we are making vibrations that move through the air like a wave. Microphones detect these vibrations. These vibrations are then recorded into numbers which can be processed by computers. It turns out that we can get quite a bit of information from these numbers.</p>
+<div id="a-brief-description-of-sound" class="section level1"
+number="2">
+<h1><span class="header-section-number">2</span> A brief description of
+sound</h1>
+<p>When we vocalize, we are making vibrations that move through the air
+like a wave. Microphones detect these vibrations. These vibrations are
+then recorded into numbers which can be processed by computers. It turns
+out that we can get quite a bit of information from these numbers.</p>
+<p>These packages are not yet installed on the RStudio Server, so we
+will need to install them. Please run this <strong>once</strong> this
+semester in the console:</p>
+<pre><code>install.packages(c(&quot;seewave&quot;,&quot;tuneR&quot;))</code></pre>
 <p>Let’s start by loading the packages that we will need.</p>
 <pre class="r"><code>### Loading packages
 library(seewave)
@@ -436,25 +446,43 @@ library(tuneR)
 library(dplyr)
 library(readr)</code></pre>
 <div id="waveforms" class="section level2" number="2.1">
-<h2 number="2.1"><span class="header-section-number">2.1</span> Waveforms</h2>
-<p>Let’s pull in one of the recorded files from the BFS. You can play the recording below.</p>
+<h2><span class="header-section-number">2.1</span> Waveforms</h2>
+<p>Let’s pull in one of the recorded files from the BFS. You can play
+the recording below.</p>
 <audio controls="">
-<source src="20220313_063000.WAV" type="audio/wav"/>
+<source src="Sound_files/20220313_063000.WAV" type="audio/wav"/>
 </audio>
-<p>Now, let’s visualize this recording using an oscillogram. The output from the function <code>oscillo</code> shows how how the amplitude (or loudness) changes over the whole recording. We’re going to focus on visualizing the recording from 0:00 to 0:05</p>
+<p>Now, let’s visualize this recording using an oscillogram. The output
+from the function <code>oscillo</code> shows how how the amplitude (or
+loudness) changes over the whole recording. We’re going to focus on
+visualizing the recording from 0:00 to 0:05.</p>
+<p>Please navigate to this <a
+href="https://github.com/EA30POM/site/raw/refs/heads/main/docs/Sound_files/20220313_063000.WAV">Github
+link to download the <code>20220313_063000.WAV</code> file</a>. Then
+upload this file to your RStudio Server workspace in the home
+directory.</p>
 <pre class="r"><code>## Read in the sound data
-BFS_am_1 &lt;-tuneR::readWave(&#39;20221103_062700.WAV&#39;)
+BFS_am_1 &lt;-tuneR::readWave(&#39;20220313_063000.WAV&#39;)
 
 ## Show the oscillogram
 ## which is a plot of amplitude over time
 oscillo(BFS_am_1, from=0, to= 5, fastdisp=TRUE)</code></pre>
 <p><img src="Sound_files/figure-html/unnamed-chunk-3-1.png" width="672" /></p>
-<p>One thing to note is that these data were recorded at a frequency of 48,000 records per second. So even though each sound file is only 30 seconds long, it has a total of 1,440,000 data points! (This is equal to 30 seconds / minute * 48000 records/second.)</p>
+<p>One thing to note is that these data were recorded at a frequency of
+48,000 records per second. So even though each sound file is only 30
+seconds long, it has a total of 1,440,000 data points! (This is equal to
+30 seconds / minute * 48000 records/second.)</p>
 </div>
 <div id="spectrogram" class="section level2" number="2.2">
-<h2 number="2.2"><span class="header-section-number">2.2</span> Spectrogram</h2>
-<p>Another way that we can visualize sound is to use the fact that sound has the property of frequency (pitch) at particular times. We can also include amplitude (loudness) as a color. A spectrogram let’s us display all three elements of an acoustic signal: its time/duration, the frequency (pitch) of the sound, and the loudness of the sound at each frequency (pitch).</p>
-<p>We see that the frequencies in this sound recording are mostly located from 0 to 5000 Hz (or 5 kHz).</p>
+<h2><span class="header-section-number">2.2</span> Spectrogram</h2>
+<p>Another way that we can visualize sound is to use the fact that sound
+has the property of frequency (pitch) at particular times. We can also
+include amplitude (loudness) as a color. A spectrogram let’s us display
+all three elements of an acoustic signal: its time/duration, the
+frequency (pitch) of the sound, and the loudness of the sound at each
+frequency (pitch).</p>
+<p>We see that the frequencies in this sound recording are mostly
+located from 0 to 5000 Hz (or 5 kHz).</p>
 <pre class="r"><code>## Use spectro to display the spectogram of this data
 spectro(BFS_am_1, fastdisp=TRUE)</code></pre>
 <p><img src="Sound_files/figure-html/unnamed-chunk-4-1.png" width="672" /></p>
@@ -462,105 +490,190 @@ spectro(BFS_am_1, fastdisp=TRUE)</code></pre>
 </div>
 </div>
 <div id="soundscape-indices" class="section level1" number="3">
-<h1 number="3"><span class="header-section-number">3</span> Soundscape indices</h1>
-<p>From observational data of species, we can calculate metrics such as species richness, Shannon’s index, etc. Similarly, from sound data, we can calculate metrics of acoustic complexity, which theoretically should be related to the overall biodiversity of vocalizing animals.</p>
-<p>First, let’s now also read in an evening recording.</p>
+<h1><span class="header-section-number">3</span> Soundscape indices</h1>
+<p>From observational data of species, we can calculate metrics such as
+species richness, Shannon’s index, etc. Similarly, from sound data, we
+can calculate metrics of acoustic complexity, which theoretically should
+be related to the overall biodiversity of vocalizing animals.</p>
+<p>First, let’s now also read in an evening recording. Please navigate
+to this <a
+href="https://github.com/EA30POM/site/raw/refs/heads/main/docs/Sound_files/20221020_191500.WAV">Github
+link to download the <code>20221020_191500.WAV</code> file</a>. Then
+upload this file to your RStudio Server workspace in the home
+directory.</p>
 <audio controls="">
 <source src="20220313_205000.WAV" type="audio/wav"/>
 </audio>
 <pre class="r"><code>## Read in the sound data for the evening
 BFS_pm_1 &lt;-tuneR::readWave(&#39;20221020_191500.WAV&#39;)</code></pre>
-<p>Here, we will use the function <code>ACI</code> to calculate the acoustic complexity of a morning versus evening recording from the BFS.</p>
+<p>If the command above doesn’t work
+<code>BFS_pm_1 &lt;-tuneR::readWave('20221020_191500.WAV')</code>, then
+run <code>getwd()</code> to see which “working directory” (or folder)
+you are located in. If you do not see some variant of
+<code>/home/username</code> then you can either:</p>
+<ul>
+<li>Move the recording to whichever directory (folder) you see in
+<code>getwd()</code></li>
+<li>Change your current directory to whichever directory (folder) you
+downloaded the <code>.WAV</code> file to.
+<ul>
+<li>To swap back to the home directory, simply run
+<code>setwd("~")</code>.</li>
+<li>(This assumes that you downloaded the WAV files to the home
+directory <code>/home/username</code> where <code>username</code> is
+likely something like <code>cesa2025</code>).</li>
+</ul></li>
+</ul>
+<p>Here, we will use the function <code>ACI</code> to calculate the
+acoustic complexity of a morning versus evening recording from the
+BFS.</p>
 <pre class="r"><code>ACI(BFS_am_1)</code></pre>
-<pre><code>## [1] 150.2826</code></pre>
+<pre><code>## [1] 155.0816</code></pre>
 <pre class="r"><code>ACI(BFS_pm_1)</code></pre>
 <pre><code>## [1] 167.0415</code></pre>
 </div>
 <div id="processed-data" class="section level1" number="4">
-<h1 number="4"><span class="header-section-number">4</span> Processed data</h1>
-<p>In addition to using numeric metrics such as <code>ACI</code> to calculate the acoustic diversity of audio recordings, we can use new computer vision models to identify (bird) species in the recordings. We have and will process/ed the raw recording data to:</p>
+<h1><span class="header-section-number">4</span> Processed data</h1>
+<p>In addition to using numeric metrics such as <code>ACI</code> to
+calculate the acoustic diversity of audio recordings, we can use new
+computer vision models to identify (bird) species in the recordings. We
+have and will process/ed the raw recording data to:</p>
 <ul>
-<li>Calculate ACI for each 30 second recording - <em>in progress</em>; <em>to be done for the class recordings</em></li>
-<li>Identify bird vocalizations in each 30 second recording - <em>complete</em>; <em>to be done for the class recordings</em></li>
+<li>Calculate ACI for each 30 second recording - <em>to be done for the
+class recordings</em></li>
+<li>Identify bird vocalizations in each 30 second recording - <em>to be
+done for the class recordings</em></li>
 </ul>
-<p>We have used Cornell Lab of Ornithology’s <a href="https://birdnet.cornell.edu/">BirdNET</a> neural network model, which is trained on data such as identified acoustic recordings from <a href="https://xeno-canto.org/">xeno-canto</a>. This model extracts distinct bird vocalizations from the spectrographic representation of each sound file. Those bird vocalizations are then pattern matched against known bird vocalizations to generate the most likely species (of the 3000 species supported by the model) with some probability (a.k.a. <code>confidence</code>).</p>
+<p>We have used Cornell Lab of Ornithology’s <a
+href="https://birdnet.cornell.edu/">BirdNET</a> neural network model,
+which is trained on data such as identified acoustic recordings from <a
+href="https://xeno-canto.org/">xeno-canto</a>. This model extracts
+distinct bird vocalizations from the spectrographic representation of
+each sound file. Those bird vocalizations are then pattern matched
+against known bird vocalizations to generate the most likely species (of
+the 3000 species supported by the model) with some probability (a.k.a.
+<code>confidence</code>).</p>
 <p>Let’s take a look at the data.</p>
 <pre class="r"><code># Read in a spreadsheet from a URL using read_tsv from the readr package
-birdnetDF &lt;- readr::read_tsv(&quot;https://github.com/EA30POM/site/raw/main/data/birdnet10-22.tsv&quot;)</code></pre>
-<pre><code>## Parsed with column specification:
-## cols(
-##   Selection = col_double(),
-##   View = col_character(),
-##   Channel = col_double(),
-##   BeginTimeS = col_double(),
-##   EndTimeS = col_double(),
-##   LowFreqHz = col_double(),
-##   HighFreqHz = col_double(),
-##   SpeciesCode = col_character(),
-##   CommonName = col_character(),
-##   Confidence = col_double(),
-##   unit = col_character(),
-##   date = col_date(format = &quot;&quot;),
-##   time = col_character(),
-##   DayNight = col_character()
-## )</code></pre>
+soundDF &lt;- readr::read_tsv(&quot;https://github.com/chchang47/BIOL104PO/raw/refs/heads/master/data/bioacousticAY22-23.tsv&quot;) # read in spreadsheet from its URL and store in soundDF</code></pre>
+<pre><code>## Rows: 151468 Columns: 8
+## ── Column specification ────────────────────────────────────────────────────────
+## Delimiter: &quot;\t&quot;
+## chr  (5): unit, time, DayNight, Month, season
+## dbl  (2): ACI, SR
+## date (1): date
+## 
+## ℹ Use `spec()` to retrieve the full column specification for this data.
+## ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
 <pre class="r"><code># Inspect the data
-birdnetDF %&gt;% head() # look at the first 6 rows</code></pre>
-<pre><code>## # A tibble: 6 x 14
-##   Selection View    Channel BeginTimeS EndTimeS LowFreqHz HighFreqHz SpeciesCode
-##       &lt;dbl&gt; &lt;chr&gt;     &lt;dbl&gt;      &lt;dbl&gt;    &lt;dbl&gt;     &lt;dbl&gt;      &lt;dbl&gt; &lt;chr&gt;      
-## 1         1 Spectr…       1          0        3       150      12000 caltow     
-## 2         2 Spectr…       1          3        6       150      12000 caltow     
-## 3         3 Spectr…       1          6        9       150      12000 caltow     
-## 4         4 Spectr…       1          9       12       150      12000 caltow     
-## 5         5 Spectr…       1         12       15       150      12000 caltow     
-## 6         6 Spectr…       1         15       18       150      12000 caltow     
-## # … with 6 more variables: CommonName &lt;chr&gt;, Confidence &lt;dbl&gt;, unit &lt;chr&gt;,
-## #   date &lt;date&gt;, time &lt;chr&gt;, DayNight &lt;chr&gt;</code></pre>
-<p>Below, I’ll walk you through some possible analyses with the BirdNET identifications, so that this can be grist for the mill for thinking about a hypothesis that your group can take on. Let’s start by removing low confidence recordings (e.g. confidence <span class="math display">\[ &lt; 0.5\]</span>).</p>
-<pre class="r"><code># Filter out low confidence identifications
-birdnetDF &lt;- birdnetDF %&gt;%
-  dplyr::filter(Confidence &gt;= 0.5) # only retain the rows (observations) where Confidence &gt;= 0.5</code></pre>
-<p>Now, let’s say that we were interested in evaluating the number of species identified during the day or night. How would we do that?</p>
-<pre class="r"><code># Analyzing number of species during the day or night
-birdnetDF %&gt;%
-  group_by(DayNight) %&gt;% # group by the Day or Night categories
-  summarize(NumSpecies = length(unique(CommonName))) # number of distinct species per category</code></pre>
-<pre><code>## `summarise()` ungrouping output (override with `.groups` argument)</code></pre>
-<pre><code>## # A tibble: 2 x 2
-##   DayNight NumSpecies
-##   &lt;chr&gt;         &lt;int&gt;
-## 1 Day             195
-## 2 Night           144</code></pre>
-<p>Below is a summary of what the relevant columns in the class data are or will be:</p>
-<p><em><code>birdnet</code> Data</em>:</p>
+soundDF %&gt;% head() # look at the first 6 rows</code></pre>
+<pre><code>## # A tibble: 6 × 8
+##   unit  date       time        ACI    SR DayNight Month season
+##   &lt;chr&gt; &lt;date&gt;     &lt;chr&gt;     &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt;    &lt;chr&gt; &lt;chr&gt; 
+## 1 CBio4 2023-03-23 18H 0M 0S  155.     3 Night    March Spring
+## 2 CBio4 2023-03-23 18H 1M 0S  154.     3 Night    March Spring
+## 3 CBio4 2023-03-23 18H 2M 0S  151.     7 Night    March Spring
+## 4 CBio4 2023-03-23 18H 3M 0S  155.     3 Night    March Spring
+## 5 CBio4 2023-03-23 18H 4M 0S  152.     2 Night    March Spring
+## 6 CBio4 2023-03-23 18H 5M 0S  152.     4 Night    March Spring</code></pre>
+<p>What are the different variables in the data? We see that there are
+the following columns:</p>
 <ul>
-<li><code>SpeciesCode</code>: A <a href="https://www.birdpop.org/pages/birdSpeciesCodes.php">six letter short-hand code for species</a>, determined by groups such as the American Ornithological Society</li>
-<li><code>CommonName</code>: The common name for different species identified in each 3 second window of the recording</li>
-<li><code>Confidence</code>: The confidence of the identification for each species in each 3 second window</li>
-<li><code>unit</code>: Which unit recorded the data</li>
-<li><code>date</code>: What was the date of the recording?</li>
-<li><code>time</code>: What was the time of the recording?</li>
-<li><code>DayNight</code>: Was the recording made during the daytime or nighttime?</li>
-</ul>
-<p><em><code>ACI</code> Data</em> (forthcoming):</p>
-<p>Many of the columns will be the same as the <code>birdnet</code> data, though some column names may be capitalized (e.g. <code>Unit</code> instead of <code>unit</code>).</p>
+<li><code>unit</code>: Which AudioMoth collected the recordings
 <ul>
-<li><code>ACI</code>: the acoustic complexity index value for each 30 second recording.</li>
+<li>Note that each AudioMoth had a particular location, so your group
+may use that attribute in your analyses. I’ll show you how to do that
+below.</li>
+</ul></li>
+<li><code>date</code>: The date of the recording</li>
+<li><code>time</code>: The time of the recording</li>
+<li><code>ACI</code>: The Acoustic Complexity Index of the recording
+<ul>
+<li>In a nutshell, ACI values typically increase with more diversity of
+sounds.</li>
+<li>The calculation for ACI introduced by Pieretti <em>et al.</em>
+(2011) is based on the following observations: 1) biological sounds
+(like bird song) tend to show fluctuations of intensities while 2)
+anthropogenic sounds (like cars passing or planes flying) tend to
+present a very constant droning sound at a less varying intensity.</li>
+<li>One potential confounding factor is the role of geophony, or
+environmental sounds like rainfall. Sometimes geophony like a low,
+constant wind can present at a very constant intensity, and therefore
+would not influence ACI. However, patterns that have high variation
+could influence ACI because they may have varying intensities.
+<!-- See table 1 here https://besjournals.onlinelibrary.wiley.com/doi/10.1111/2041-210X.13254--></li>
+</ul></li>
+<li><code>SR</code>: The species richness in every 30 second
+recording</li>
+<li><code>DayNight</code>: Whether the recording occurred in the day or
+at night</li>
+<li><code>Month</code>: A variable that notes which month is associated
+with the recording.</li>
+<li><code>season</code>: A variable that notes if the recording was made
+in the spring or fall.</li>
 </ul>
-<p>Each of your groups is required to submit 3 hypotheses by the end of Week 3 of this lab (Week 13 of class). Please confer with your groups on possible hypotheses that you can explore with these data. Some additional variables beyond the bird identification or <code>ACI</code> variables that we can obtain as a class include:</p>
+<p>How can I see an overview of the data?</p>
+<pre class="r"><code>str(soundDF) # see the data structure
+View(soundDF) # open up a spreadsheet viewer to see the data</code></pre>
+<p>Let’s make sure that the data are in the correct format.</p>
+<pre class="r"><code># Cleaning up the data
+soundDF &lt;- soundDF %&gt;%
+  mutate(date = lubridate::ymd(date), # datetime format for date column
+         time = lubridate::hms(time), # HH:MM:SS time format for time column
+         Month = forcats::fct_relevel(Month, 
+                             c(&quot;January&quot;, &quot;February&quot;, &quot;March&quot;, &quot;April&quot;, &quot;May&quot;, &quot;June&quot;, 
+                               &quot;July&quot;, &quot;August&quot;, &quot;September&quot;, &quot;October&quot;, &quot;November&quot;, &quot;December&quot;)) # ensure that month is ordered appropriately 
+         )</code></pre>
+<pre><code>## Warning: There was 1 warning in `mutate()`.
+## ℹ In argument: `Month = forcats::fct_relevel(...)`.
+## Caused by warning:
+## ! 8 unknown levels in `f`: January, February, May, June, July, August, September,
+## and December</code></pre>
+<p>How can I view the levels for different covariates of interest?</p>
+<pre class="r"><code>soundDF %&gt;% dplyr::select(DayNight) %&gt;% # select the DayNight column from soundDF
+  unique() # get the unique values</code></pre>
+<pre><code>## # A tibble: 2 × 1
+##   DayNight
+##   &lt;chr&gt;   
+## 1 Night   
+## 2 Day</code></pre>
+<pre class="r"><code># How would I do this for month?</code></pre>
+<p>Each of your groups is required to submit 3 hypotheses by the end of
+Week 2 of this lab (Week 7/8 of class). Please confer with your groups
+on possible hypotheses that you can explore with these data. Some
+additional variables beyond the bird identification or <code>ACI</code>
+variables that we can obtain as a class include:</p>
 <ul>
 <li>Precipitation</li>
 <li>Temperature</li>
 <li>Time of year (<code>date</code>)</li>
-<li><a href="https://dashboard.birdcast.info/region/US-CA-037?night=2022-11-14">BirdCast</a> migration estimates for Los Angeles County (see the <em>Birds in flight (nightly avg.)</em> plot FMI)</li>
-<li>Habitat type in the BFS (determined by the <code>unit</code>’s location)</li>
-<li>Distance to road or edge of the BFS (determined by the <code>unit</code>’s location)</li>
-<li>… other variables that you may think of and are feasible for us to collect!</li>
+<li><a
+href="https://dashboard.birdcast.info/region/US-CA-037?night=2022-11-14">BirdCast</a>
+migration estimates for Los Angeles County (see the <em>Birds in flight
+(nightly avg.)</em> plot FMI)</li>
+<li>Habitat type in the BFS (determined by the <code>unit</code>’s
+location)</li>
+<li>Distance to road or edge of the BFS (determined by the
+<code>unit</code>’s location)</li>
+<li>… other variables that you may think of and are feasible for us to
+collect!</li>
 </ul>
+<p>To that end, you might wonder–how can I start to look at different
+patterns in the data?</p>
+<pre class="r"><code># Examining and describing the number of species during the day or night
+soundDF %&gt;%
+  group_by(DayNight) %&gt;% # group by the Day or Night categories
+  summarize(meanSpecies = mean(SR)) # average species richness</code></pre>
+<pre><code>## # A tibble: 2 × 2
+##   DayNight meanSpecies
+##   &lt;chr&gt;          &lt;dbl&gt;
+## 1 Day             3.45
+## 2 Night           1.59</code></pre>
+<pre class="r"><code>  # How would you build on this to look at other variables of interest?</code></pre>
 </div>
 <div id="r-script" class="section level1" number="5">
-<h1 number="5"><span class="header-section-number">5</span> <code>R</code> script</h1>
+<h1><span class="header-section-number">5</span> <code>R</code>
+script</h1>
 <p>Below is the <code>R</code> script in its entirety.</p>
 <pre class="r"><code>### Loading packages
 library(seewave)
@@ -586,19 +699,34 @@ ACI(BFS_am_1)
 ACI(BFS_pm_1)
 
 # Read in a spreadsheet from a URL using read_tsv from the readr package
-birdnetDF &lt;- readr::read_tsv(&quot;https://github.com/EA30POM/site/raw/main/data/birdnet10-22.tsv&quot;)
+soundDF &lt;- readr::read_tsv(&quot;https://raw.githubusercontent.com/chchang47/BIOL104PO/refs/heads/master/data/bioacousticAY22-23.tsv&quot;) # read in spreadsheet from its URL and store in soundDF
 
 # Inspect the data
-birdnetDF %&gt;% head() # look at the first 6 rows
+soundDF %&gt;% head() # look at the first 6 rows
+str(soundDF) # see the data structure
+View(soundDF) # open up a spreadsheet viewer to see the data
 
-# Filter out low confidence identifications
-birdnetDF &lt;- birdnetDF %&gt;%
-  dplyr::filter(Confidence &gt;= 0.5) # only retain the rows (observations) where Confidence &gt;= 0.5
+# Cleaning up the data
+soundDF &lt;- soundDF %&gt;%
+  mutate(date = lubridate::ymd(date), # datetime format for date column
+         time = lubridate::hms(time), # HH:MM:SS time format for time column
+         Month = forcats::fct_relevel(Month, 
+                             c(&quot;January&quot;, &quot;February&quot;, &quot;March&quot;, &quot;April&quot;, &quot;May&quot;, &quot;June&quot;, 
+                               &quot;July&quot;, &quot;August&quot;, &quot;September&quot;, &quot;October&quot;, &quot;November&quot;, &quot;December&quot;)) # ensure that month is ordered appropriately 
+         )
 
-# Analyzing number of species during the day or night
-birdnetDF %&gt;%
+# View attributes in the data
+soundDF %&gt;% dplyr::select(DayNight) %&gt;% # select the DayNight column from soundDF
+  unique() # get the unique values
+
+  # How would I do this for month?
+
+# Examining and describing the number of species during the day or night
+soundDF %&gt;%
   group_by(DayNight) %&gt;% # group by the Day or Night categories
-  summarize(NumSpecies = length(unique(CommonName))) # number of distinct species per category</code></pre>
+  summarize(meanSpecies = mean(SR)) # average species richness
+
+  # How would you build on this to look at other variables of interest?</code></pre>
 </div>
 
 
