@@ -4,6 +4,8 @@ author: ""
 date: '`r Sys.Date()`'
 output: 
   html_document:
+    toc: true
+    toc_float: true
     number_sections: true
 ---
 
@@ -11,24 +13,22 @@ output:
 knitr::opts_chunk$set(echo = TRUE, warning=F, message=F) # by default, print out all of the chunks with commands
 ```
 
-# Overview 
+# Overview {.tabset .tabset-fade}
 
-This page provides a demonstration on using `R` and shuffling our data to analyze the class bioacoustic dataset to generate results for your group presentation. You are welcome to either follow along with the text and copy-paste the code into the console **or** read through and then copy the whole script into a new `R` script.
+This page provides a demonstration on using `R` and shuffling our data to analyze the class bioacoustic dataset to generate results for your group analysis. You are welcome to either follow along with the text and copy-paste the code into the console **or** read through and then copy the whole script into a new `R` script.
 
-Please start by logging into [sso.rstudio.cloud/pomona](https://sso.posit.cloud/pomona). Once you've logged in, you should see the option to open the `EA 30.1 - Fall 2022` workspace. You can also access [the `EA 30.1 - Fall 2022` workspace at this link](https://sso.rstudio.cloud/pomona?redirect=https%3A%2F%2Frstudio.cloud%2Fspaces%2F272090%2Fjoin%3Faccess_code%3DRH6FObo67WiGmhjuBirlncXZZYKYQBZW9K1HPSEV). 
-
-At the workspace, you should then see the "Assignment" `Bioaco`. Please click on that Assignment. Here is a [direct link to the `Bioaco` project](https://posit.cloud/spaces/272090/content/5049202), but it may not work if this is the first time in a while that you're logging into RStudio.Cloud. If it doesn't work, no worries - just log in through the [sso.rstudio.cloud/pomona](https://sso.rstudio.cloud/pomona) link.
+Please start by logging into [rstudio.pomona.edu](https://rstudio.pomona.edu).
 
 This table below shows the hypotheses for each group:
 
 ```{r, echo=F}
 library(magrittr)
 ## Pull in Google sheet schedule
-schedDF <- googlesheets4::read_sheet("https://docs.google.com/spreadsheets/d/1wqLT5LiPRBhfeYxiQAc0AkJAEsdTwO6jrqAilw8SalE/edit?usp=sharing",sheet = "FinalVersions",col_types="cc")
+schedDF <- googlesheets4::read_sheet("https://docs.google.com/spreadsheets/d/1b6yIsvcT57wPnHy7H143Kk4__WMJ-fz6UGHPNcnt0O8/edit?usp=sharing",sheet = "FinalVersions",col_types="ccc")
 
 schedDF %>% 
-  htmlTable::addHtmlTableStyle(col.rgroup = c("#fb9a99","#fdc086","#ffff99","#ccebc5","#b3cde3","#decbe4"
-  )) %>%
+  htmlTable::addHtmlTableStyle(col.rgroup = c("#f4cccc","#fce5cd","#fff2cc","#d9ead3","#c9daf8","#c9daf8","#ead1dc"
+  )) %>% # get the colors by navigating to the Gsheet, clicking on the cell, then clicking on the color icon --> Custom. Will show hexcode
   htmlTable::htmlTable(rnames=FALSE) # can't figure out for now how to merge cells - whatever
 ```
 
@@ -36,7 +36,11 @@ schedDF %>%
 
 ## 1: Load packages
 
-Below, we will start by loading packages that we'll need.
+Below, we will start by loading packages that we'll need. **Remember**: if you get an error for loading a package in your workspace, it might be because it isn't installed. In that case, just run this command **once** this semester:
+
+```
+install.packages("package") # replace "package" with the name of the package that you need
+```
 
 ```{r pkgs}
 ### Load packages
@@ -52,7 +56,7 @@ Next, we will pull in our data and inspect it.
 
 ```{r data}
 ### Load in dataset
-soundDF <- readr::read_tsv("https://github.com/EA30POM/site/blob/main/data/bioacousticF22.tsv?raw=true") # read in spreadsheet from its URL and store in soundDF
+soundDF <- readr::read_tsv("https://github.com/chchang47/BIOL104PO/raw/refs/heads/master/data/bioacousticAY22-23.tsv") # read in spreadsheet from its URL and store in soundDF
 
 ### Look at the first few rows
 soundDF
@@ -74,7 +78,8 @@ We see that there are the following columns:
   + One potential confounding factor is the role of geophony, or environmental sounds like rainfall. Sometimes geophony like a low, constant wind can present at a very constant intensity, and therefore would not influence ACI. However, patterns that have high variation could influence ACI because they may have varying intensities. <!-- See table 1 here https://besjournals.onlinelibrary.wiley.com/doi/10.1111/2041-210X.13254-->
 * `SR`: The species richness in every 30 second recording
 * `DayNight`: Whether the recording occurred in the day or at night
-* `Month`: A variable that notes if the recording was taken in October or November.
+* `Month`: A variable that notes which month is associated with the recording.
+* `season`: A variable that notes if the recording was made in the spring or fall.
 
 Here, I am going to do two tasks. I am going to create a dummy column of data that takes the average of the ranks of `SR` and `ACI` to illustrate different analyses. I am also going to create a data table that tells us different characteristics of each AudioMoth `unit` to illustrate how hypotheses that have some relationship with distance or tree cover (which would be informed by the location of the unit) could proceed.
 
@@ -275,11 +280,11 @@ gf_histogram(~ cor,
              ylab="Count")
 ```
 
-In this case, our simulated correlation coefficient includes 0 in its 95% simulated confidence interval. We can also see this in the plot. So given these data, we cannot reject the null hypothesis. There is not sufficiently strong data that the mean ranks in `ChangVar` associate with site characteristics in `sitenum` in any clear way.
+In this case, our simulated correlation coefficient does not include 0 in its 95% simulated confidence interval. We can also see this in the plot. So given these data, we can reject the null hypothesis. There is sufficiently strong data to conclude that the mean ranks in `ChangVar` associate with site characteristics in `sitenum` in a clear way.
 
 # Code in entirety
 
-The segment below can be directly copied and pasted into the code editor in RStudio Cloud.
+The segment below can be directly copied and pasted into the code editor in RStudio Server.
 
 ```{r full_code, eval=F}
 ###=========================================
@@ -296,7 +301,7 @@ library("mosaic") # shuffle (permute) our data
 ###=========================================
 
 ### Load in dataset
-soundDF <- readr::read_tsv("https://github.com/EA30POM/site/blob/main/data/bioacousticF22.tsv?raw=true") # read in spreadsheet from its URL and store in soundDF
+soundDF <- readr::read_tsv("https://github.com/chchang47/BIOL104PO/raw/refs/heads/master/data/bioacousticAY22-23.tsv") # read in spreadsheet from its URL and store in soundDF
 
 ### Look at the first few rows
 soundDF

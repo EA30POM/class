@@ -9,12 +9,13 @@
 <meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
 
 
+<meta name="author" content="" />
 
-<meta name="date" content="2022-11-28" />
+<meta name="date" content="2024-10-22" />
 
 <title>Bioacoustic analyses</title>
 
-<script src="site_libs/header-attrs-2.13/header-attrs.js"></script>
+<script src="site_libs/header-attrs-2.27/header-attrs.js"></script>
 <script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <link href="site_libs/bootstrap-3.3.5/css/flatly.min.css" rel="stylesheet" />
@@ -30,11 +31,14 @@
        h6 {font-size: 12px;}
        code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
        pre:not([class]) { background-color: white }</style>
+<script src="site_libs/jqueryui-1.13.2/jquery-ui.min.js"></script>
+<link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
+<script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
 <script src="site_libs/navigation-1.1/tabsets.js"></script>
 <link href="site_libs/highlightjs-9.12.0/default.css" rel="stylesheet" />
 <script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
-<link href="site_libs/font-awesome-5.1.0/css/all.css" rel="stylesheet" />
-<link href="site_libs/font-awesome-5.1.0/css/v4-shims.css" rel="stylesheet" />
+<link href="site_libs/font-awesome-6.4.2/css/all.min.css" rel="stylesheet" />
+<link href="site_libs/font-awesome-6.4.2/css/v4-shims.min.css" rel="stylesheet" />
 
 <style type="text/css">
   code{white-space: pre-wrap;}
@@ -145,11 +149,15 @@ $(document).ready(function () {
     href = "index.html";
   var menuAnchor = $('a[href="' + href + '"]');
 
-  // mark it active
-  menuAnchor.tab('show');
-
-  // if it's got a parent navbar menu mark it active as well
-  menuAnchor.closest('li.dropdown').addClass('active');
+  // mark the anchor link active (and if it's in a dropdown, also mark that active)
+  var dropdown = menuAnchor.closest('li.dropdown');
+  if (window.bootstrap) { // Bootstrap 4+
+    menuAnchor.addClass('active');
+    dropdown.find('> .dropdown-toggle').addClass('active');
+  } else { // Bootstrap 3
+    menuAnchor.parent().addClass('active');
+    dropdown.addClass('active');
+  }
 
   // Navbar adjustments
   var navHeight = $(".navbar").first().height() + 15;
@@ -178,8 +186,8 @@ $(document).ready(function () {
   border-radius: 4px;
 }
 
-.tabset-dropdown > .nav-tabs > li.active:before {
-  content: "";
+.tabset-dropdown > .nav-tabs > li.active:before, .tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "\e259";
   font-family: 'Glyphicons Halflings';
   display: inline-block;
   padding: 10px;
@@ -187,16 +195,9 @@ $(document).ready(function () {
 }
 
 .tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
-  content: "&#xe258;";
-  border: none;
-}
-
-.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
-  content: "";
+  content: "\e258";
   font-family: 'Glyphicons Halflings';
-  display: inline-block;
-  padding: 10px;
-  border-right: 1px solid #ddd;
+  border: none;
 }
 
 .tabset-dropdown > .nav-tabs > li.active {
@@ -226,6 +227,69 @@ $(document).ready(function () {
 
 
 
+<style type="text/css">
+
+#TOC {
+  margin: 25px 0px 20px 0px;
+}
+@media (max-width: 768px) {
+#TOC {
+  position: relative;
+  width: 100%;
+}
+}
+
+@media print {
+.toc-content {
+  /* see https://github.com/w3c/csswg-drafts/issues/4434 */
+  float: right;
+}
+}
+
+.toc-content {
+  padding-left: 30px;
+  padding-right: 40px;
+}
+
+div.main-container {
+  max-width: 1200px;
+}
+
+div.tocify {
+  width: 20%;
+  max-width: 260px;
+  max-height: 85%;
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  div.tocify {
+    width: 25%;
+  }
+}
+
+@media (max-width: 767px) {
+  div.tocify {
+    width: 100%;
+    max-width: none;
+  }
+}
+
+.tocify ul, .tocify li {
+  line-height: 20px;
+}
+
+.tocify-subheader .tocify-item {
+  font-size: 0.90em;
+}
+
+.tocify .list-group-item {
+  border-radius: 0px;
+}
+
+
+</style>
+
+
 
 </head>
 
@@ -233,6 +297,16 @@ $(document).ready(function () {
 
 
 <div class="container-fluid main-container">
+
+
+<!-- setup 3col/9col grid for toc_float and main content  -->
+<div class="row">
+<div class="col-xs-12 col-sm-4 col-md-3">
+<div id="TOC" class="tocify">
+</div>
+</div>
+
+<div class="toc-content col-xs-12 col-sm-8 col-md-9">
 
 
 
@@ -269,6 +343,9 @@ $(document).ready(function () {
     </li>
     <li class="dropdown-header">Class activities</li>
     <li>
+      <a href="tidyTutorial.html">Tidyverse intro</a>
+    </li>
+    <li>
       <a href="ClimateData.html">Climate data</a>
     </li>
   </ul>
@@ -291,18 +368,6 @@ $(document).ready(function () {
     <li class="dropdown-header">Week 3</li>
     <li>
       <a href="AQexp2.html">Air Quality: Analysis</a>
-    </li>
-  </ul>
-</li>
-<li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-    Soil science
-     
-    <span class="caret"></span>
-  </a>
-  <ul class="dropdown-menu" role="menu">
-    <li>
-      <a href="soil.html">Analyzing data</a>
     </li>
   </ul>
 </li>
@@ -335,33 +400,22 @@ $(document).ready(function () {
 
 <h1 class="title toc-ignore">Bioacoustic analyses</h1>
 <h4 class="author"></h4>
-<h4 class="date">2022-11-28</h4>
+<h4 class="date">2024-10-22</h4>
 
 </div>
 
 
-<div id="overview" class="section level1" number="1">
-<h1><span class="header-section-number">1</span> Overview</h1>
+<div id="overview" class="section level1 tabset tabset-fade" number="1">
+<h1 class="tabset tabset-fade"><span
+class="header-section-number">1</span> Overview</h1>
 <p>This page provides a demonstration on using <code>R</code> and
 shuffling our data to analyze the class bioacoustic dataset to generate
-results for your group presentation. You are welcome to either follow
-along with the text and copy-paste the code into the console
+results for your group analysis. You are welcome to either follow along
+with the text and copy-paste the code into the console
 <strong>or</strong> read through and then copy the whole script into a
 new <code>R</code> script.</p>
 <p>Please start by logging into <a
-href="https://sso.posit.cloud/pomona">sso.rstudio.cloud/pomona</a>. Once
-you’ve logged in, you should see the option to open the
-<code>EA 30.1 - Fall 2022</code> workspace. You can also access <a
-href="https://sso.rstudio.cloud/pomona?redirect=https%3A%2F%2Frstudio.cloud%2Fspaces%2F272090%2Fjoin%3Faccess_code%3DRH6FObo67WiGmhjuBirlncXZZYKYQBZW9K1HPSEV">the
-<code>EA 30.1 - Fall 2022</code> workspace at this link</a>.</p>
-<p>At the workspace, you should then see the “Assignment”
-<code>Bioaco</code>. Please click on that Assignment. Here is a <a
-href="https://posit.cloud/spaces/272090/content/5049202">direct link to
-the <code>Bioaco</code> project</a>, but it may not work if this is the
-first time in a while that you’re logging into RStudio.Cloud. If it
-doesn’t work, no worries - just log in through the <a
-href="https://sso.rstudio.cloud/pomona">sso.rstudio.cloud/pomona</a>
-link.</p>
+href="https://rstudio.pomona.edu">rstudio.pomona.edu</a>.</p>
 <p>This table below shows the hypotheses for each group:</p>
 <table class="gmisc_table" style="border-collapse: collapse; margin-top: 1em; margin-bottom: 1em;">
 <thead>
@@ -372,60 +426,104 @@ Group
 <th style="font-weight: 900; border-bottom: 1px solid grey; border-top: 2px solid grey; text-align: center;">
 Hypotheses
 </th>
+<th style="font-weight: 900; border-bottom: 1px solid grey; border-top: 2px solid grey; text-align: center;">
+Team
+</th>
 </tr>
 </thead>
 <tbody>
-<tr style="background-color: #fb9a99;">
-<td style="background-color: #fb9a99; text-align: center;">
+<tr style="background-color: #f4cccc;">
+<td style="background-color: #f4cccc; text-align: center;">
 1
 </td>
-<td style="background-color: #fb9a99; text-align: center;">
-There is greater species richness as sites are further from pHake Lake.
+<td style="background-color: #f4cccc; text-align: center;">
+ACI and species richness will be greater near Phake lake due to habitat
+differences (birds aquiring water)
+</td>
+<td style="background-color: #f4cccc; text-align: center;">
+Sy’Vanna, Mari
 </td>
 </tr>
-<tr style="background-color: #fdc086;">
-<td style="background-color: #fdc086; text-align: center;">
+<tr style="background-color: #fce5cd;">
+<td style="background-color: #fce5cd; text-align: center;">
 2
 </td>
-<td style="background-color: #fdc086; text-align: center;">
-ACI is higher during the morning periods of data collection compared to
-night
+<td style="background-color: #fce5cd; text-align: center;">
+We assume that active roads disrupt natural habitats and therefore there
+will be higher ACI levels further away from Foothill Blvd.
+</td>
+<td style="background-color: #fce5cd; text-align: center;">
+Willa, Danie
 </td>
 </tr>
-<tr style="background-color: #ffff99;">
-<td style="background-color: #ffff99; text-align: center;">
+<tr style="background-color: #fff2cc;">
+<td style="background-color: #fff2cc; text-align: center;">
 3
 </td>
-<td style="background-color: #ffff99; text-align: center;">
-Species richness will be lower during the month of November (as compared
-to October) due to colder temperatures
+<td style="background-color: #fff2cc; text-align: center;">
+Monitors located in areas with less foliage will have lower ACI levels
+</td>
+<td style="background-color: #fff2cc; text-align: center;">
+Ella, Nico
 </td>
 </tr>
-<tr style="background-color: #ccebc5;">
-<td style="background-color: #ccebc5; text-align: center;">
+<tr style="background-color: #d9ead3;">
+<td style="background-color: #d9ead3; text-align: center;">
 4
 </td>
-<td style="background-color: #ccebc5; text-align: center;">
-ACI is higher in areas with trees and shrubs, as compared to open areas
+<td style="background-color: #d9ead3; text-align: center;">
+ACI is higher on cooler days than hotter days.
+</td>
+<td style="background-color: #d9ead3; text-align: center;">
+Clara, Anna
 </td>
 </tr>
-<tr style="background-color: #b3cde3;">
-<td style="background-color: #b3cde3; text-align: center;">
+<tr style="background-color: #c9daf8;">
+<td style="background-color: #c9daf8; text-align: center;">
 5
 </td>
-<td style="background-color: #b3cde3; text-align: center;">
-ACI will increase as distance from the edge of the field station and
-nonnatural influences increases.
+<td style="background-color: #c9daf8; text-align: center;">
+The ACI will be higher in more bioddiverse native habitat areas as
+opposed to the invasive grassland where there is less activity from
+various species.
+</td>
+<td style="background-color: #c9daf8; text-align: center;">
+Fiona, George
 </td>
 </tr>
-<tr style="background-color: #decbe4;">
-<td style="background-color: #decbe4; border-bottom: 2px solid grey; text-align: center;">
+<tr style="background-color: #c9daf8;">
+<td style="background-color: #c9daf8; text-align: center;">
 6
 </td>
-<td style="background-color: #decbe4; border-bottom: 2px solid grey; text-align: center;">
-Biodiversity of bird and insect species is positively correlated to
-distance from human settlements (biodiversity increases and distance
-from human settlements increases)
+<td style="background-color: #c9daf8; text-align: center;">
+The SR is lower when Air Quality Index (AQI) is higher.
+</td>
+<td style="background-color: #c9daf8; text-align: center;">
+Jeremy, Sophia
+</td>
+</tr>
+<tr style="background-color: #ead1dc;">
+<td style="background-color: #ead1dc; text-align: center;">
+7
+</td>
+<td style="background-color: #ead1dc; text-align: center;">
+October and November will have greater ACI, SR, and abundance than March
+and April
+</td>
+<td style="background-color: #ead1dc; text-align: center;">
+Karl, Elisa
+</td>
+</tr>
+<tr style="background-color: #f4cccc;">
+<td style="background-color: #f4cccc; border-bottom: 2px solid grey; text-align: center;">
+8
+</td>
+<td style="background-color: #f4cccc; border-bottom: 2px solid grey; text-align: center;">
+Areas more recently affected by fires will record a higher species
+richness.
+</td>
+<td style="background-color: #f4cccc; border-bottom: 2px solid grey; text-align: center;">
+Evan, Ruth
 </td>
 </tr>
 </tbody>
@@ -435,7 +533,11 @@ from human settlements increases)
 <h1><span class="header-section-number">2</span> Preparing data</h1>
 <div id="load-packages" class="section level2" number="2.1">
 <h2><span class="header-section-number">2.1</span> 1: Load packages</h2>
-<p>Below, we will start by loading packages that we’ll need.</p>
+<p>Below, we will start by loading packages that we’ll need.
+<strong>Remember</strong>: if you get an error for loading a package in
+your workspace, it might be because it isn’t installed. In that case,
+just run this command <strong>once</strong> this semester:</p>
+<pre><code>install.packages(&quot;package&quot;) # replace &quot;package&quot; with the name of the package that you need</code></pre>
 <pre class="r"><code>### Load packages
 library(&quot;ggplot2&quot;) # plotting functions
 library(&quot;dplyr&quot;) # data wrangling functions
@@ -446,24 +548,24 @@ library(&quot;mosaic&quot;) # shuffle (permute) our data</code></pre>
 <h2><span class="header-section-number">2.2</span> 2: Read data</h2>
 <p>Next, we will pull in our data and inspect it.</p>
 <pre class="r"><code>### Load in dataset
-soundDF &lt;- readr::read_tsv(&quot;https://github.com/EA30POM/site/blob/main/data/bioacousticF22.tsv?raw=true&quot;) # read in spreadsheet from its URL and store in soundDF
+soundDF &lt;- readr::read_tsv(&quot;https://github.com/chchang47/BIOL104PO/raw/refs/heads/master/data/bioacousticAY22-23.tsv&quot;) # read in spreadsheet from its URL and store in soundDF
 
 ### Look at the first few rows
 soundDF</code></pre>
-<pre><code>## # A tibble: 85,654 x 7
-##    unit  date       time        ACI    SR DayNight Month  
-##    &lt;chr&gt; &lt;date&gt;     &lt;chr&gt;     &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt;    &lt;chr&gt;  
-##  1 CBio3 2022-10-12 18H 0M 0S  152.     1 Night    October
-##  2 CBio3 2022-10-12 18H 1M 0S  153.     1 Night    October
-##  3 CBio3 2022-10-12 18H 2M 0S  152.     1 Night    October
-##  4 CBio3 2022-10-12 18H 3M 0S  151.     1 Night    October
-##  5 CBio3 2022-10-12 18H 4M 0S  152.     1 Night    October
-##  6 CBio3 2022-10-12 18H 5M 0S  151.     1 Night    October
-##  7 CBio3 2022-10-12 18H 6M 0S  154.     2 Night    October
-##  8 CBio3 2022-10-12 18H 7M 0S  152.     2 Night    October
-##  9 CBio3 2022-10-12 18H 8M 0S  153.     0 Night    October
-## 10 CBio3 2022-10-12 18H 9M 0S  152.     2 Night    October
-## # … with 85,644 more rows</code></pre>
+<pre><code>## # A tibble: 151,468 × 8
+##    unit  date       time        ACI    SR DayNight Month season
+##    &lt;chr&gt; &lt;date&gt;     &lt;chr&gt;     &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt;    &lt;chr&gt; &lt;chr&gt; 
+##  1 CBio4 2023-03-23 18H 0M 0S  155.     3 Night    March Spring
+##  2 CBio4 2023-03-23 18H 1M 0S  154.     3 Night    March Spring
+##  3 CBio4 2023-03-23 18H 2M 0S  151.     7 Night    March Spring
+##  4 CBio4 2023-03-23 18H 3M 0S  155.     3 Night    March Spring
+##  5 CBio4 2023-03-23 18H 4M 0S  152.     2 Night    March Spring
+##  6 CBio4 2023-03-23 18H 5M 0S  152.     4 Night    March Spring
+##  7 CBio4 2023-03-23 18H 6M 0S  159.     3 Night    March Spring
+##  8 CBio4 2023-03-23 18H 7M 0S  152.     2 Night    March Spring
+##  9 CBio4 2023-03-23 18H 8M 0S  152.     3 Night    March Spring
+## 10 CBio4 2023-03-23 18H 9M 0S  153.     7 Night    March Spring
+## # ℹ 151,458 more rows</code></pre>
 <pre class="r"><code>### Look at the first few rows in a spreadsheet viewer
 soundDF %&gt;% head() %&gt;% View()</code></pre>
 <p>We see that there are the following columns:</p>
@@ -496,8 +598,10 @@ could influence ACI because they may have varying intensities.
 recording</li>
 <li><code>DayNight</code>: Whether the recording occurred in the day or
 at night</li>
-<li><code>Month</code>: A variable that notes if the recording was taken
-in October or November.</li>
+<li><code>Month</code>: A variable that notes which month is associated
+with the recording.</li>
+<li><code>season</code>: A variable that notes if the recording was made
+in the spring or fall.</li>
 </ul>
 <p>Here, I am going to do two tasks. I am going to create a dummy column
 of data that takes the average of the ranks of <code>SR</code> and
@@ -557,11 +661,11 @@ summary statistics and visualize your variable.</p>
 tapply(soundDF$ChangVar, soundDF$sitecat, summary) </code></pre>
 <pre><code>## $`Big Bird`
 ##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
-##    5802   30426   44778   43324   56500   85070 
+##    8046   52731   80302   77683  103211  151085 
 ## 
 ## $`Little Bird`
 ##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
-##    5801   27717   44828   42338   56858   85048</code></pre>
+##    8095   47172   77256   73805  100275  149904</code></pre>
 <pre class="r"><code>  # use sitecat as the grouping variable
   # for ChangVar and then summarize ChangVar
   # for each sitecat (site characteristics)</code></pre>
@@ -629,13 +733,13 @@ values of <code>ChangVar</code> for the Big Bird vs. Little Bird sites.
 We can start by calculating the mean difference we observe.</p>
 <pre class="r"><code>mean( ChangVar ~ sitecat, data = soundDF , na.rm=T) # show mean ChangVar values for the Big and Little Bird sites, removing missing data</code></pre>
 <pre><code>##    Big Bird Little Bird 
-##    43324.07    42338.25</code></pre>
+##    77682.87    73805.17</code></pre>
 <pre class="r"><code>obs_diff &lt;- diff( mean( ChangVar ~ sitecat, data = soundDF , na.rm=T)) # calculate the difference between the means and store in a variable called &quot;obs_diff&quot;
 obs_diff # display the value of obs_diff</code></pre>
 <pre><code>## Little Bird 
-##   -985.8256</code></pre>
+##   -3877.701</code></pre>
 <p>OK, so the mean difference in mean values between Big and Little Bird
-sites is -985.83. Is this difference meaningful though? We can test that
+sites is -3877.7. Is this difference meaningful though? We can test that
 by specifying an opposing <strong>null hypothesis</strong>.</p>
 <p>In this case, our null hypothesis would be that there is no
 difference in <code>ChangVar</code> across <code>sitecat</code>.</p>
@@ -657,13 +761,13 @@ names(randomizing_diffs)[1] &lt;- &quot;DiffMeans&quot; # change the name of the
 
 # View first few rows of data
 head(randomizing_diffs)</code></pre>
-<pre><code>##     DiffMeans
-## 1 -158.167756
-## 2    3.483474
-## 3   37.037744
-## 4 -219.122058
-## 5  -34.465019
-## 6  238.468001</code></pre>
+<pre><code>##    DiffMeans
+## 1  201.91668
+## 2  107.21028
+## 3  -70.09207
+## 4 -259.21337
+## 5  -89.13740
+## 6  239.40673</code></pre>
 <p>Now we can visualize the distribution of simulated differences in the
 mean values of <code>ChangVar</code> at the Big and Little Bird sites
 versus our observed difference in means. Note that the observed
@@ -705,7 +809,7 @@ data.</p>
 <pre class="r"><code>### Calculate observed correlation
 obs_cor &lt;- cor(ChangVar ~ sitenum, data=soundDF, use=&quot;complete.obs&quot;) # store observed correlation in obs_cor of ChangVar vs sitenum
 obs_cor # print out value</code></pre>
-<pre><code>## [1] 0.001082036</code></pre>
+<pre><code>## [1] 0.05162087</code></pre>
 <p>Let’s say that I’m interested in determining if <code>ChangVar</code>
 is actually positively correlated with <code>sitenum</code>. We can test
 this against the opposing null hypothesis. Our null hypothesis could be
@@ -731,8 +835,8 @@ randomizing_cor &lt;- do(1000) * cor(ChangVar ~ sitenum,
 when we shuffle our data?</p>
 <pre class="r"><code>quantiles_cor &lt;- qdata( ~ cor, p = c(0.025, 0.975), data=randomizing_cor) # calculate the 2.5% and 97.5% quantiles in our simulated correlation coefficient data (note that 97.5-2.5 = 95!)
 quantiles_cor # display the quantiles</code></pre>
-<pre><code>##         2.5%        97.5% 
-## -0.005408486  0.007455075</code></pre>
+<pre><code>##       2.5%      97.5% 
+## 0.04668164 0.05687103</code></pre>
 <p>The values above give us a 95% confidence interval estimate for our
 correlation coefficient!</p>
 <p>Do we clearly see that our correlation coefficient distribution does
@@ -742,18 +846,18 @@ or doesn’t include 0?</p>
              xlab=&quot;Simulated correlation coefficients&quot;,
              ylab=&quot;Count&quot;)</code></pre>
 <p><img src="bioaco_files/figure-html/simCorHist-1.png" width="672" /></p>
-<p>In this case, our simulated correlation coefficient includes 0 in its
-95% simulated confidence interval. We can also see this in the plot. So
-given these data, we cannot reject the null hypothesis. There is not
-sufficiently strong data that the mean ranks in <code>ChangVar</code>
-associate with site characteristics in <code>sitenum</code> in any clear
-way.</p>
+<p>In this case, our simulated correlation coefficient does not include
+0 in its 95% simulated confidence interval. We can also see this in the
+plot. So given these data, we can reject the null hypothesis. There is
+sufficiently strong data to conclude that the mean ranks in
+<code>ChangVar</code> associate with site characteristics in
+<code>sitenum</code> in a clear way.</p>
 </div>
 </div>
 <div id="code-in-entirety" class="section level1" number="5">
 <h1><span class="header-section-number">5</span> Code in entirety</h1>
 <p>The segment below can be directly copied and pasted into the code
-editor in RStudio Cloud.</p>
+editor in RStudio Server.</p>
 <pre class="r"><code>###=========================================
 ### 2: Load packages
 ###=========================================
@@ -768,7 +872,7 @@ library(&quot;mosaic&quot;) # shuffle (permute) our data
 ###=========================================
 
 ### Load in dataset
-soundDF &lt;- readr::read_tsv(&quot;https://github.com/EA30POM/site/blob/main/data/bioacousticF22.tsv?raw=true&quot;) # read in spreadsheet from its URL and store in soundDF
+soundDF &lt;- readr::read_tsv(&quot;https://github.com/chchang47/BIOL104PO/raw/refs/heads/master/data/bioacousticAY22-23.tsv&quot;) # read in spreadsheet from its URL and store in soundDF
 
 ### Look at the first few rows
 soundDF
@@ -902,6 +1006,8 @@ gf_histogram(~ cor,
 
 
 
+</div>
+</div>
 
 </div>
 
@@ -934,6 +1040,35 @@ $(document).ready(function () {
 
 <!-- code folding -->
 
+<script>
+$(document).ready(function ()  {
+
+    // temporarily add toc-ignore selector to headers for the consistency with Pandoc
+    $('.unlisted.unnumbered').addClass('toc-ignore')
+
+    // move toc-ignore selectors from section div to header
+    $('div.section.toc-ignore')
+        .removeClass('toc-ignore')
+        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
+
+    // establish options
+    var options = {
+      selectors: "h1,h2,h3",
+      theme: "bootstrap3",
+      context: '.toc-content',
+      hashGenerator: function (text) {
+        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_');
+      },
+      ignoreSelector: ".toc-ignore",
+      scrollTo: 0
+    };
+    options.showAndHide = true;
+    options.smoothScroll = true;
+
+    // tocify
+    var toc = $("#TOC").tocify(options).data("toc-tocify");
+});
+</script>
 
 <!-- dynamically load mathjax for compatibility with self-contained -->
 <script>
