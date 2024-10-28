@@ -11,7 +11,7 @@
 
 <meta name="author" content="" />
 
-<meta name="date" content="2024-10-22" />
+<meta name="date" content="2024-10-28" />
 
 <title>Bioacoustic analyses</title>
 
@@ -384,6 +384,9 @@ div.tocify {
     <li>
       <a href="bioaco.html">Analyzing sound data</a>
     </li>
+    <li>
+      <a href="acoJoin.html">Joining external data</a>
+    </li>
   </ul>
 </li>
       </ul>
@@ -400,7 +403,7 @@ div.tocify {
 
 <h1 class="title toc-ignore">Bioacoustic analyses</h1>
 <h4 class="author"></h4>
-<h4 class="date">2024-10-22</h4>
+<h4 class="date">2024-10-28</h4>
 
 </div>
 
@@ -548,11 +551,11 @@ library(&quot;mosaic&quot;) # shuffle (permute) our data</code></pre>
 <h2><span class="header-section-number">2.2</span> 2: Read data</h2>
 <p>Next, we will pull in our data and inspect it.</p>
 <pre class="r"><code>### Load in dataset
-soundDF &lt;- readr::read_tsv(&quot;https://github.com/chchang47/BIOL104PO/raw/refs/heads/master/data/bioacousticAY22-23.tsv&quot;) # read in spreadsheet from its URL and store in soundDF
+soundDF &lt;- readr::read_tsv(&quot;https://github.com/EA30POM/site/raw/main/data/bioacousticAY22-24.tsv&quot;) # read in spreadsheet from its URL and store in soundDF
 
 ### Look at the first few rows
 soundDF</code></pre>
-<pre><code>## # A tibble: 151,468 × 8
+<pre><code>## # A tibble: 202,433 × 8
 ##    unit  date       time        ACI    SR DayNight Month season
 ##    &lt;chr&gt; &lt;date&gt;     &lt;chr&gt;     &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt;    &lt;chr&gt; &lt;chr&gt; 
 ##  1 CBio4 2023-03-23 18H 0M 0S  155.     3 Night    March Spring
@@ -565,7 +568,7 @@ soundDF</code></pre>
 ##  8 CBio4 2023-03-23 18H 7M 0S  152.     2 Night    March Spring
 ##  9 CBio4 2023-03-23 18H 8M 0S  152.     3 Night    March Spring
 ## 10 CBio4 2023-03-23 18H 9M 0S  153.     7 Night    March Spring
-## # ℹ 151,458 more rows</code></pre>
+## # ℹ 202,423 more rows</code></pre>
 <pre class="r"><code>### Look at the first few rows in a spreadsheet viewer
 soundDF %&gt;% head() %&gt;% View()</code></pre>
 <p>We see that there are the following columns:</p>
@@ -661,11 +664,11 @@ summary statistics and visualize your variable.</p>
 tapply(soundDF$ChangVar, soundDF$sitecat, summary) </code></pre>
 <pre><code>## $`Big Bird`
 ##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
-##    8046   52731   80302   77683  103211  151085 
+##    8046   74650  108979  105034  139365  202032 
 ## 
 ## $`Little Bird`
 ##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
-##    8095   47172   77256   73805  100275  149904</code></pre>
+##    8095   68090  101380   97349  129534  200852</code></pre>
 <pre class="r"><code>  # use sitecat as the grouping variable
   # for ChangVar and then summarize ChangVar
   # for each sitecat (site characteristics)</code></pre>
@@ -733,14 +736,14 @@ values of <code>ChangVar</code> for the Big Bird vs. Little Bird sites.
 We can start by calculating the mean difference we observe.</p>
 <pre class="r"><code>mean( ChangVar ~ sitecat, data = soundDF , na.rm=T) # show mean ChangVar values for the Big and Little Bird sites, removing missing data</code></pre>
 <pre><code>##    Big Bird Little Bird 
-##    77682.87    73805.17</code></pre>
+##   105033.65    97348.68</code></pre>
 <pre class="r"><code>obs_diff &lt;- diff( mean( ChangVar ~ sitecat, data = soundDF , na.rm=T)) # calculate the difference between the means and store in a variable called &quot;obs_diff&quot;
 obs_diff # display the value of obs_diff</code></pre>
 <pre><code>## Little Bird 
-##   -3877.701</code></pre>
+##   -7684.975</code></pre>
 <p>OK, so the mean difference in mean values between Big and Little Bird
-sites is -3877.7. Is this difference meaningful though? We can test that
-by specifying an opposing <strong>null hypothesis</strong>.</p>
+sites is -7684.97. Is this difference meaningful though? We can test
+that by specifying an opposing <strong>null hypothesis</strong>.</p>
 <p>In this case, our null hypothesis would be that there is no
 difference in <code>ChangVar</code> across <code>sitecat</code>.</p>
 <p>Logically, if there is a meaningful difference, then if we shuffle
@@ -761,13 +764,13 @@ names(randomizing_diffs)[1] &lt;- &quot;DiffMeans&quot; # change the name of the
 
 # View first few rows of data
 head(randomizing_diffs)</code></pre>
-<pre><code>##    DiffMeans
-## 1  201.91668
-## 2  107.21028
-## 3  -70.09207
-## 4 -259.21337
-## 5  -89.13740
-## 6  239.40673</code></pre>
+<pre><code>##     DiffMeans
+## 1  -81.402340
+## 2    8.934357
+## 3 -381.107355
+## 4 -164.055170
+## 5  137.156645
+## 6  -55.831277</code></pre>
 <p>Now we can visualize the distribution of simulated differences in the
 mean values of <code>ChangVar</code> at the Big and Little Bird sites
 versus our observed difference in means. Note that the observed
@@ -809,7 +812,7 @@ data.</p>
 <pre class="r"><code>### Calculate observed correlation
 obs_cor &lt;- cor(ChangVar ~ sitenum, data=soundDF, use=&quot;complete.obs&quot;) # store observed correlation in obs_cor of ChangVar vs sitenum
 obs_cor # print out value</code></pre>
-<pre><code>## [1] 0.05162087</code></pre>
+<pre><code>## [1] 0.06280265</code></pre>
 <p>Let’s say that I’m interested in determining if <code>ChangVar</code>
 is actually positively correlated with <code>sitenum</code>. We can test
 this against the opposing null hypothesis. Our null hypothesis could be
@@ -836,7 +839,7 @@ when we shuffle our data?</p>
 <pre class="r"><code>quantiles_cor &lt;- qdata( ~ cor, p = c(0.025, 0.975), data=randomizing_cor) # calculate the 2.5% and 97.5% quantiles in our simulated correlation coefficient data (note that 97.5-2.5 = 95!)
 quantiles_cor # display the quantiles</code></pre>
 <pre><code>##       2.5%      97.5% 
-## 0.04668164 0.05687103</code></pre>
+## 0.05849326 0.06710745</code></pre>
 <p>The values above give us a 95% confidence interval estimate for our
 correlation coefficient!</p>
 <p>Do we clearly see that our correlation coefficient distribution does
@@ -872,7 +875,7 @@ library(&quot;mosaic&quot;) # shuffle (permute) our data
 ###=========================================
 
 ### Load in dataset
-soundDF &lt;- readr::read_tsv(&quot;https://github.com/chchang47/BIOL104PO/raw/refs/heads/master/data/bioacousticAY22-23.tsv&quot;) # read in spreadsheet from its URL and store in soundDF
+soundDF &lt;- readr::read_tsv(&quot;https://github.com/EA30POM/site/raw/main/data/bioacousticAY22-24.tsv&quot;) # read in spreadsheet from its URL and store in soundDF
 
 ### Look at the first few rows
 soundDF

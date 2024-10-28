@@ -549,11 +549,11 @@ library(&quot;lubridate&quot;) # package to handle datetime objects</code></pre>
 <h2><span class="header-section-number">2.2</span> 2: Read data</h2>
 <p>Next, we will pull in our data and inspect it.</p>
 <pre class="r"><code>### Load in dataset
-soundDF &lt;- readr::read_tsv(&quot;https://github.com/chchang47/BIOL104PO/raw/refs/heads/master/data/bioacousticAY22-23.tsv&quot;) # read in spreadsheet from its URL and store in soundDF
+soundDF &lt;- readr::read_tsv(&quot;https://github.com/EA30POM/site/raw/main/data/bioacousticAY22-24.tsv&quot;) # read in spreadsheet from its URL and store in soundDF
 
 ### Look at the first few rows
 soundDF</code></pre>
-<pre><code>## # A tibble: 151,468 × 8
+<pre><code>## # A tibble: 202,433 × 8
 ##    unit  date       time        ACI    SR DayNight Month season
 ##    &lt;chr&gt; &lt;date&gt;     &lt;chr&gt;     &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt;    &lt;chr&gt; &lt;chr&gt; 
 ##  1 CBio4 2023-03-23 18H 0M 0S  155.     3 Night    March Spring
@@ -566,7 +566,7 @@ soundDF</code></pre>
 ##  8 CBio4 2023-03-23 18H 7M 0S  152.     2 Night    March Spring
 ##  9 CBio4 2023-03-23 18H 8M 0S  152.     3 Night    March Spring
 ## 10 CBio4 2023-03-23 18H 9M 0S  153.     7 Night    March Spring
-## # ℹ 151,458 more rows</code></pre>
+## # ℹ 202,423 more rows</code></pre>
 <pre class="r"><code>### Load AQI and/or temperature datasets
 aqi_df &lt;- readr::read_csv(&quot;https://github.com/EA30POM/site/raw/main/data/claremont_aqi_data.csv&quot;)
 temp_df &lt;- readr::read_csv(&quot;https://github.com/EA30POM/site/raw/main/data/claremont_average_temperature.csv&quot;)</code></pre>
@@ -621,7 +621,7 @@ library(&quot;mosaic&quot;) # shuffle (permute) our data
 library(&quot;lubridate&quot;) # package to handle datetime objects
 
 ### Load in dataset
-soundDF &lt;- readr::read_tsv(&quot;https://github.com/chchang47/BIOL104PO/raw/refs/heads/master/data/bioacousticAY22-23.tsv&quot;) # read in spreadsheet from its URL and store in soundDF
+soundDF &lt;- readr::read_tsv(&quot;https://github.com/EA30POM/site/raw/main/data/bioacousticAY22-24.tsv&quot;) # read in spreadsheet from its URL and store in soundDF
 
 ### Look at the first few rows
 soundDF

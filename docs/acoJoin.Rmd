@@ -57,7 +57,7 @@ Next, we will pull in our data and inspect it.
 
 ```{r data}
 ### Load in dataset
-soundDF <- readr::read_tsv("https://github.com/chchang47/BIOL104PO/raw/refs/heads/master/data/bioacousticAY22-23.tsv") # read in spreadsheet from its URL and store in soundDF
+soundDF <- readr::read_tsv("https://github.com/EA30POM/site/raw/main/data/bioacousticAY22-24.tsv") # read in spreadsheet from its URL and store in soundDF
 
 ### Look at the first few rows
 soundDF
@@ -121,7 +121,7 @@ library("mosaic") # shuffle (permute) our data
 library("lubridate") # package to handle datetime objects
 
 ### Load in dataset
-soundDF <- readr::read_tsv("https://github.com/chchang47/BIOL104PO/raw/refs/heads/master/data/bioacousticAY22-23.tsv") # read in spreadsheet from its URL and store in soundDF
+soundDF <- readr::read_tsv("https://github.com/EA30POM/site/raw/main/data/bioacousticAY22-24.tsv") # read in spreadsheet from its URL and store in soundDF
 
 ### Look at the first few rows
 soundDF

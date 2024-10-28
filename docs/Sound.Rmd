@@ -137,7 +137,7 @@ Let's take a look at the data.
 
 ```{r}
 # Read in a spreadsheet from a URL using read_tsv from the readr package
-soundDF <- readr::read_tsv("https://github.com/chchang47/BIOL104PO/raw/refs/heads/master/data/bioacousticAY22-23.tsv") # read in spreadsheet from its URL and store in soundDF
+soundDF <- readr::read_tsv("https://github.com/EA30POM/site/raw/main/data/bioacousticAY22-24.tsv") # read in spreadsheet from its URL and store in soundDF
 
 # Inspect the data
 soundDF %>% head() # look at the first 6 rows
@@ -237,7 +237,7 @@ ACI(BFS_am_1)
 ACI(BFS_pm_1)
 
 # Read in a spreadsheet from a URL using read_tsv from the readr package
-soundDF <- readr::read_tsv("https://raw.githubusercontent.com/chchang47/BIOL104PO/refs/heads/master/data/bioacousticAY22-23.tsv") # read in spreadsheet from its URL and store in soundDF
+soundDF <- readr::read_tsv("https://github.com/EA30POM/site/raw/main/data/bioacousticAY22-24.tsv") # read in spreadsheet from its URL and store in soundDF
 
 # Inspect the data
 soundDF %>% head() # look at the first 6 rows

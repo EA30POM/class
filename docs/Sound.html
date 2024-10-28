@@ -383,6 +383,9 @@ div.tocify {
     <li>
       <a href="bioaco.html">Analyzing sound data</a>
     </li>
+    <li>
+      <a href="acoJoin.html">Joining external data</a>
+    </li>
   </ul>
 </li>
       </ul>
@@ -555,8 +558,8 @@ the 3000 species supported by the model) with some probability (a.k.a.
 <code>confidence</code>).</p>
 <p>Let’s take a look at the data.</p>
 <pre class="r"><code># Read in a spreadsheet from a URL using read_tsv from the readr package
-soundDF &lt;- readr::read_tsv(&quot;https://github.com/chchang47/BIOL104PO/raw/refs/heads/master/data/bioacousticAY22-23.tsv&quot;) # read in spreadsheet from its URL and store in soundDF</code></pre>
-<pre><code>## Rows: 151468 Columns: 8
+soundDF &lt;- readr::read_tsv(&quot;https://github.com/EA30POM/site/raw/main/data/bioacousticAY22-24.tsv&quot;) # read in spreadsheet from its URL and store in soundDF</code></pre>
+<pre><code>## Rows: 202433 Columns: 8
 ## ── Column specification ────────────────────────────────────────────────────────
 ## Delimiter: &quot;\t&quot;
 ## chr  (5): unit, time, DayNight, Month, season
@@ -667,8 +670,8 @@ soundDF %&gt;%
 <pre><code>## # A tibble: 2 × 2
 ##   DayNight meanSpecies
 ##   &lt;chr&gt;          &lt;dbl&gt;
-## 1 Day             3.45
-## 2 Night           1.59</code></pre>
+## 1 Day             3.57
+## 2 Night           1.75</code></pre>
 <pre class="r"><code>  # How would you build on this to look at other variables of interest?</code></pre>
 </div>
 <div id="r-script" class="section level1" number="5">
@@ -699,7 +702,7 @@ ACI(BFS_am_1)
 ACI(BFS_pm_1)
 
 # Read in a spreadsheet from a URL using read_tsv from the readr package
-soundDF &lt;- readr::read_tsv(&quot;https://raw.githubusercontent.com/chchang47/BIOL104PO/refs/heads/master/data/bioacousticAY22-23.tsv&quot;) # read in spreadsheet from its URL and store in soundDF
+soundDF &lt;- readr::read_tsv(&quot;https://github.com/EA30POM/site/raw/main/data/bioacousticAY22-24.tsv&quot;) # read in spreadsheet from its URL and store in soundDF
 
 # Inspect the data
 soundDF %&gt;% head() # look at the first 6 rows
