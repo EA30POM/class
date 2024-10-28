@@ -1,0 +1,161 @@
+---
+title: "Joining external data to the bioacoustic dataset"
+author: ""
+date: '`r Sys.Date()`'
+output: 
+  html_document:
+    toc: true
+    toc_float: true
+    number_sections: true
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, warning=F, message=F) # by default, print out all of the chunks with commands
+```
+
+# Overview {.tabset .tabset-fade}
+
+This page provides an overview on how to read in and join external data with the class bioacoustic dataset.
+
+Please start by logging into [rstudio.pomona.edu](https://rstudio.pomona.edu).
+
+This table below shows the hypotheses for each group:
+
+```{r, echo=F}
+library(magrittr)
+## Pull in Google sheet schedule
+schedDF <- googlesheets4::read_sheet("https://docs.google.com/spreadsheets/d/1b6yIsvcT57wPnHy7H143Kk4__WMJ-fz6UGHPNcnt0O8/edit?usp=sharing",sheet = "FinalVersions",col_types="ccc")
+
+schedDF %>% 
+  htmlTable::addHtmlTableStyle(col.rgroup = c("#f4cccc","#fce5cd","#fff2cc","#d9ead3","#c9daf8","#c9daf8","#ead1dc"
+  )) %>% # get the colors by navigating to the Gsheet, clicking on the cell, then clicking on the color icon --> Custom. Will show hexcode
+  htmlTable::htmlTable(rnames=FALSE) # can't figure out for now how to merge cells - whatever
+```
+
+# Preparing data
+
+## 1: Load packages
+
+Below, we will start by loading packages that we'll need. **Remember**: if you get an error for loading a package in your workspace, it might be because it isn't installed. In that case, just run this command **once** this semester:
+
+```
+install.packages("package") # replace "package" with the name of the package that you need
+```
+
+```{r pkgs}
+### Load packages
+library("ggplot2") # plotting functions
+library("dplyr") # data wrangling functions
+library("readr") # reading in tables, including ones online
+library("mosaic") # shuffle (permute) our data
+library("lubridate") # package to handle datetime objects
+```
+
+## 2: Read data
+
+Next, we will pull in our data and inspect it.
+
+```{r data}
+### Load in dataset
+soundDF <- readr::read_tsv("https://github.com/chchang47/BIOL104PO/raw/refs/heads/master/data/bioacousticAY22-23.tsv") # read in spreadsheet from its URL and store in soundDF
+
+### Look at the first few rows
+soundDF
+
+### Load AQI and/or temperature datasets
+aqi_df <- readr::read_csv("https://github.com/EA30POM/site/raw/main/data/claremont_aqi_data.csv")
+temp_df <- readr::read_csv("https://github.com/EA30POM/site/raw/main/data/claremont_average_temperature.csv")
+```
+```{r,eval=F}
+### Look at the first few rows in a spreadsheet viewer
+soundDF %>% head() %>% View()
+```
+
+```{r, eval=F}
+### Look at the first few rows of the external data
+head(aqi_df)
+head(temp_df)
+```
+
+## 3: Ensure that the date columns are in the correct format.
+
+Now, we are going to ensure that the date columns are correctly formatted for all 3 datasets.
+
+```{r, eval=F}
+### Clean up the data using lubridate for date conversion
+  # Bioacoustic datasset
+soundDF <- soundDF %>%
+  mutate(date = lubridate::ymd(date))
+
+  # AQI dataset
+aqi_df <- aqi_df %>%
+  mutate(date = lubridate::ymd(date)) 
+
+  # Temp dataset
+temp_df <- temp_df %>%
+  mutate(date = lubridate::ymd(date))
+```
+
+## 4: Joining on the data
+
+Below, I'm going to show you how you can merge the data based on the dates in the data. It is **up to you** to modify this code to join on your external dataset with the class `soundDF` bioacoustic dataset!
+
+```{r, eval=F}
+### Merge AQI and temperature data by date
+claremont_data <- temp_df %>%
+  left_join(aqi_df, by = "date") # Join on the 'date' column
+
+### Check the merged dataset
+head(claremont_data)
+View(claremont_data) # view in spreadsheet format
+```
+
+## 5: Code in its entirety
+
+```{r, eval=F}
+### Load packages
+library("ggplot2") # plotting functions
+library("dplyr") # data wrangling functions
+library("readr") # reading in tables, including ones online
+library("mosaic") # shuffle (permute) our data
+library("lubridate") # package to handle datetime objects
+
+### Load in dataset
+soundDF <- readr::read_tsv("https://github.com/chchang47/BIOL104PO/raw/refs/heads/master/data/bioacousticAY22-23.tsv") # read in spreadsheet from its URL and store in soundDF
+
+### Look at the first few rows
+soundDF
+
+### Load AQI and/or temperature datasets
+aqi_df <- readr::read_csv("https://github.com/EA30POM/site/raw/main/data/claremont_aqi_data.csv")
+temp_df <- readr::read_csv("https://github.com/EA30POM/site/raw/main/data/claremont_average_temperature.csv")
+
+### Look at the first few rows in a spreadsheet viewer
+soundDF %>% head() %>% View()
+
+### Look at the first few rows of the external data
+head(aqi_df)
+head(temp_df)
+
+### Clean up the data using lubridate for date conversion
+  # Bioacoustic datasset
+soundDF <- soundDF %>%
+  mutate(date = lubridate::ymd(date))
+
+  # AQI dataset
+aqi_df <- aqi_df %>%
+  mutate(date = lubridate::ymd(date)) 
+
+  # Temp dataset
+temp_df <- temp_df %>%
+  mutate(date = lubridate::ymd(date))
+
+### Merge AQI and temperature data by date
+claremont_data <- temp_df %>%
+  left_join(aqi_df, by = "date") # Join on the 'date' column
+
+### Check the merged dataset
+head(claremont_data)
+View(claremont_data) # view in spreadsheet format
+```
+

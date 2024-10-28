@@ -1,0 +1,740 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+<meta name="author" content="" />
+
+<meta name="date" content="2024-10-28" />
+
+<title>Joining external data to the bioacoustic dataset</title>
+
+<script src="site_libs/header-attrs-2.27/header-attrs.js"></script>
+<script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/flatly.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<style>h1 {font-size: 34px;}
+       h1.title {font-size: 38px;}
+       h2 {font-size: 30px;}
+       h3 {font-size: 24px;}
+       h4 {font-size: 18px;}
+       h5 {font-size: 16px;}
+       h6 {font-size: 12px;}
+       code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
+       pre:not([class]) { background-color: white }</style>
+<script src="site_libs/jqueryui-1.13.2/jquery-ui.min.js"></script>
+<link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
+<script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<link href="site_libs/highlightjs-9.12.0/default.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+<link href="site_libs/font-awesome-6.4.2/css/all.min.css" rel="stylesheet" />
+<link href="site_libs/font-awesome-6.4.2/css/v4-shims.min.css" rel="stylesheet" />
+
+<style type="text/css">
+  code{white-space: pre-wrap;}
+  span.smallcaps{font-variant: small-caps;}
+  span.underline{text-decoration: underline;}
+  div.column{display: inline-block; vertical-align: top; width: 50%;}
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  ul.task-list{list-style: none;}
+    </style>
+
+<style type="text/css">code{white-space: pre;}</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+
+
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+details > summary > p:only-child {
+  display: inline;
+}
+pre code {
+  padding: 0;
+}
+</style>
+
+
+<style type="text/css">
+.dropdown-submenu {
+  position: relative;
+}
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  border-radius: 0 6px 6px 6px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
+}
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #cccccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+.dropdown-submenu:hover>a:after {
+  border-left-color: #adb5bd;
+}
+.dropdown-submenu.pull-left {
+  float: none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  border-radius: 6px 0 6px 6px;
+}
+</style>
+
+<script type="text/javascript">
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark the anchor link active (and if it's in a dropdown, also mark that active)
+  var dropdown = menuAnchor.closest('li.dropdown');
+  if (window.bootstrap) { // Bootstrap 4+
+    menuAnchor.addClass('active');
+    dropdown.find('> .dropdown-toggle').addClass('active');
+  } else { // Bootstrap 3
+    menuAnchor.parent().addClass('active');
+    dropdown.addClass('active');
+  }
+
+  // Navbar adjustments
+  var navHeight = $(".navbar").first().height() + 15;
+  var style = document.createElement('style');
+  var pt = "padding-top: " + navHeight + "px; ";
+  var mt = "margin-top: -" + navHeight + "px; ";
+  var css = "";
+  // offset scroll position for anchor links (for fixed navbar)
+  for (var i = 1; i <= 6; i++) {
+    css += ".section h" + i + "{ " + pt + mt + "}\n";
+  }
+  style.innerHTML = "body {" + pt + "padding-bottom: 40px; }\n" + css;
+  document.head.appendChild(style);
+});
+</script>
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before, .tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "\e259";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "\e258";
+  font-family: 'Glyphicons Halflings';
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+  background-color: transparent;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+
+
+
+<style type="text/css">
+
+#TOC {
+  margin: 25px 0px 20px 0px;
+}
+@media (max-width: 768px) {
+#TOC {
+  position: relative;
+  width: 100%;
+}
+}
+
+@media print {
+.toc-content {
+  /* see https://github.com/w3c/csswg-drafts/issues/4434 */
+  float: right;
+}
+}
+
+.toc-content {
+  padding-left: 30px;
+  padding-right: 40px;
+}
+
+div.main-container {
+  max-width: 1200px;
+}
+
+div.tocify {
+  width: 20%;
+  max-width: 260px;
+  max-height: 85%;
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  div.tocify {
+    width: 25%;
+  }
+}
+
+@media (max-width: 767px) {
+  div.tocify {
+    width: 100%;
+    max-width: none;
+  }
+}
+
+.tocify ul, .tocify li {
+  line-height: 20px;
+}
+
+.tocify-subheader .tocify-item {
+  font-size: 0.90em;
+}
+
+.tocify .list-group-item {
+  border-radius: 0px;
+}
+
+
+</style>
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+<!-- setup 3col/9col grid for toc_float and main content  -->
+<div class="row">
+<div class="col-xs-12 col-sm-4 col-md-3">
+<div id="TOC" class="tocify">
+</div>
+</div>
+
+<div class="toc-content col-xs-12 col-sm-8 col-md-9">
+
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-bs-toggle="collapse" data-target="#navbar" data-bs-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">Environmental Science</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li>
+  <a href="index.html">
+    <span class="fa fa-home"></span>
+     
+    Syllabus
+  </a>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    Data science
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li class="dropdown-header">Week 1</li>
+    <li>
+      <a href="Rintro.html">The R and RStudio environments</a>
+    </li>
+    <li class="dropdown-header">Class activities</li>
+    <li>
+      <a href="tidyTutorial.html">Tidyverse intro</a>
+    </li>
+    <li>
+      <a href="ClimateData.html">Climate data</a>
+    </li>
+  </ul>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    Climate science
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li class="dropdown-header">Week 1</li>
+    <li>
+      <a href="AQintro.html">Air Quality Lab Introduction</a>
+    </li>
+    <li class="dropdown-header">Week 2</li>
+    <li>
+      <a href="AQexp1.html">Air Quality: Test transects</a>
+    </li>
+    <li class="dropdown-header">Week 3</li>
+    <li>
+      <a href="AQexp2.html">Air Quality: Analysis</a>
+    </li>
+  </ul>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    Bioacoustics
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="Sound.html">Bioacoustic data</a>
+    </li>
+    <li>
+      <a href="bioaco.html">Analyzing sound data</a>
+    </li>
+    <li>
+      <a href="acoJoin.html">Joining external data</a>
+    </li>
+  </ul>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div id="header">
+
+
+
+<h1 class="title toc-ignore">Joining external data to the bioacoustic
+dataset</h1>
+<h4 class="author"></h4>
+<h4 class="date">2024-10-28</h4>
+
+</div>
+
+
+<div id="overview" class="section level1 tabset tabset-fade" number="1">
+<h1 class="tabset tabset-fade"><span
+class="header-section-number">1</span> Overview</h1>
+<p>This page provides an overview on how to read in and join external
+data with the class bioacoustic dataset.</p>
+<p>Please start by logging into <a
+href="https://rstudio.pomona.edu">rstudio.pomona.edu</a>.</p>
+<p>This table below shows the hypotheses for each group:</p>
+<table class="gmisc_table" style="border-collapse: collapse; margin-top: 1em; margin-bottom: 1em;">
+<thead>
+<tr>
+<th style="font-weight: 900; border-bottom: 1px solid grey; border-top: 2px solid grey; text-align: center;">
+Group
+</th>
+<th style="font-weight: 900; border-bottom: 1px solid grey; border-top: 2px solid grey; text-align: center;">
+Hypotheses
+</th>
+<th style="font-weight: 900; border-bottom: 1px solid grey; border-top: 2px solid grey; text-align: center;">
+Team
+</th>
+</tr>
+</thead>
+<tbody>
+<tr style="background-color: #f4cccc;">
+<td style="background-color: #f4cccc; text-align: center;">
+1
+</td>
+<td style="background-color: #f4cccc; text-align: center;">
+ACI and species richness will be greater near Phake lake due to habitat
+differences (birds aquiring water)
+</td>
+<td style="background-color: #f4cccc; text-align: center;">
+Sy’Vanna, Mari
+</td>
+</tr>
+<tr style="background-color: #fce5cd;">
+<td style="background-color: #fce5cd; text-align: center;">
+2
+</td>
+<td style="background-color: #fce5cd; text-align: center;">
+We assume that active roads disrupt natural habitats and therefore there
+will be higher ACI levels further away from Foothill Blvd.
+</td>
+<td style="background-color: #fce5cd; text-align: center;">
+Willa, Danie
+</td>
+</tr>
+<tr style="background-color: #fff2cc;">
+<td style="background-color: #fff2cc; text-align: center;">
+3
+</td>
+<td style="background-color: #fff2cc; text-align: center;">
+Monitors located in areas with less foliage will have lower ACI levels
+</td>
+<td style="background-color: #fff2cc; text-align: center;">
+Ella, Nico
+</td>
+</tr>
+<tr style="background-color: #d9ead3;">
+<td style="background-color: #d9ead3; text-align: center;">
+4
+</td>
+<td style="background-color: #d9ead3; text-align: center;">
+ACI is higher on cooler days than hotter days.
+</td>
+<td style="background-color: #d9ead3; text-align: center;">
+Clara, Anna
+</td>
+</tr>
+<tr style="background-color: #c9daf8;">
+<td style="background-color: #c9daf8; text-align: center;">
+5
+</td>
+<td style="background-color: #c9daf8; text-align: center;">
+The ACI will be higher in more bioddiverse native habitat areas as
+opposed to the invasive grassland where there is less activity from
+various species.
+</td>
+<td style="background-color: #c9daf8; text-align: center;">
+Fiona, George
+</td>
+</tr>
+<tr style="background-color: #c9daf8;">
+<td style="background-color: #c9daf8; text-align: center;">
+6
+</td>
+<td style="background-color: #c9daf8; text-align: center;">
+The SR is lower when Air Quality Index (AQI) is higher.
+</td>
+<td style="background-color: #c9daf8; text-align: center;">
+Jeremy, Sophia
+</td>
+</tr>
+<tr style="background-color: #ead1dc;">
+<td style="background-color: #ead1dc; text-align: center;">
+7
+</td>
+<td style="background-color: #ead1dc; text-align: center;">
+October and November will have greater ACI, SR, and abundance than March
+and April
+</td>
+<td style="background-color: #ead1dc; text-align: center;">
+Karl, Elisa
+</td>
+</tr>
+<tr style="background-color: #f4cccc;">
+<td style="background-color: #f4cccc; border-bottom: 2px solid grey; text-align: center;">
+8
+</td>
+<td style="background-color: #f4cccc; border-bottom: 2px solid grey; text-align: center;">
+Areas more recently affected by fires will record a higher species
+richness.
+</td>
+<td style="background-color: #f4cccc; border-bottom: 2px solid grey; text-align: center;">
+Evan, Ruth
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="preparing-data" class="section level1" number="2">
+<h1><span class="header-section-number">2</span> Preparing data</h1>
+<div id="load-packages" class="section level2" number="2.1">
+<h2><span class="header-section-number">2.1</span> 1: Load packages</h2>
+<p>Below, we will start by loading packages that we’ll need.
+<strong>Remember</strong>: if you get an error for loading a package in
+your workspace, it might be because it isn’t installed. In that case,
+just run this command <strong>once</strong> this semester:</p>
+<pre><code>install.packages(&quot;package&quot;) # replace &quot;package&quot; with the name of the package that you need</code></pre>
+<pre class="r"><code>### Load packages
+library(&quot;ggplot2&quot;) # plotting functions
+library(&quot;dplyr&quot;) # data wrangling functions
+library(&quot;readr&quot;) # reading in tables, including ones online
+library(&quot;mosaic&quot;) # shuffle (permute) our data
+library(&quot;lubridate&quot;) # package to handle datetime objects</code></pre>
+</div>
+<div id="read-data" class="section level2" number="2.2">
+<h2><span class="header-section-number">2.2</span> 2: Read data</h2>
+<p>Next, we will pull in our data and inspect it.</p>
+<pre class="r"><code>### Load in dataset
+soundDF &lt;- readr::read_tsv(&quot;https://github.com/chchang47/BIOL104PO/raw/refs/heads/master/data/bioacousticAY22-23.tsv&quot;) # read in spreadsheet from its URL and store in soundDF
+
+### Look at the first few rows
+soundDF</code></pre>
+<pre><code>## # A tibble: 151,468 × 8
+##    unit  date       time        ACI    SR DayNight Month season
+##    &lt;chr&gt; &lt;date&gt;     &lt;chr&gt;     &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt;    &lt;chr&gt; &lt;chr&gt; 
+##  1 CBio4 2023-03-23 18H 0M 0S  155.     3 Night    March Spring
+##  2 CBio4 2023-03-23 18H 1M 0S  154.     3 Night    March Spring
+##  3 CBio4 2023-03-23 18H 2M 0S  151.     7 Night    March Spring
+##  4 CBio4 2023-03-23 18H 3M 0S  155.     3 Night    March Spring
+##  5 CBio4 2023-03-23 18H 4M 0S  152.     2 Night    March Spring
+##  6 CBio4 2023-03-23 18H 5M 0S  152.     4 Night    March Spring
+##  7 CBio4 2023-03-23 18H 6M 0S  159.     3 Night    March Spring
+##  8 CBio4 2023-03-23 18H 7M 0S  152.     2 Night    March Spring
+##  9 CBio4 2023-03-23 18H 8M 0S  152.     3 Night    March Spring
+## 10 CBio4 2023-03-23 18H 9M 0S  153.     7 Night    March Spring
+## # ℹ 151,458 more rows</code></pre>
+<pre class="r"><code>### Load AQI and/or temperature datasets
+aqi_df &lt;- readr::read_csv(&quot;https://github.com/EA30POM/site/raw/main/data/claremont_aqi_data.csv&quot;)
+temp_df &lt;- readr::read_csv(&quot;https://github.com/EA30POM/site/raw/main/data/claremont_average_temperature.csv&quot;)</code></pre>
+<pre class="r"><code>### Look at the first few rows in a spreadsheet viewer
+soundDF %&gt;% head() %&gt;% View()</code></pre>
+<pre class="r"><code>### Look at the first few rows of the external data
+head(aqi_df)
+head(temp_df)</code></pre>
+</div>
+<div id="ensure-that-the-date-columns-are-in-the-correct-format."
+class="section level2" number="2.3">
+<h2><span class="header-section-number">2.3</span> 3: Ensure that the
+date columns are in the correct format.</h2>
+<p>Now, we are going to ensure that the date columns are correctly
+formatted for all 3 datasets.</p>
+<pre class="r"><code>### Clean up the data using lubridate for date conversion
+  # Bioacoustic datasset
+soundDF &lt;- soundDF %&gt;%
+  mutate(date = lubridate::ymd(date))
+
+  # AQI dataset
+aqi_df &lt;- aqi_df %&gt;%
+  mutate(date = lubridate::ymd(date)) 
+
+  # Temp dataset
+temp_df &lt;- temp_df %&gt;%
+  mutate(date = lubridate::ymd(date))</code></pre>
+</div>
+<div id="joining-on-the-data" class="section level2" number="2.4">
+<h2><span class="header-section-number">2.4</span> 4: Joining on the
+data</h2>
+<p>Below, I’m going to show you how you can merge the data based on the
+dates in the data. It is <strong>up to you</strong> to modify this code
+to join on your external dataset with the class <code>soundDF</code>
+bioacoustic dataset!</p>
+<pre class="r"><code>### Merge AQI and temperature data by date
+claremont_data &lt;- temp_df %&gt;%
+  left_join(aqi_df, by = &quot;date&quot;) # Join on the &#39;date&#39; column
+
+### Check the merged dataset
+head(claremont_data)
+View(claremont_data) # view in spreadsheet format</code></pre>
+</div>
+<div id="code-in-its-entirety" class="section level2" number="2.5">
+<h2><span class="header-section-number">2.5</span> 5: Code in its
+entirety</h2>
+<pre class="r"><code>### Load packages
+library(&quot;ggplot2&quot;) # plotting functions
+library(&quot;dplyr&quot;) # data wrangling functions
+library(&quot;readr&quot;) # reading in tables, including ones online
+library(&quot;mosaic&quot;) # shuffle (permute) our data
+library(&quot;lubridate&quot;) # package to handle datetime objects
+
+### Load in dataset
+soundDF &lt;- readr::read_tsv(&quot;https://github.com/chchang47/BIOL104PO/raw/refs/heads/master/data/bioacousticAY22-23.tsv&quot;) # read in spreadsheet from its URL and store in soundDF
+
+### Look at the first few rows
+soundDF
+
+### Load AQI and/or temperature datasets
+aqi_df &lt;- readr::read_csv(&quot;https://github.com/EA30POM/site/raw/main/data/claremont_aqi_data.csv&quot;)
+temp_df &lt;- readr::read_csv(&quot;https://github.com/EA30POM/site/raw/main/data/claremont_average_temperature.csv&quot;)
+
+### Look at the first few rows in a spreadsheet viewer
+soundDF %&gt;% head() %&gt;% View()
+
+### Look at the first few rows of the external data
+head(aqi_df)
+head(temp_df)
+
+### Clean up the data using lubridate for date conversion
+  # Bioacoustic datasset
+soundDF &lt;- soundDF %&gt;%
+  mutate(date = lubridate::ymd(date))
+
+  # AQI dataset
+aqi_df &lt;- aqi_df %&gt;%
+  mutate(date = lubridate::ymd(date)) 
+
+  # Temp dataset
+temp_df &lt;- temp_df %&gt;%
+  mutate(date = lubridate::ymd(date))
+
+### Merge AQI and temperature data by date
+claremont_data &lt;- temp_df %&gt;%
+  left_join(aqi_df, by = &quot;date&quot;) # Join on the &#39;date&#39; column
+
+### Check the merged dataset
+head(claremont_data)
+View(claremont_data) # view in spreadsheet format</code></pre>
+</div>
+</div>
+
+
+
+</div>
+</div>
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.odd').parent('tbody').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open');
+  });
+});
+</script>
+
+<!-- code folding -->
+
+<script>
+$(document).ready(function ()  {
+
+    // temporarily add toc-ignore selector to headers for the consistency with Pandoc
+    $('.unlisted.unnumbered').addClass('toc-ignore')
+
+    // move toc-ignore selectors from section div to header
+    $('div.section.toc-ignore')
+        .removeClass('toc-ignore')
+        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
+
+    // establish options
+    var options = {
+      selectors: "h1,h2,h3",
+      theme: "bootstrap3",
+      context: '.toc-content',
+      hashGenerator: function (text) {
+        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_');
+      },
+      ignoreSelector: ".toc-ignore",
+      scrollTo: 0
+    };
+    options.showAndHide = true;
+    options.smoothScroll = true;
+
+    // tocify
+    var toc = $("#TOC").tocify(options).data("toc-tocify");
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>
