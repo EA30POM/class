@@ -12,7 +12,7 @@ options(tinytex.verbose = TRUE)
 
 # Overview
 
-*Environmental Science* introduces the scientific, socio-political, and technological dimensions of environmental problems that pose unprecedented challenges to humanity and the environment: climate change, biodiversity loss, and providing food and water for 7.8 billion people. In this class, we will examine fundamental changes in the biosphere, and their implications for climate, land, water, and species, while emphasizing a systems-view of problems and potential solutions.
+*Environmental Science* introduces the scientific, socio-political, and technological dimensions of environmental problems that pose unprecedented challenges to humanity and the environment: climate change, biodiversity loss, and providing food and water for over 8 billion people. In this class, we will examine fundamental changes in the biosphere, and their implications for climate, land, water, and species, while emphasizing a systems-view of problems and potential solutions.
 
 Over the coming semester, we will look at environmental issues at a local and global scale, examining how individual and collective decisions lead to environmental changes. We will use case studies to illustrate the different dimensions of environmental problems. In the laboratory, you will learn some core techniques for environmental science, including the use and analysis of spatial and environmental data, as well as the uncertainty and limitations of real-world data.
 
